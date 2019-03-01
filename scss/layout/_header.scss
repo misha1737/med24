@@ -1,0 +1,467 @@
+header {
+	
+	max-height:80px;
+	background-color: white;
+	width:100%;
+	position: fixed;
+	z-index:300;
+	//border-bottom:1px solid red;
+	box-shadow: 0 0 10px gray;
+	.mobileContent{
+		display:none;
+	}
+	.menuMob, .mobileMenu{
+		display:none;
+	}
+	img{
+		margin-top:15px;
+		margin-bottom:15px;
+	}
+	p{
+		@include text(27px);
+		text-align: center;
+	}
+
+	.line{
+		height: 2px;
+		width: 100%;
+		background-color: $black;
+		display: inline-block;
+	}
+	h1{
+		@include text(34px,$stack-CirceBold,$orange,70px);
+		text-align: center;
+	}
+	h2{
+		@include text(30px,$stack-CirceBold,#020001);
+		text-align: center;
+	}
+	.gLine{
+		background-color: #ddd ;
+		height: 20px;
+		p, span{
+			@include text(12px, $gray);
+		}
+		select{
+			margin-top: -2px;
+			@include text(12px, $black);
+			background: none;
+			outline:none;
+			border:none;
+		}
+		span, select{
+			display:inline-block;
+		}
+		.language{
+			float:left;
+			margin-left: 5px;
+		}
+		.city{
+			float:left;
+			margin-left: 30px;
+		}
+		.percent{
+			float:right;
+			margin-left: 18px;
+
+		}
+
+
+
+
+		a{
+			@include text(12px, $gray);
+			text-decoration: none;
+			&:hover{
+				color:black;
+			}
+			i{
+				font-size: 12px;
+			}
+		}
+	}
+	.tovaryButtonBlock{
+		padding-bottom: 17px;
+		z-index: 50;
+	}
+	.poslugiButtonBlock{
+		padding-bottom: 17px;
+		z-index: 50;
+	}
+	.bannerHeader{
+		background-color: #efefef;
+		height: 100%;
+		padding-right: 0;
+	}
+
+	button.tovaryButton{	
+		margin-top: 15px;
+		@include button(30px, 5px, 100%, $green);
+		@include text(14px,white);
+		width:90%;
+		margin-left: 10%;
+	}
+
+	.tovaryMenu{
+		height:420px;
+		background-color: white;
+		position:absolute;
+		width:800%;
+		margin-left: -50%;
+		margin-top: 8px;
+		overflow:hidden;
+		border:1px solid #efefef;
+		display: none;
+	}
+	.poslugiMenu{
+		height:420px;
+		background-color: white;
+		position:absolute;
+		width:800%;
+		margin-left: -107%;
+		margin-top: 8px;
+		overflow:hidden;
+		border:1px solid #efefef;
+		display: none;
+	}
+	.arrow{
+		width:20px;
+		height:10px;
+		//background-color: red;
+		position: absolute;
+		background: url(../img/arrow.png) 100% 100% no-repeat; 
+		background-size: cover;
+		margin-left: 43%;
+		display: none;
+	}
+	 .arrowP {
+	 	 width:20px;
+	 	 height:10px;
+		//background-color: red;
+	// 	position: absolute;
+	margin-top: -10px;
+	 	 background: url(../img/arrow.png) 100% 100% no-repeat; 
+		 background-size: cover;
+		 margin-left: 43%;
+		 display: none;
+
+	}
+
+
+
+	button.poslugiButton{	
+		margin-top: 15px;
+		@include button(30px, 5px, 100%, $blue);
+		@include text(14px,white);
+		width:90%;
+	}
+	form.searchForm{
+
+		.searchButton{
+			position:absolute;
+			background:none;
+			border: none;
+			color: #999;
+			left:20px;
+			outline:none;
+			top:21px;
+			font-size: 16px;
+		}
+	}
+
+	.blockP{
+		padding: 0;
+		div{
+			padding-left: 5px;
+			padding-right: 5px;
+		}
+	}
+	input{
+		outline:none;
+		text-indent: 30px;
+
+	}
+	input.search{
+		width:100%;
+		margin-top: 15px;
+		border:1px solid #ccc;
+		@include text(14px);
+		padding:5px;
+		border-radius:2px;
+		border-radius: 5px;
+		background-color: #efefef;
+	}
+	
+	.phoneNumber, .access, .basket{
+	
+		display: inline-block;
+		i{
+			font-size: 20px;
+			margin-right: 5px;
+		}
+
+	}
+
+
+	.phoneNumber{
+		margin-top:7px;
+		a{
+			color:black	;
+			text-decoration:none;
+			}
+		p{
+			@include text(12px);
+			display: inline-block;	
+			
+		}
+		float:right;
+	}
+
+	.access{
+		margin-top: 20px;
+		margin-left: 5px;
+		a{
+		display: inline-block;
+		color:black;
+		@include text(9px);
+		}
+			
+		
+		span{
+			line-height: 10px;
+    		vertical-align: middle;
+			position: absolute;
+			color:black;
+			@include text(9px);
+			}
+		span.exit{
+			margin-top: 15px;
+			cursor: pointer;
+		}
+
+	//	float:right;
+	}
+
+	.basket{
+		margin-top:10px;
+		a{
+			position:relative;
+			img{
+				left:0px;
+				top:0px;
+				
+				height:30px;
+				width:30px;
+				margin: 0;
+				margin-top: -5px;
+   				 margin-right: 5px;
+				border-radius: 10px;
+				border:1px solid gray;
+				padding:5px;
+			}
+			.productCounter{
+				right: 0px;
+				position:absolute;
+					@include text(9px);
+				width: 14px;
+				height:15px;
+				background:red;
+				color:white;
+				padding:1px;
+				border-radius:50%;
+				text-align: center;
+				 
+			}
+
+			// width:35px;
+			// height:34px;
+			// display:inline-block;
+			// background: url(../img/cart.svg);
+			// margin-right: 13px;
+			// margin-bottom: -5px;
+   //  		margin-top: 5px;
+		 	
+		 
+		}
+		// i{
+		// 	padding:6px 4px;
+		// 	border: 1px solid black;
+		// 	border-radius: 10px;
+		// 	font-size: 25px;
+		// }
+		 p{
+		 @include text(9px);
+		 text-align: left;
+		 display: inline-block;
+		 display:inline-block;
+		 margin:0;
+		 margin-top: 5px;
+		 margin-left: 5px;
+
+		}
+		// float:right;
+	}
+
+	
+}
+// .catalogNavMenu h5, h4{
+// 		@include text(16px);
+// 		color: green;
+// 		cursor: pointer;
+// 		&:hover{
+// 			color:black;
+// 		}
+// 	}
+.headerMenu{
+	display:none;
+	position: absolute;
+
+	.menuKatalog{
+		
+		background-color: #fcfcfc;
+				
+		z-index: 10;
+		box-shadow: 0 0 10px gray;
+		&::after {
+		    content: ''; 
+		    position: absolute; /* Абсолютное позиционирование */
+		    left: 45%; top: -30px; /* Положение треугольника */
+		    border: 15px solid transparent; /* Прозрачные границы */
+		    border-bottom: 15px solid #999 ; /* Добавляем треугольник */
+		   }
+		   .catalogNavMenu{
+			max-height: 80vh;
+						overflow-y: scroll;
+
+		   }
+
+
+	}
+	.menuPodKatalog{
+		&::after {
+		display:none;
+		}
+		max-height: 80vh;
+						overflow-y: scroll;
+	}
+}
+
+@media only screen and (max-width : 1200px) {
+
+header{
+		max-height:800px;
+	.access{
+		a{
+			span{
+				line-height:11px;
+				
+			}
+		}
+		}
+	.basket{
+		p{
+			margin-left: 0px;
+		}
+	}
+	
+}
+
+
+
+}
+@media only screen and (max-width : 1000px) {
+	
+	header{
+		.pk{
+		display:none;
+	}
+	.mobileContent{
+		display:block;
+	}
+	.mobileMenu{
+		display:none;
+	}
+		.gLine{display:none}
+	
+	.mobMenuButtons{
+	text-align: right;
+	margin-right: 15px;
+
+	}
+
+	.container.headerTop{
+	display:none;
+	}
+	.blockP div {
+    padding-left: 15px;
+    padding-right: 15px;
+	}
+	button.poslugiButton, button.tovaryButton{
+
+		width:100%;
+		margin-left: 0px;
+		margin-right: 0px;
+
+	}
+	.logo{
+		padding:0px;
+	}
+	.access{
+		//display:none;
+		span{
+			display:none;
+		}
+	}
+	.phoneNumber{
+		float:none;
+		p{
+			display:none;
+		}
+	}
+	.basket{
+		margin-top: 18px;
+		p{
+			display: none;
+		}
+		a p {
+			display: inline-block;
+			top:-18px;
+		}
+	}
+	.menuMob{
+		display:inline-block;
+		z-index:500;
+	}
+	.menuMob div{
+		cursor:pointer;
+		//background-color: $blue;
+		transform: scale(2,1.5);
+		font-stretch:100px;
+		width:32px;
+		height:32px;
+		margin-top: 16px;
+		//border-radius:50%;
+		.glyphicon{
+			color:$gray;
+			margin-top: 8px;
+			margin-left: 10px;
+		}
+	}
+	.mobileMenu{
+		margin-top: 20px;
+		a{
+			@include text(15px, $gray);
+			text-decoration: none;
+			line-height: 25px;
+			&:hover{
+				color:black;
+			}
+			i{
+				font-size: 12px;
+			}
+		}
+
+	}
+
+}
+}

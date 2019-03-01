@@ -1,0 +1,867 @@
+@charset "UTF-8";
+/*order is imp*/
+@import url("https://fonts.googleapis.com/css?family=Just+Another+Hand");
+@font-face {
+  font-family: "SegoeUI-SemiBold";
+  src: url("../fonts/SegoeUI-SemiBold.ttf"); }
+@font-face {
+  font-family: "PTSansBold";
+  src: url("../fonts/PTSansBold.ttf"); }
+@font-face {
+  font-family: "PTSansRegular";
+  src: url("../fonts/PTSansRegular.ttf"); }
+@font-face {
+  font-family: "georgiai";
+  src: url("../fonts/georgiai.ttf"); }
+/* Type Selector*/
+body {
+  margin: 0; }
+
+.content {
+  margin-top: 80px;
+  background-color: #f5f5f5;
+  min-height: calc(100vh - 300px); }
+
+/* Links */
+@media only screen and (max-width: 1000px) {
+  .content {
+    margin-top: 155px; } }
+footer {
+  padding: 20px;
+  background-color: #666666;
+  color: #ffffff; }
+
+header {
+  background-color: white;
+  width: 100%;
+  position: fixed;
+  z-index: 300; }
+  header .mobileContent {
+    display: none; }
+  header .menuMob, header .mobileMenu {
+    display: none; }
+  header img {
+    margin-top: 15px;
+    margin-bottom: 15px; }
+  header p {
+    font-size: 27px;
+    font-family: SegoeUI-SemiBold;
+    color: #2b2e35;
+    text-align: center; }
+  header .line {
+    height: 2px;
+    width: 100%;
+    background-color: #2b2e35;
+    display: inline-block; }
+  header h1 {
+    font-size: 34px;
+    font-family: #ff621f;
+    color: "SegoeUI-SemiBold", Helvetica, Arial, sans-serif;
+    line-height: 70px;
+    text-align: center; }
+  header h2 {
+    font-size: 30px;
+    font-family: #020001;
+    color: "SegoeUI-SemiBold", Helvetica, Arial, sans-serif;
+    text-align: center; }
+  header .gLine {
+    background-color: #ddd;
+    height: 20px; }
+    header .gLine p, header .gLine span {
+      font-size: 12px;
+      font-family: SegoeUI-SemiBold;
+      color: #666666; }
+    header .gLine select {
+      margin-top: -2px;
+      font-size: 12px;
+      font-family: SegoeUI-SemiBold;
+      color: #2b2e35;
+      background: none;
+      outline: none;
+      border: none; }
+    header .gLine span, header .gLine select {
+      display: inline-block; }
+    header .gLine .language {
+      float: left;
+      margin-left: 5px; }
+    header .gLine .city {
+      float: left;
+      margin-left: 30px; }
+    header .gLine .percent {
+      float: right;
+      margin-left: 18px; }
+    header .gLine a {
+      font-size: 12px;
+      font-family: SegoeUI-SemiBold;
+      color: #666666;
+      text-decoration: none; }
+      header .gLine a:hover {
+        color: black; }
+      header .gLine a i {
+        font-size: 12px; }
+  header .tovaryButtonBlock {
+    padding-bottom: 17px;
+    z-index: 50; }
+  header .bannerHeader {
+    background-color: #efefef;
+    height: 100%;
+    padding-right: 0; }
+  header button.tovaryButton {
+    margin-top: 15px;
+    font-size: 30px;
+    padding: 5px;
+    width: 100%;
+    background-color: #6fab57;
+    color: #ffffff;
+    font-family: "PTSansBold", Helvetica, Arial, sans-serif;
+    border: none;
+    border-radius: 2px;
+    outline: none;
+    font-size: 14px;
+    font-family: SegoeUI-SemiBold;
+    color: white;
+    width: 90%;
+    margin-left: 10%; }
+    header button.tovaryButton:hover {
+      background-color: #5d8f49; }
+  header .tovaryMenu {
+    height: 420px;
+    background-color: white;
+    position: absolute;
+    width: 800%;
+    margin-left: -50%;
+    margin-top: 8px;
+    overflow: hidden;
+    border: 1px solid #efefef;
+    display: none; }
+  header .arrow {
+    width: 20px;
+    height: 10px;
+    position: absolute;
+    background: url(../img/arrow.png) 100% 100% no-repeat;
+    background-size: cover;
+    margin-left: 43%;
+    display: none; }
+  header button.poslugiButton {
+    margin-top: 15px;
+    font-size: 30px;
+    padding: 5px;
+    width: 100%;
+    background-color: #63aae1;
+    color: #ffffff;
+    font-family: "PTSansBold", Helvetica, Arial, sans-serif;
+    border: none;
+    border-radius: 2px;
+    outline: none;
+    font-size: 14px;
+    font-family: SegoeUI-SemiBold;
+    color: white;
+    width: 90%; }
+    header button.poslugiButton:hover {
+      background-color: #538ebc; }
+  header form.searchForm .searchButton {
+    position: absolute;
+    background: none;
+    border: none;
+    color: #999;
+    left: 20px;
+    outline: none;
+    top: 21px;
+    font-size: 16px; }
+  header .blockP {
+    padding: 0; }
+    header .blockP div {
+      padding-left: 5px;
+      padding-right: 5px; }
+  header input {
+    outline: none;
+    text-indent: 30px; }
+  header input.search {
+    width: 100%;
+    margin-top: 15px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    font-family: SegoeUI-SemiBold;
+    color: #2b2e35;
+    padding: 5px;
+    border-radius: 2px;
+    border-radius: 5px;
+    background-color: #efefef; }
+  header .phoneNumber, header .access, header .basket {
+    display: inline-block; }
+    header .phoneNumber i, header .access i, header .basket i {
+      font-size: 20px;
+      margin-right: 5px; }
+  header .phoneNumber {
+    margin-top: 7px;
+    float: right; }
+    header .phoneNumber p {
+      font-size: 12px;
+      font-family: SegoeUI-SemiBold;
+      color: #2b2e35;
+      display: inline-block; }
+  header .access {
+    margin-top: 20px;
+    margin-left: 5px; }
+    header .access a {
+      display: inline-block;
+      color: black;
+      font-size: 9px;
+      font-family: SegoeUI-SemiBold;
+      color: #2b2e35; }
+    header .access span {
+      line-height: 10px;
+      vertical-align: middle;
+      position: absolute;
+      color: black;
+      font-size: 9px;
+      font-family: SegoeUI-SemiBold;
+      color: #2b2e35; }
+    header .access span.exit {
+      margin-top: 15px;
+      cursor: pointer; }
+  header .basket {
+    margin-top: 10px; }
+    header .basket a {
+      position: relative; }
+      header .basket a img {
+        left: 0px;
+        top: 0px;
+        height: 30px;
+        width: 30px;
+        margin: 0;
+        margin-top: -5px;
+        margin-right: 5px;
+        border-radius: 10px;
+        border: 1px solid gray;
+        padding: 5px; }
+      header .basket a .productCounter {
+        right: 0px;
+        position: absolute;
+        font-size: 9px;
+        font-family: SegoeUI-SemiBold;
+        color: #2b2e35;
+        width: 14px;
+        height: 15px;
+        background: red;
+        color: white;
+        padding: 1px;
+        border-radius: 50%;
+        text-align: center; }
+    header .basket p {
+      font-size: 9px;
+      font-family: SegoeUI-SemiBold;
+      color: #2b2e35;
+      text-align: left;
+      display: inline-block;
+      display: inline-block;
+      margin: 0;
+      margin-top: 5px;
+      margin-left: 5px; }
+
+.headerMenu {
+  display: none;
+  position: absolute; }
+  .headerMenu .menuKatalog {
+    background-color: #fcfcfc;
+    z-index: 10;
+    box-shadow: 0 0 10px gray; }
+    .headerMenu .menuKatalog::after {
+      content: '';
+      position: absolute;
+      /* Абсолютное позиционирование */
+      left: 45%;
+      top: -30px;
+      /* Положение треугольника */
+      border: 15px solid transparent;
+      /* Прозрачные границы */
+      border-bottom: 15px solid #999;
+      /* Добавляем треугольник */ }
+    .headerMenu .menuKatalog .catalogNavMenu {
+      max-height: 80vh;
+      overflow-y: scroll; }
+  .headerMenu .menuPodKatalog {
+    max-height: 80vh;
+    overflow-y: scroll; }
+    .headerMenu .menuPodKatalog::after {
+      display: none; }
+
+@media only screen and (max-width: 1200px) {
+  header .access a span {
+    line-height: 11px; }
+  header .basket p {
+    margin-left: 0px; } }
+@media only screen and (max-width: 1000px) {
+  header .pk {
+    display: none; }
+  header .mobileContent {
+    display: block; }
+  header .mobileMenu {
+    display: none; }
+  header .gLine {
+    display: none; }
+  header .mobMenuButtons {
+    text-align: right;
+    margin-right: 15px; }
+  header .container.headerTop {
+    display: none; }
+  header .blockP div {
+    padding-left: 15px;
+    padding-right: 15px; }
+  header button.poslugiButton, header button.tovaryButton {
+    width: 100%;
+    margin-left: 0px;
+    margin-right: 0px; }
+  header .logo {
+    padding: 0px; }
+  header .access span {
+    display: none; }
+  header .phoneNumber {
+    float: none; }
+    header .phoneNumber p {
+      display: none; }
+  header .basket {
+    margin-top: 18px; }
+    header .basket p {
+      display: none; }
+    header .basket a p {
+      display: inline-block;
+      top: -18px; }
+  header .menuMob {
+    display: inline-block;
+    z-index: 500; }
+  header .menuMob div {
+    cursor: pointer;
+    transform: scale(2, 1.5);
+    font-stretch: 100px;
+    width: 64px;
+    height: 32px;
+    margin-top: 16px; }
+    header .menuMob div .glyphicon {
+      color: #666666;
+      margin-top: 8px;
+      margin-left: 16px; }
+  header .mobileMenu {
+    margin-top: 20px; }
+    header .mobileMenu a {
+      font-size: 15px;
+      font-family: SegoeUI-SemiBold;
+      color: #666666;
+      text-decoration: none;
+      line-height: 25px; }
+      header .mobileMenu a:hover {
+        color: black; }
+      header .mobileMenu a i {
+        font-size: 12px; } }
+.authorization {
+  margin-top: 50px;
+  margin-bottom: 50px; }
+  .authorization h5 {
+    font-size: 20px;
+    font-family: SegoeUI-SemiBold;
+    color: #6fab57;
+    text-transform: uppercase; }
+
+input#registrationButton, input#authorizationButton {
+  margin-top: 15px;
+  font-size: 30px;
+  padding: 5px;
+  width: 100%;
+  background-color: #6fab57;
+  color: #ffffff;
+  font-family: "PTSansBold", Helvetica, Arial, sans-serif;
+  border: none;
+  border-radius: 2px;
+  outline: none;
+  font-size: 14px;
+  font-family: SegoeUI-SemiBold;
+  color: white; }
+  input#registrationButton:hover, input#authorizationButton:hover {
+    background-color: #5d8f49; }
+
+input#registrationButton {
+  margin-top: 15px;
+  text-align: center;
+  font-size: 30px;
+  padding: 5px;
+  width: 100%;
+  background-color: #63aae1;
+  color: #ffffff;
+  font-family: "PTSansBold", Helvetica, Arial, sans-serif;
+  border: none;
+  border-radius: 2px;
+  outline: none;
+  font-size: 14px;
+  font-family: SegoeUI-SemiBold;
+  color: white; }
+  input#registrationButton:hover {
+    background-color: #538ebc; }
+  input#registrationButton:hover {
+    text-decoration: none; }
+
+#registrationResults {
+  font-size: 16px;
+  font-family: SegoeUI-SemiBold;
+  color: red;
+  padding-bottom: 20px; }
+
+.catalog h5 {
+  font-size: 12px;
+  font-family: SegoeUI-SemiBold;
+  color: #2b2e35;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: 1px solid #eee; }
+
+.catalogBlock h5 {
+  cursor: pointer; }
+
+h3 {
+  margin-top: 40px;
+  margin-bottom: 0px; }
+
+.recomendTovari, .akciyniTovari {
+  background-color: #f5f5f5;
+  margin-top: 10px;
+  padding: 5px;
+  overflow-x: scroll;
+  display: inline-block;
+  width: 89%; }
+  .recomendTovari::-webkit-scrollbar, .akciyniTovari::-webkit-scrollbar {
+    height: 4px; }
+  .recomendTovari::-webkit-scrollbar-thumb, .akciyniTovari::-webkit-scrollbar-thumb {
+    border-width: 1px 1px 1px 2px;
+    border-color: #777;
+    background-color: #6fab57; }
+  .recomendTovari .productBlockAkciya, .akciyniTovari .productBlockAkciya {
+    margin: 10px;
+    background-color: #ffffff;
+    display: table-cell;
+    width: 200px;
+    padding: 10px; }
+    .recomendTovari .productBlockAkciya h5, .akciyniTovari .productBlockAkciya h5 {
+      font-size: 13px;
+      font-family: SegoeUI-SemiBold;
+      color: #2b2e35;
+      text-align: center;
+      text-transform: uppercase;
+      padding-top: 5px; }
+    .recomendTovari .productBlockAkciya img, .akciyniTovari .productBlockAkciya img {
+      width: 200px; }
+    .recomendTovari .productBlockAkciya p, .akciyniTovari .productBlockAkciya p {
+      font-size: 20px;
+      font-family: SegoeUI-SemiBold;
+      color: #2b2e35;
+      color: #bb332a;
+      text-align: right;
+      padding-right: 5px;
+      margin: 2px; }
+    .recomendTovari .productBlockAkciya button, .akciyniTovari .productBlockAkciya button {
+      font-size: 16px;
+      padding: 2px;
+      width: 100%;
+      background-color: #6fab57;
+      color: #ffffff;
+      font-family: "PTSansBold", Helvetica, Arial, sans-serif;
+      border: none;
+      border-radius: 2px;
+      outline: none; }
+      .recomendTovari .productBlockAkciya button:hover, .akciyniTovari .productBlockAkciya button:hover {
+        background-color: #5d8f49; }
+
+.slider1ArowRight, .slider1ArowLeft, .slider2ArowRight, .slider2ArowLeft {
+  display: inline-block;
+  width: 5%;
+  position: relative;
+  height: 340px; }
+  .slider1ArowRight img, .slider1ArowLeft img, .slider2ArowRight img, .slider2ArowLeft img {
+    position: absolute;
+    margin-top: 125px;
+    color: #63aae1; }
+
+.slider1ArowRight img, .slider2ArowRight img {
+  right: 0; }
+
+.slider1ArowLeft img, .slider2ArowLeft img {
+  left: 0; }
+
+.oProekte {
+  background-color: #ffffff;
+  margin-top: 40px;
+  margin-bottom: 40px; }
+
+.catalog {
+  min-height: 400px;
+  margin-top: 20px;
+  background-color: white; }
+  .catalog h3 {
+    display: inline-block;
+    text-transform: uppercase;
+    font-size: 20px;
+    font-family: SegoeUI-SemiBold;
+    color: #2b2e35; }
+  .catalog .fa-bars {
+    margin-right: 10px;
+    font-size: 20px; }
+  .catalog ul li, .catalog ul a {
+    font-size: 14px;
+    font-family: SegoeUI-SemiBold;
+    color: #2b2e35;
+    color: #666666;
+    list-style-type: none;
+    padding: 5px 0;
+    border-bottom: 1px solid #f5f5f5;
+    cursor: pointer;
+    margin-left: 25px; }
+    .catalog ul li:hover, .catalog ul a:hover {
+      color: #6fab57; }
+    .catalog ul li i, .catalog ul a i {
+      margin-left: -25px;
+      position: absolute;
+      font-size: 18px; }
+    .catalog ul li .fa-angle-right, .catalog ul a .fa-angle-right {
+      margin-left: 0px;
+      right: 15px; }
+  .catalog ul a {
+    color: orange;
+    text-decoration: none; }
+
+.catalogBlock, .catalogBlockHeader {
+  margin-top: 20px;
+  display: none;
+  height: 400px;
+  background-color: white;
+  overflow: hidden;
+  position: relative; }
+  .catalogBlock a, .catalogBlockHeader a {
+    position: absolute;
+    bottom: 0;
+    background: white;
+    font-size: 16px;
+    font-family: SegoeUI-SemiBold;
+    color: #2b2e35;
+    line-height: 36px;
+    color: #6fab57;
+    display: block;
+    text-align: center;
+    width: 100%;
+    text-decoration: none; }
+  .catalogBlock h5, .catalogBlockHeader h5 {
+    font-size: 16px;
+    font-family: SegoeUI-SemiBold;
+    color: #2b2e35;
+    margin-top: 15px;
+    text-transform: uppercase; }
+  .catalogBlock h4, .catalogBlockHeader h4 {
+    font-size: 12px;
+    font-family: SegoeUI-SemiBold;
+    color: #2b2e35;
+    text-transform: uppercase; }
+  .catalogBlock p, .catalogBlockHeader p {
+    font-size: 12px;
+    font-family: SegoeUI-SemiBold;
+    color: #2b2e35;
+    margin: 0; }
+
+.sliderBox ul {
+  margin-top: 20px;
+  padding-top: 10px;
+  margin-bottom: 0px;
+  background-color: white; }
+  .sliderBox ul li {
+    padding: 10px;
+    display: inline-block;
+    list-style-type: none;
+    font-size: 12px;
+    font-family: SegoeUI-SemiBold;
+    color: #2b2e35;
+    cursor: pointer;
+    border-right: 1px solid  #f5f5f5; }
+    .sliderBox ul li:first-child {
+      border-top: 3px solid #6fab57; }
+
+.catalogBlockHeader {
+  display: inline-block; }
+
+.catalogPoslugi {
+  margin-top: 20px;
+  min-height: 400px;
+  background-color: white; }
+  .catalogPoslugi button.medPoslugi {
+    font-size: 30px;
+    padding: 5px;
+    width: 100%;
+    background-color: #63aae1;
+    color: #ffffff;
+    font-family: "PTSansBold", Helvetica, Arial, sans-serif;
+    border: none;
+    border-radius: 2px;
+    outline: none;
+    font-size: 14px;
+    font-family: SegoeUI-SemiBold;
+    color: white;
+    margin: 15px 0; }
+    .catalogPoslugi button.medPoslugi:hover {
+      background-color: #538ebc; }
+  .catalogPoslugi .medPosluga {
+    padding: 10px 0; }
+    .catalogPoslugi .medPosluga button {
+      font-size: 30px;
+      padding: 5px;
+      width: 100%;
+      background-color: #bb332a;
+      color: #ffffff;
+      font-family: "PTSansBold", Helvetica, Arial, sans-serif;
+      border: none;
+      border-radius: 2px;
+      outline: none;
+      font-size: 14px;
+      font-family: SegoeUI-SemiBold;
+      color: white;
+      margin: 15px 0;
+      border-radius: 15px; }
+      .catalogPoslugi .medPosluga button:hover {
+        background-color: #9c2b23; }
+    .catalogPoslugi .medPosluga h4 {
+      font-size: 14px;
+      font-family: SegoeUI-SemiBold;
+      color: #2b2e35;
+      margin: 0; }
+
+.productBlock {
+  padding-top: 10px; }
+  .productBlock .product {
+    background: #ffffff;
+    min-height: 490px; }
+    .productBlock .product h5 {
+      height: 72px;
+      overflow: hidden;
+      font-size: 16px;
+      font-family: SegoeUI-SemiBold;
+      color: #2b2e35;
+      padding: 3px 18px; }
+    .productBlock .product img {
+      width: 86%;
+      margin-left: 7%; }
+    .productBlock .product .manufacturer {
+      font-size: 14px;
+      font-family: SegoeUI-SemiBold;
+      color: #2b2e35;
+      padding: 3px 18px;
+      margin: 0px;
+      margin-top: 16px; }
+    .productBlock .product .price {
+      font-size: 14px;
+      font-family: SegoeUI-SemiBold;
+      color: #2b2e35;
+      color: #bb332a;
+      padding: 3px 18px;
+      margin: 0px; }
+    .productBlock .product button {
+      font-size: 14px;
+      padding: 5px;
+      width: 86%;
+      background-color: #63aae1;
+      color: #ffffff;
+      font-family: "PTSansBold", Helvetica, Arial, sans-serif;
+      border: none;
+      border-radius: 2px;
+      outline: none;
+      margin-left: 7%; }
+      .productBlock .product button:hover {
+        background-color: #538ebc; }
+
+@media only screen and (max-width: 1000px) {
+  .catalog {
+    min-height: 400px; } }
+.containerSlider {
+  margin: 0 auto;
+  min-height: 350px;
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 50%;
+  user-select: none;
+  background-color: #1c1c1c;
+  box-shadow: 0 11px 22px rgba(0, 0, 0, 0.2), 0 7px 7px rgba(0, 0, 0, 0.24); }
+  .containerSlider input {
+    display: none; }
+  .containerSlider .slide_img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: -1; }
+    .containerSlider .slide_img img {
+      width: inherit;
+      height: inherit; }
+    .containerSlider .slide_img .prev, .containerSlider .slide_img .next {
+      width: 12%;
+      height: inherit;
+      position: absolute;
+      top: 0;
+      background-color: rgba(82, 82, 82, 0.2);
+      z-index: 99;
+      transition: .45s;
+      cursor: pointer;
+      text-align: center; }
+    .containerSlider .slide_img .next {
+      right: 0; }
+    .containerSlider .slide_img .prev {
+      left: 0; }
+    .containerSlider .slide_img .prev:hover, .containerSlider .slide_img .next:hover {
+      transition: .3s;
+      background-color: rgba(82, 82, 82, 0.8); }
+    .containerSlider .slide_img .prev span, .containerSlider .slide_img .next span {
+      position: absolute;
+      width: 0px;
+      height: 0px;
+      border: solid 20px;
+      top: 50%;
+      transform: translateY(-50%); }
+    .containerSlider .slide_img .prev span {
+      border-color: transparent #fff transparent transparent;
+      right: 35%; }
+    .containerSlider .slide_img .next span {
+      border-color: transparent transparent transparent #fff;
+      left: 35%; }
+  .containerSlider #nav_slide {
+    width: 100%;
+    bottom: 12%;
+    height: 11px;
+    position: absolute;
+    text-align: center;
+    z-index: 99;
+    cursor: default; }
+    .containerSlider #nav_slide .dots {
+      top: -5px;
+      width: 12px;
+      height: 12px;
+      margin: 0 3px;
+      position: relative;
+      border-radius: 100%;
+      display: inline-block;
+      background-color: rgba(0, 0, 0, 0.6);
+      transition: .4s;
+      cursor: pointer;
+      border: 1px solid #666666; }
+      .containerSlider #nav_slide .dots:hover {
+        background: #63aae1; }
+
+#i1:checked ~ #one,
+#i2:checked ~ #two,
+#i3:checked ~ #three,
+#i4:checked ~ #four {
+  z-index: 9;
+  animation: scroll 1s ease-in-out; }
+
+#i1:checked ~ #nav_slide #dot1 {
+  background: #6fab57; }
+
+#i2:checked ~ #nav_slide #dot2 {
+  background: #6fab57; }
+
+#i3:checked ~ #nav_slide #dot3 {
+  background: #6fab57; }
+
+#i4:checked ~ #nav_slide #dot4 {
+  background: #6fab57; }
+
+@keyframes scroll {
+  0% {
+    opacity: .4; }
+  100% {
+    opacity: 1; } }
+@media screen and (max-width: 685px) {
+  .containerSlider {
+    border: none;
+    width: 100%;
+    height: 0;
+    padding-bottom: 55%; }
+    .containerSlider .slide_img .prev, .containerSlider .slide_img .next {
+      width: 15%; }
+    .containerSlider .slide_img .prev span, .containerSlider .slide_img .next span {
+      border: solid 12px; }
+    .containerSlider .slide_img .prev span {
+      border-color: transparent #fff transparent transparent; }
+    .containerSlider .slide_img .next span {
+      border-color: transparent transparent transparent #fff; }
+    .containerSlider #nav_slide .dots {
+      width: 12px;
+      height: 12px; } }
+.cartList {
+  margin-top: 50px; }
+  .cartList .productCart {
+    background: #ffffff;
+    margin-top: 5px;
+    font-size: 16px;
+    font-family: SegoeUI-SemiBold;
+    color: #2b2e35;
+    min-height: 36px;
+    position: relative; }
+  .cartList span.price {
+    position: absolute;
+    right: 70px;
+    padding-left: 30px;
+    color: #2b2e35;
+    padding-top: 5px;
+    padding-bottom: 5px; }
+  .cartList button.removeProduct {
+    position: absolute;
+    right: 30px;
+    font-size: 15px;
+    padding: 5px;
+    width: 30px;
+    background-color: #63aae1;
+    color: #ffffff;
+    font-family: "PTSansBold", Helvetica, Arial, sans-serif;
+    border: none;
+    border-radius: 2px;
+    outline: none;
+    border-radius: 100%;
+    margin-top: 2px; }
+    .cartList button.removeProduct:hover {
+      background-color: #538ebc; }
+  .cartList span.name {
+    display: inline-block;
+    max-width: 75%;
+    padding-left: 30px;
+    padding-top: 5px;
+    padding-bottom: 5px; }
+  .cartList span.productCount {
+    position: absolute;
+    right: 135px;
+    padding-left: 30px;
+    color: #6fab57;
+    padding-top: 5px;
+    padding-bottom: 5px; }
+
+#searchMore {
+  font-size: 16px;
+  padding: 2px;
+  width: 100%;
+  background-color: #6fab57;
+  color: #ffffff;
+  font-family: "PTSansBold", Helvetica, Arial, sans-serif;
+  border: none;
+  border-radius: 2px;
+  outline: none;
+  display: block;
+  padding: 5px;
+  width: 300px;
+  margin: 30px auto;
+  border-top: 20px solid #f5f5f5; }
+  #searchMore:hover {
+    background-color: #5d8f49; }
+
+@media only screen and (max-width: 1000px) {
+  .cartList span.name {
+    display: inline-block;
+    max-width: 60%;
+    padding-left: 15px; }
+  .cartList button.removeProduct {
+    position: absolute;
+    right: 15px; } }
+.sitebar {
+  background-color: #ffffff; }
+
+/*# sourceMappingURL=main.css.map */

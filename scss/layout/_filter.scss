@@ -1,0 +1,184 @@
+
+.filterButton{
+
+	display:none;
+		width:100%;
+		background:$blue;
+	
+		span{
+			font-size:  24px;
+			margin-left: 15px;
+				line-height: 32px;
+					vertical-align: middle;
+					padding: 5px;
+					color:white;
+					cursor: pointer;
+		}
+		p{
+			@include text(16px);
+			line-height: 32px;
+				vertical-align: middle;
+			margin:0;
+			display:inline-block;
+			color:white;
+		}
+	}
+
+
+.filter{
+
+
+
+
+	.categoria{
+		label{
+			width:100%;
+			color:$blue;
+			cursor:pointer;
+
+			&:hover{
+				color:$green;
+			}
+			span{
+				float:right;
+				color:$red;
+				text-transform: uppercase;
+
+
+
+			}
+		}
+		.pdcatalog{
+			margin-top: 10px;
+			label{
+			
+			color:$black;
+			cursor:pointer;
+				&:hover{
+					color:$green;
+				}
+			}
+		}
+	}
+
+
+
+	label{
+		@include text(14px);
+		//width:51%;
+		margin: 5px;
+		margin-bottom: 0;
+		cursor: pointer;
+	}
+	input{
+		margin-top: 0;
+	}
+
+	#amount{
+
+		background-color: $lGray;
+		outline:none;
+
+	}
+	h4{
+		margin-top: 20px;
+		margin-bottom: 0;
+		@include text(14px);
+		text-transform: uppercase;
+		color:$blue;
+	}
+	.filterSend{
+		@include button();
+		margin-top: 20px;
+
+	}
+
+}
+.dodatkovaKategoria{
+
+text-align: center;
+		a{
+			
+			//width:100%;
+			text-decoration: none;
+			color:$blue;
+			&:hover{
+				color:$green;
+			}
+		}
+
+
+	}
+	.zagolovokFilter{
+		@include text(16px);
+		width:100%;
+		padding: 10px;
+		color:white;
+		background-color: $blue;	
+		margin-bottom: 10px;
+		margin-top: 10px;
+		border-left: 15px solid $lGray;
+		border-right: 15px solid $lGray;
+	}
+
+	 .filterOption{
+
+		@include text(16px);
+		width:100%;
+		padding: 10px;
+		color:black;
+		background-color: $white;	
+		margin-bottom: 10px;
+		border-left: 30px solid $lGray;
+		border-right: 30px solid $lGray;
+		margin-top: 15px;
+		select{
+			outline:none;
+		}
+		span.paginationO{
+			cursor:pointer;
+			&:hover{
+				color:$green;
+			}
+		}
+		span.glyphicon{
+			float:right;
+			padding:5px;
+			cursor:pointer;
+			&:hover{
+				background-color: $blue;
+				color:white;
+			}
+		}
+		span.selected{
+			background-color: $green;
+			color:white;
+		}
+		.abzac{
+			    display: inline-block;
+		}
+	 }
+
+
+
+
+
+@media only screen and (max-width : 768px) {
+.filterButton{
+	display:inline-block;
+}
+	.filter{
+		display:none ;
+	}
+
+
+
+ .dodatkovaKategoria{
+ 	display:none;
+ }
+  .filterOption{
+  		.abzac{
+			    display: block ;
+		}
+  }
+}

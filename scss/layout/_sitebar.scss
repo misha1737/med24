@@ -1,0 +1,30 @@
+.siteBar{
+	background-color: $white;
+	margin-top: 75px;
+	a{
+		@include text(16px);
+		display:block;
+		padding:5px;
+		&:hover{
+			color:$blue;
+			text-decoration: none;
+		}
+		border-bottom: 1px solid $lGray;
+
+	}
+	.fa-angle-right{
+		position: absolute;
+		right:20px;
+		margin-top:2px;
+	}
+}
+
+@media only screen and (max-width : 1000px) {
+
+	.siteBar{
+	margin-top: 0px;
+
+	}
+
+
+}

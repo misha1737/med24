@@ -1,0 +1,133 @@
+
+@media only screen and (max-width : 1000px) {
+
+	.content{
+	margin-top: 155px;
+	}
+}
+
+
+// .blocks{
+// 	.firstBlock{
+// 		min-height: 1220px;
+// 		padding:50px 75px;
+// 		background: $orange;
+// 		.calendar{
+// 			width: 150px;
+// 			height:150px;
+			
+// 			p{
+// 				text-align: center;
+// 				background:$black;
+// 				display: absolute;
+// 				@include text(22px,$stack-PTSansBold,$white);
+// 			}
+// 			h6{
+
+// 				text-align: center;
+// 				margin-top: -10px;
+// 				width: 100%;
+// 				background:$white;
+// 				@include text(73px,$stack-PTSansBold,$black,100px);
+// 			}
+// 		}
+// 		.date{
+// 			p{
+// 				@include text(30px,$stack-CirceBold,$white,30px);
+// 			}
+// 			span{
+// 				@include text(36px,$stack-CirceBold,$white,30px);	
+// 			}
+// 		}
+// 		.dashedline{
+// 			margin:20px 0;
+// 			width: 100%;
+// 			border: 2px dashed $white;
+// 		}
+// 		.time p{
+// 			@include text(24px,$stack-PTSansRegular,$white);
+// 		}
+// 		.firstBlockContent{
+// 			img{
+// 				margin:auto;
+// 				margin-top: 30px;
+// 			}
+// 			p{
+// 				@include text(24px,$stack-Georgiai,$white,30px);
+// 				text-align: center;
+// 			}
+// 			h4{
+// 				@include text(22px,$stack-PTSansBold,$white);
+// 				text-align: center;
+// 			}
+// 			li{
+// 				@include text(18px,$stack-PTSansRegular,$white);
+// 				padding:10px;
+// 			}
+// 		}
+// 	}
+// 	.secondBlock{
+// 		min-height: 1220px;
+// 		padding:50px 75px;
+// 		background-color: #eaeaea;
+// 		h5{
+// 			@include text(21px,$stack-PTSansBold);
+// 		}
+// 		h3{
+// 			@include text(24px,$stack-PTSansBold);
+// 		}
+// 		li {
+//  			@include text();
+//    			 list-style-image: url(../img/symbol.png) ;
+//    			 padding:10px;
+//    			 span{
+//    			 	@include text(24px,$stack-PTSansBold);
+//    			 }
+//    		}
+ 
+// 	}
+// }
+
+// .content{
+// 	h6{
+// 		@include text(24px, $stack-Georgiai);
+// 		text-align: center;
+// 		padding: 30px 0;
+// 	}
+// 	button{
+// 		@include button(36px, 10px);
+// 		margin: 20px 0; 
+// 	}
+// 	h5{
+// 		@include text(36px);
+// 		text-align: center;
+// 	}
+// 	.dashedline{
+// 			margin:20px 0;
+// 			width: 100%;
+// 			border: 2px dashed $black;
+// 	}
+// 	.box1{
+// 		display: block;
+// 		background-image: url(../img/bg2.svg); 
+// 		//background-color: #f8f8f8;
+//     	background-size: cover;
+// 		h3{
+// 			@include text(36px,$stack-PTSansBold);
+// 			text-align: center;
+// 		}
+// 		p{
+// 			@include text();
+// 			span{
+// 				@include text(24px, $stack-PTSansBold );
+// 			}
+// 		}
+
+// 	}
+
+// 	.box2{
+// 		background-image: url(../img/bg1.svg); 
+//     	//background-color: #f8f8f8;
+//     	background-size: cover;
+// 	}	
+// }

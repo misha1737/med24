@@ -1,0 +1,33 @@
+.authorization{
+h5{
+	@include text(20px,$green);
+	text-transform: uppercase;
+}
+margin-top: 50px;
+margin-bottom: 50px;
+
+}
+input#registrationButton, input#authorizationButton {
+	margin-top: 15px;
+		@include button(30px, 5px, 100%, $green);
+		@include text(14px,white);
+		//width:50%;
+}
+
+input#registrationButton{
+		margin-top: 15px;
+		text-align: center;
+		@include button(30px, 5px, 100%, $blue);
+		@include text(14px,white);
+		&:hover{
+		//@include text(14px,white);
+		text-decoration: none;
+		}
+		//width:50%;
+	}
+
+
+#registrationResults{
+	@include text(16px,red);
+	padding-bottom: 20px;
+}

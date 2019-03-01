@@ -1,0 +1,326 @@
+
+.catalogMenu{
+	min-height: 400px;
+	margin-top: 20px;
+	background-color: white;
+	
+		
+	
+
+	h3{
+		display:inline-block;
+		text-transform: uppercase;
+		@include text(20px);
+	}
+	.fa-bars{
+		margin-right: 10px;
+		font-size: 20px;
+	}
+	ul{
+		li{
+			
+			@include text(14px);
+			color:$gray;
+			list-style-type: none;
+			padding: 5px 0;
+			border-bottom:1px solid #f5f5f5;
+			cursor:pointer;
+			margin-left: 25px;
+			&:hover{
+				color: $green;
+			}
+			i{
+				margin-left: -25px;
+				position: absolute;
+				font-size: 18px;
+			}
+			.fa-angle-right{
+				margin-left: 0px;
+				right:15px;
+			}
+			a{
+				color:black;
+				text-decoration: none;
+				&:hover{
+					color:$green;
+				}
+			}
+
+		}
+		// a{
+		// 	color:orange;
+		// 	text-decoration: none;
+		// }
+	}
+
+}
+.catalogBlock, .catalogBlockHeader{
+	margin-top: 20px;
+	display:none;
+			height: 400px;
+			//width:40%;
+			background-color: white;
+	overflow: hidden;
+	position: relative;
+	a{
+		position: absolute;
+		bottom:0;
+		background:white;
+		@include text(16px);
+		line-height: 36px;
+		color:$green;
+		display:block;
+		text-align: center;
+		width:100%;
+		text-decoration: none;
+
+	}
+		h5{
+			@include text(16px);
+			margin-top: 15px;
+			text-transform: uppercase;
+		}
+		h4{
+				@include text(12px);
+			//margin-top: 15px;
+			text-transform: uppercase;
+			cursor:pointer;
+			&:hover{
+				color:$green;
+			}
+		}
+
+		p{
+			@include text(12px);
+			margin:0;
+			cursor:pointer;
+			&:hover{
+				color:$green;
+			}
+		}
+
+		}
+.sliderBox .sliderMenu{
+		ul{
+			margin-top: 20px;
+			padding-top: 10px;
+			margin-bottom: 0px;
+			background-color: white;
+
+
+			li{
+				padding: 10px;
+				display:inline-block;
+				list-style-type: none;
+				@include text(12px);
+				cursor: pointer;
+				border-right: 1px solid  #f5f5f5;
+				//
+			&:first-child{
+					border-top: 3px solid $green;
+				}
+			}
+		}
+	}
+.catalogBlockHeader{
+	display: inline-block;
+//	visibility: hidden;
+}
+.catalogPoslugi{
+	//display:none;
+		margin-top: 20px;
+			min-height: 400px;
+			//width:40%;
+			background-color: white;
+
+	button.medPoslugi{
+
+	@include button(30px, 5px, 100%, $blue);
+		@include text(14px,white);
+		margin: 15px 0;
+	}
+
+	.medPosluga{
+	padding: 10px 0;
+		button{
+			@include button(30px, 5px, 100%, $red);
+			@include text(14px,white);
+			margin: 15px 0;
+			border-radius: 15px;
+		}
+		h4{
+		@include text(14px);	
+		margin:0;
+		}
+
+	}
+}
+.productBlock{
+	    padding-top: 10px;
+	.product{
+		background: $white;
+		min-height: 490px;
+		h5{
+			height: 72px;
+			overflow:hidden;
+			@include text(16px);
+			padding: 3px 18px;
+		}
+		img{
+			width:86%;
+			margin-left: 7%;
+		}
+		.manufacturer{
+			@include text(14px);
+			padding: 3px 18px;
+			margin: 0px;
+			margin-top: 16px;
+		}
+		.price{
+			@include text(14px);
+			color:$red;
+			padding: 3px 18px;
+			margin: 0px;
+			
+		}
+		button{
+			@include button(14px, 5px, 86%, $blue);
+			margin-left: 7%;
+			//margin:8px;
+		}
+	}
+}
+.productBlockList{
+	width:100% ;
+	   // padding-top: 10px;
+	    background: $white;
+	    margin-bottom: 10px;
+	    padding:0;
+	    border-right:15px solid $lGray;
+	      border-left:15px solid $lGray;
+	 .product{
+	 	
+	// 	min-height: 490px;
+	 	h5{
+	 		//height: 72px;
+	 		//overflow:hidden;
+	 		@include text(16px);
+			margin-left: 15px;
+			display:inline-block;
+			width:65%;
+			text-align: left;
+	 	}
+	 	img{
+			//width:86%;
+			//margin-left: 5%;
+			width: 30%;
+			float:left;
+			padding:10px 0;
+			padding-left: 10px;
+	 	}
+		.manufacturer{
+			@include text(14px);
+		
+			margin: 0px;
+			margin-left: 15px;
+			margin-top: 16px;
+			display: inline-block;
+			width:65%;
+		}
+		.price{
+			@include text(14px);
+			color:$red;
+			display: inline-block;
+			margin: 0px;
+				padding-left: 15px;
+				width:65%;
+			
+		}
+		button{
+			@include button(14px, 5px, 100px, $blue);
+			margin-left: 15px;
+			width:65%;
+			position: absolute;
+			bottom:15px;
+			left:30%;
+
+			//margin:8px;
+		}
+	 }
+}
+
+.catalog{
+	padding:10px;
+	margin: 10px 0;
+	
+	background-color: white;
+	h5{
+		@include text(30px);
+		text-transform: uppercase;
+	}
+	h4{
+		@include text(16px);
+		text-transform: uppercase;
+		cursor:pointer;
+		&:hover{
+			color:$green;
+		}
+	}
+	p{
+		@include text(12px);
+		cursor:pointer;
+		&:hover{
+			color:$green;
+		}
+	}
+}
+
+
+@media only screen and (max-width : 1000px) {
+	.catalogMenu{
+	min-height: 400px;
+	}
+	.productBlockList{
+		min-height: 200px;
+		.product{
+			img{
+				width:20%;
+			margin:0px;
+			padding-left: 0;
+			margin-left: 5%;
+			//margin-left: 10%;
+			margin-bottom: 5px;
+			}
+			.manufacturer{
+				width:90%;
+			margin:0px;
+			margin-left: 5%;
+			margin-bottom: 5px;
+			}
+		
+			.price{
+			width:90%;
+			margin:0px;
+			margin-left: 5%;
+			margin-bottom: 5px;
+			padding-left: 0px;
+			}
+		button{
+			position: static;
+			width:90%;
+			margin:0px;
+			margin-left: 5%;
+			margin-bottom: 5px;
+			//padding:0px;
+			//margin:8px;
+		}
+		h5{
+			font-size: 12px;
+		}
+		}
+	}
+}
+
+
+
+

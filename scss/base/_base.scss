@@ -1,0 +1,68 @@
+
+
+
+/* Type Selector*/
+body{ 
+    margin: 0;
+    
+    
+}
+
+.content{
+margin-top: 80px;	
+background-color: #f5f5f5;
+min-height: calc(100vh - 300px);
+}
+/* Links */
+a{
+
+}
+.socialsBlockButtons{
+	transition:1s;
+	position: fixed;
+	z-index:1000;
+	max-width:56px;
+	//background-color: white;
+	top:160px;
+	right:3%;
+	img, span{
+		width:36px;
+		display:inline-block;
+		margin:5px;
+		opacity:0.8;
+		cursor:pointer;
+		font-size: 36px;
+		color:$gray;
+		&:hover{
+			opacity:1; 
+		}
+	}
+
+
+}
+.breadcrumbs{
+	margin:10px 0;
+	@include text(12px);
+	a{
+		
+		@include text(12px);
+		color:$blue;
+		text-decoration: none;
+	}
+	.thisPage{
+		@include text(12px);
+	}
+
+}
+
+@media only screen and (max-width : 1000px) {
+.breadcrumbs{
+	margin-top:60px;
+}
+.socialsBlockButtons{
+	display:none;
+}
+
+
+
+}

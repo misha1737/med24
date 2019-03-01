@@ -1,0 +1,119 @@
+.zamovlenyaList{
+	margin-top: 0px;
+	.productCart{
+
+		background:$white;
+		margin-top: 5px;
+		@include text(16px);
+		min-height: 36px;
+		position: relative;
+	}
+	span.price{
+		position: absolute;
+		right: 70px;
+		padding-left: 30px;
+		color:$black;
+		padding-top: 5px;
+		padding-bottom: 5px;
+	}
+	button.removeProduct{
+		position: absolute;
+		right: 30px;
+		 @include button(15px, 5px, 30px, $blue);
+		 border-radius: 100%;
+		 margin-top: 2px;
+	}
+
+	span.name{
+		display:inline-block;
+		max-width: 65%;
+		padding-left: 30px;
+		padding-top: 5px;
+		padding-bottom: 5px;
+	}
+	span.productCount{
+		position: absolute;
+		right: 135px;
+		padding-left: 30px;
+		color:$green;
+		padding-top: 5px;
+		padding-bottom: 5px;
+	}
+
+
+}
+h5{
+	@include text(20px,$green);
+	text-transform: uppercase;
+	text-align: center;
+}
+	.zamovlenya{
+		input{
+			display:block;
+			width:100%;
+			margin-bottom: 20px;
+		}
+		#umovi{
+			display:inline-block;
+			width:30px;
+			margin-bottom: 5px;
+
+		}
+		button{
+			@include button();
+			padding: 5px 0;
+			margin-bottom: 30px;
+			
+		}
+		.error{
+			opacity:0;
+			h6{
+				text-align: center;
+				@include text(16px,$red);
+			}
+		}
+	}
+
+
+#searchMore{
+	@include button();
+	display:block;
+	padding:5px;
+	width:300px;
+	margin:30px auto;
+	border-top: 20px solid $lGray;
+	
+	//margin:auto;
+
+}
+a#zakaz{
+	text-align: center;
+ @include button();
+ display:block;
+ padding: 10px;
+
+ width:250px;
+ text-decoration: none;
+ margin: 10px auto ;
+}
+
+@media only screen and (max-width : 1000px) {
+	.cartList{
+		span.name{
+			display:inline-block;
+			max-width: 60%;
+			padding-left: 15px;
+		}
+		span.price{
+		//padding-left: 80px;
+		//padding-top: 15px;
+		}
+	button.removeProduct{
+		position: absolute;
+		right: 15px;
+		// @include button(30px, 5px, 50px, $blue);
+		// border-radius: 100%;
+		// margin-top: 2px;	
+	}
+	}
+}

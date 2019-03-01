@@ -1,0 +1,143 @@
+.catalogMenu h5{
+	@include text(12px);
+	text-transform:uppercase;
+	cursor: pointer;
+	border:1px solid #eee;
+}
+.catalogBlock h5{
+cursor: pointer;
+	
+}
+h3{
+	margin-top: 40px;
+	margin-bottom: 0px;
+}
+.recomendTovari, .akciyniTovari{
+	background-color: $white;
+	position: relative;
+	//background-color: $lGray;
+	margin-top: 10px;
+	padding: 5px 50px;
+	//padding-right: 100px;
+	overflow-x: hidden;
+	display:inline-block;
+	width:100%;
+	&::-webkit-scrollbar {
+    height: 4px;
+	}
+	&::-webkit-scrollbar-thumb {
+    border-width: 1px 1px 1px 2px;
+    border-color: #777;
+    background-color: $green;
+	}
+
+	.productBlockAkciya{
+		margin: 10px;
+	//	background-color: $white;
+		display: table-cell;
+		min-width:255px;
+		padding:10px;
+		
+		h5{
+			@include text(13px);
+			text-align: center;
+			text-transform: uppercase;
+			padding-top: 5px;
+		}
+		img{
+		//	min-width:120px;
+		width:30%;
+		float:left;
+		//	margin-left: 2%;
+		}
+		p{
+			@include text(20px);
+			color:$red;
+			text-align:right;
+			padding-right:5px;
+			margin:2px;
+			border-top: 1px dotted $green;
+		}
+		button{
+			@include button();
+		}
+
+	}
+		.endAkciya{
+			width:50px;
+			height:50px;
+			display:table-cell;
+			        min-width: 40px;
+		}
+}
+
+.arrowBackR{
+	    background-color: white;
+    position: absolute;
+    height: 140px;
+    width: 50px;
+    top: 10px;
+    right: 0;
+    z-index: 20;
+}
+.arrowBackL{
+	    background-color: white;
+    position: absolute;
+    height: 140px;
+    width: 50px;
+    top: 10px;
+    left: 0;
+    z-index: 20;
+}
+
+.slider1ArowRight, .slider1ArowLeft, .slider2ArowRight, .slider2ArowLeft{
+	position: absolute;
+	display:inline-block;
+
+	//width:5%;
+	position: relative;
+
+	//height:340px;
+	font-size: 50px;
+	color:$green;
+	cursor: pointer;
+	&:hover{
+		//background-color: $white;
+	}
+
+}
+.navig{
+	width:100%;
+	position: relative;
+}
+.slider1ArowRight, .slider2ArowRight{
+	position: absolute;
+    z-index: 30;
+    top: 48px;
+   right: 15px;
+}
+.slider1ArowLeft, .slider2ArowLeft{
+	position: absolute;
+    z-index: 30;
+    top: 48px;
+  left: 15px;
+
+
+
+
+}
+.oProekte{
+	background-color: $white;
+	margin-top: 40px;
+	margin-bottom: 40px;
+}
+
+
+@media only screen and (max-width : 1000px) {
+	
+	.sliderProducts{
+		margin:10px;
+	}
+
+
+}

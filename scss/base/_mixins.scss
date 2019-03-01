@@ -1,0 +1,24 @@
+@mixin text($size:24px, $color:$black, $family:SegoeUI-SemiBold,  $lineheight:null, $weight:null){
+    font-size: $size;
+    font-family: $family;
+    color: $color;
+    line-height: $lineheight;
+    font-weight: $weight;
+}
+
+@mixin button($size:16px, $padding:2px, $width: 100%,$backgroundColor:$green,$color:$white,$family:$stack-PTSansBold){
+	font-size: $size;
+	padding: $padding;
+	width: $width;
+	background-color: $backgroundColor;
+	color:$color;
+	font-family: $family;
+	border: none;
+	border-radius: 2px;
+	outline:none;
+	//border-bottom: 5px solid $red;
+	 &:hover{
+	 //	border-bottom: 5px solid $white;
+	 	background-color: $backgroundColor/1.2;
+	 }
+}
