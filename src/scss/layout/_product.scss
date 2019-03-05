@@ -334,7 +334,7 @@ padding:0;
 		}
 	}
 	.productMainCha-cs{
-	
+		display:none;
 		border-top:2px solid $grayL;
 		min-height:130px;
 		padding-top: 10px;
@@ -347,6 +347,29 @@ padding:0;
 
 			}
 		}
+		&.active{
+			display:block;
+		}
+	}
+	.productAllCha-cs{
+		display:none;
+		border-top:2px solid $grayL;
+		min-height:130px;
+		padding-top: 10px;
+		ul {
+		
+			li{
+			@include text(14px);
+			margin-top:10px;
+			margin-left: 30px;
+
+			}
+		}
+		&.active{
+			display:block;
+		}
+
+
 	}
 	
 }
@@ -386,9 +409,13 @@ padding:0;
 
 	}
 	.mainSellers{
+		display:none;
 		border-top:2px solid $grayL;
 		min-height:130px;
 		padding-top: 10px;
+		&.active{
+			display:block;
+		}
 	.mainSellers__partner, .mainSellers__Thing{
 		@include text(14px);
 	}
@@ -413,15 +440,7 @@ padding:0;
 		@include text(14px);
 		color:$green;
 	}
-
-
-
-	}
-
-
-
-}
-.productDeliveryBox{
+	.productDeliveryBox{
 	.productDeliveryBox__textThing{
 		margin-top: 5px;
 		margin-bottom: 10px;
@@ -449,6 +468,27 @@ padding:0;
 
 
 }
+
+
+	}
+.OtherSellers{
+	display:none;
+		&.active{
+		display: block;
+	}
+	
+}
+
+.OnMaps{
+	display:none;
+	&.active{
+		display: block;
+	}
+}
+
+
+}
+
 .productGarantyMesage{
 	margin-top: 15px;
 	padding-top: 5px;

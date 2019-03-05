@@ -153,9 +153,9 @@
 							<p class="productPriceBox__availability">В наличии</p><span class="productPriceBox__availabilityThing">(2026 шт. доступно)</span>
 						</div>
 						<div class="productShortCha-cs">	
-							<button class="productShortCha-cs__Main active">Основные</button>
-							<button class="productShortCha-cs__Main">Все характеристики</button>
-							<div class="productMainCha-cs active">
+							<button class="productShortCha-cs__Main active" id="mainCha-cs">Основные</button>
+							<button class="productShortCha-cs__Main" id="allCha-cs">Все характеристики</button>
+							<div class="productMainCha-cs active" id="mainCha-csBox">
 								<ul>
 									<li class="col-sm-5">Срок действия: марта 2020</li>
 									<li class="col-sm-5">Вес Отправления: 0.29кг</li>
@@ -166,18 +166,20 @@
 								</ul>
 							</div>
 
-							<div class="productAllCha-cs">
-								
+							<div class="productMainCha-cs" id="allCha-csBox">
+								<p>123</p>
 							</div>
 
 					
 						<div class="productSellersBox">
-							<button class="productSellersBox__Sellers active">Продавец</button>
-							<button class="productSellersBox__Sellers">Інші продавці(7) від 45 грн</button>
-							<button class="productSellersBox__Sellers">На карті</button>
+							<button class="productSellersBox__Sellers active" id="prodavec">Продавец</button>
+							<button class="productSellersBox__Sellers" id="OtherProdavec">Інші продавці(7) від 45 грн</button>
+							<button class="productSellersBox__Sellers" id="OnMap">На карті</button>
 
-							<div class="mainSellers">
+							<div class="mainSellers active"  id="prodavecBox">
+
 								<p class="mainSellers__partner"> партнер bol.com Rimatel BV</p>
+								<div class="row">
 								<div class="col-sm-5">
 								<span class="mainSellers__Thing">Количество</span>
 								<select class="mainSellers__partnerSelect form-control">
@@ -195,31 +197,33 @@
 								<span class="mainSellers__selectedThing">101.90грн x 2 шт.</span>
 						
 								</div>
+									</div>
+											<div class="productDeliveryBox ">
+										<span class="productDeliveryBox__textThing">Доставка в</span>
+										<select class="productDeliveryBox__selectThing">
+											<option value='1'>Пункт 1</option>
+											<option value='2'>Пункт 2</option>
+											<option value='3'>Пункт 3</option>
+											<option value='4'>Пункт 4</option>
+										</select>
+										<p class="productDeliveryBox__novaPoshta"><span>Самовывоз</span> из Новой Почты - 60грн </p>
+										<p class="productDeliveryBox__KurierMistExpres"> <span>Курьер</span> Мист Экспрес - 60грн </p>
+										<p class="productDeliveryBox__KurierNovaPoshta"> <span>Курьер</span> Новая пошта - 60грн  </p>
+										<p class="productDeliveryBox__garantia"><span>Гарантия</span> Обмену/возрату не подлежит </p>
+										<p class="productDeliveryBox__oplata"> <span>Оплата</span> Наличными, Visa/MasterCard, Приват24, Кредит, Оплата частинами, Мгновенная расстрочка, Безналичными</p>
+									</div>
 							</div>
-							<div class="OtherSellers">
-								
+							<div class="mainSellers"  id="OtherProdavecBox">
+								OtherSellers
 							</div>	
-							<div class="OnMaps">
-								
+							<div class="mainSellers" id="OnMap">
+								OnMaps
 							</div>
 						</div>
 						
 
 
-						<div class="productDeliveryBox">
-							<span class="productDeliveryBox__textThing">Доставка в</span>
-							<select class="productDeliveryBox__selectThing">
-								<option value='1'>Пункт 1</option>
-								<option value='2'>Пункт 2</option>
-								<option value='3'>Пункт 3</option>
-								<option value='4'>Пункт 4</option>
-							</select>
-							<p class="productDeliveryBox__novaPoshta"><span>Самовывоз</span> из Новой Почты - 60грн </p>
-							<p class="productDeliveryBox__KurierMistExpres"> <span>Курьер</span> Мист Экспрес - 60грн </p>
-							<p class="productDeliveryBox__KurierNovaPoshta"> <span>Курьер</span> Новая пошта - 60грн  </p>
-							<p class="productDeliveryBox__garantia"><span>Гарантия</span> Обмену/возрату не подлежит </p>
-							<p class="productDeliveryBox__oplata"> <span>Оплата</span> Наличными, Visa/MasterCard, Приват24, Кредит, Оплата частинами, Мгновенная расстрочка, Безналичными</p>
-						</div>
+						
 						<div class="productGarantyMesage">
 							Продавец гарантирует упаковку заказаного товара, которая обеспечит целосность и сохраность его товарного вида
 						</div>
