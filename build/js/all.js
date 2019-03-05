@@ -1,1 +1,1538 @@
-function o(){$.ajax({url:"https://web-store-sample-vs.herokuapp.com/web-store/shopping-carts/"+localStorage.getItem("username"),headers:{Authorization:"Bearer "+localStorage.getItem("token")},type:"GET",contentType:"application/json",success:function(e){console.log("Корзина Отримана"),localStorage.setItem("cartId",e.id);for(var t=0,i=0,n=0;n<e.orderItems.length;n++)t+=e.orderItems[n].productCount,i+=e.orderItems[n].product.priceWithVAT*e.orderItems[n].productCount;localStorage.setItem("productCounter",t),localStorage.setItem("totalPrise",i.toFixed(2));var o=JSON.stringify(e);localStorage.setItem("cart",o),p(),m()},error:function(e,t){401==e.status&&null==localStorage.getItem("token")?document.location.href="autorization.php":401==e.status&&(i(),o())}})}function i(e){formData={refreshToken:localStorage.getItem("refresh_token")},formData=JSON.stringify(formData),console.log(formData),$.ajax({url:"https://web-store-sample-vs.herokuapp.com/web-store/auth/refresh-token",type:"POST",contentType:"application/json",data:formData,success:function(e){var t=e.access_token,i=e.refresh_token;localStorage.setItem("token",t),localStorage.setItem("refresh_token",i),console.log("refreshToken ok")},error:function(e,t){console.log("error refreshToken"),document.location.href="autorization.php"}})}function a(){name=localStorage.getItem("username"),"object"==typeof localStorage.getItem("username")?$("header .access ").append("<a href='autorization.php'><i class='far fa-user'></i><span>Увійти / Зареєструватись</span></a>"):$("header .access ").append("<i class='far fa-user'></i><span>"+name+"</span><span class='exit'> Вийти</span>")}$(" document").ready(function(){console.log("h4"),$(".catalogMenu .kategoria_in").hover(function(){$(".sliderBox").css("display","none"),$(".catalogPoslugi").css("display","none"),$(".catalogBlock .ktg").css("display","none"),console.log(this.id),$(".catalogBlock").css("display","inline-block"),$(".catalogBlock .kategoria"+this.id).css("display","inline-block")}),$(".row").hover(function(){}),$(".topBlock").mouseleave(function(){$(".sliderBox").css("display","inline-block"),$(".catalogBlock").css("display","none"),$(".catalogPoslugi").css("display","inline-block")}),$("header .tovaryButton").hover(function(){$(".tovaryMenu").css("display","inline-block"),$(".arrow").css("display","inline-block"),$(".content").css("opacity","0.3"),$(".poslugiMenu").css("display","none"),$(".arrowP").css("display","none"),$(".content").css("opacity","1")}),$(".tovaryMenu").mouseleave(function(){$(".tovaryMenu").css("display","none"),$(".arrow").css("display","none"),$(".content").css("opacity","1")}),$("header .poslugiButton").hover(function(){console.log("poslugi"),$(".poslugiMenu").css("display","inline-block"),$(".arrowP").css("display","inline-block"),$(".content").css("opacity","0.3"),$(".tovaryMenu").css("display","none"),$(".arrow").css("display","none"),$(".content").css("opacity","1")}),$(".poslugiMenu").mouseleave(function(){$(".poslugiMenu").css("display","none"),$(".arrowP").css("display","none"),$(".content").css("opacity","1")}),$(document).mouseup(function(e){0===$(".tovaryMenu").has(e.target).length&&($(".tovaryMenu").css("display","none"),$(".arrow").css("display","none"),$(".content").css("opacity","1"))}),$.ajax({url:"https://web-store-sample-vs.herokuapp.com/web-store/catalog/",type:"GET",contentType:"application/json",success:function(e){for(b=0;b<e.length;b++)$(".preparaty").prepend("<h5 id="+e[b].id+">"+e[b].name+"</h5>")}}),$("lecarstveniPreparati").hover(function(){$(".catalogBlock").empty(),$.ajax({url:"https://web-store-sample-vs.herokuapp.com/web-store/catalog/",type:"GET",contentType:"application/json",success:function(e){for(b=0;b<e.length;b++)$(".catalogBlock").prepend("<h5 id="+e[b].id+">"+e[b].name+"</h5>");$(".catalogBlock h5").click(function(){console.log("h5"),$.ajax({url:"https://web-store-sample-vs.herokuapp.com/web-store/catalog/"+this.id,type:"GET",contentType:"application/json",success:function(e){for($(".content .container .row").empty(),b=0;b<e.length;b++)$(".content .container .row").prepend("<div class='col-md-4 col-lg-3 col-sm-6 productBlock '> <div class='product' id="+e[b].id+"></div></div>"),$(".content .container .row #"+e[b].id+" ").prepend(" <h5>"+e[b].name+"</h5>"),$(".content .container .row #"+e[b].id+" ").append(" <img src='img/test.jpg' >"),$(".content .container .row #"+e[b].id+" ").append(" <p class='manufacturer'>Производитель:"+e[b].product.manufacturer+"</p>"),$(".content .container .row #"+e[b].id+" ").append(" <p class='price'>Цена:"+e[b].product.priceWithVAT+"</p>"),$(".content .container .row #"+e[b].id+" ").append(" <button onclick='addProduct("+e[b].product.id+")' id="+e[b].product.id+">Добавить в корзину</button>")}})})}})})}),a(),$("span.exit").click(function(){localStorage.removeItem("username"),localStorage.removeItem("token"),localStorage.removeItem("cartId"),localStorage.removeItem("cartVersion"),localStorage.removeItem("cart"),localStorage.removeItem("productCounter"),localStorage.removeItem("totalPrise"),localStorage.removeItem("refresh_token"),document.location.href="index.php"}),$("#registrationform").submit(function(){if($("#password").val()!=$("#password2").val())return $("#password").css("background-color","#f77"),$("#password2").css("background-color","#f77"),$("#registrationResults").text("Паролі не співпадають"),!1;if(isNaN($("#phone").val()))return $("#phone").css("background-color","#f77"),$("#registrationResults").text("невірний номер"),!1;var e={firstName:$("#firstName").val(),lastName:$("#lastName").val(),email:$("#email").val().toLowerCase(),password:$("#password").val(),phone:$("#phone").val()};return e=JSON.stringify(e),$.ajax({url:"https://web-store-sample-vs.herokuapp.com/web-store/users",type:"POST",contentType:"application/json",data:e,success:function(e){console.log(e),$(".authorization form").css("display","none"),$(".authorization").append("<h5>Вітаю! Ви успішно зареєструвлись</h5>"),setTimeout(function(){document.location.href="index.php"},3e3)},error:function(e,t){if(500==e.status)return $("#email").css("background-color","#f77"),$("#registrationResults").text("користувач з таким Email уже зареєстрований"),!1}}),!1}),$("#authorizationForm").submit(function(){var e={username:$("#email").val(),password:$("#password").val()};return e=JSON.stringify(e),$.ajax({url:"https://web-store-sample-vs.herokuapp.com/web-store/auth/signin",type:"POST",contentType:"application/json",data:e,success:function(e){var t=e.access_token,i=e.refresh_token;localStorage.setItem("token",t),localStorage.setItem("refresh_token",i);var n=jwt_decode(t);localStorage.setItem("username",n.user_name),a(),o(),$.ajax({headers:{Authorization:"Bearer "+localStorage.getItem("token")},url:"https://web-store-sample-vs.herokuapp.com/web-store/shopping-carts/"+localStorage.getItem("username"),type:"GET",contentType:"application/json",success:function(e){document.location.href="index.php"},error:function(e,t){return!(document.location.href="index.php")}})},error:function(e,t){return alert("невірний логин або пароль"),!1}}),!1}),$(".poslugiButton").click(function(){document.location.href="filter.php"}),$(".tovaryButton").click(function(){document.location.href="filter.php"});var e=!1;$(" .filter-off").click(function(){e?(e=!1,$(" .filter").css("display","none")):(e=!0,$(" .filter").css("display","block"))}),$(" .filterSend").click(function(){e=!1,$(" .filter").css("display","none")});var l,t,s,r,u,n,c=localStorage.getItem("optionCatalogList");function d(){$(" .catelogElemet").addClass("productBlockList"),$(".catelogElemet").removeClass("productBlock"),$(" .glyphicon-th").removeClass("selected"),$(" .glyphicon-th-list").addClass("selected")}function h(){$(" .catelogElemet").addClass("productBlock"),$(" .catelogElemet").removeClass("productBlockList"),$(" .glyphicon-th-list").removeClass("selected"),$(" .glyphicon-th ").addClass("selected")}function p(){$("header .basket a .productCounter").text(""),null==localStorage.getItem("productCounter")?$("header .basket a .productCounter").append("0"):$("header .basket a .productCounter").append(localStorage.getItem("productCounter"))}function m(){$(".basket #totalPrise").text(""),$("#endPrise").text(""),null==localStorage.getItem("totalPrise")?($(".basket #totalPrise").append("0"),$("#endPrise").append("0")):($(".basket #totalPrise").append(localStorage.getItem("totalPrise")),$("#endPrise").append(localStorage.getItem("totalPrise")))}null===c&&localStorage.setItem("optionCatalogList","false"),$(" .glyphicon-th-list").click(function(){d(),localStorage.setItem("optionCatalogList","true")}),$(" .glyphicon-th").click(function(){h(),localStorage.setItem("optionCatalogList","false")}),p(),m(),(l=jQuery).fn.imageLens=function(i){i=l.extend({lensSize:100,borderSize:4,borderColor:"#888"},i);var r="background-position: 0px 0px;width: "+String(i.lensSize)+"px;height: "+String(i.lensSize)+"px;float: left;display: none;border-radius: "+String(i.lensSize/2+i.borderSize)+"px;border: "+String(i.borderSize)+"px solid "+i.borderColor+";background-repeat: no-repeat;position: absolute;";return this.each(function(){obj=l(this);var n=l(this).offset(),o=l("<div style='"+r+"' class='"+i.lensCss+"'>&nbsp;</div>").appendTo(l(this).parent()),e=(o.size(),i.imageSrc?i.imageSrc:l(this).attr("src")),a=0,s=0;function t(e){var t=parseInt(e.pageX-n.left),i=parseInt(e.pageY-n.top);t<0||i<0||t>obj.width()||i>obj.height()?o.hide():(o.show(),t=String(-1*((e.pageX-n.left)*a-o.width()/2)),i=String(-1*((e.pageY-n.top)*s-o.height()/2)),o.css({backgroundPosition:t+"px "+i+"px"}),t=String(e.pageX-o.width()/2),i=String(e.pageY-o.height()/2),o.css({left:t+"px",top:i+"px"}))}l("<img style='display:none;' src='"+e+"' />").load(function(){a=l(this).width()/obj.width(),s=l(this).height()/obj.height()}).appendTo(l(this).parent()),o.css({backgroundImage:"url('"+e+"')"}),o.mousemove(t),l(this).mousemove(t)})},t=function(x){var n,e=navigator.userAgent,C=/iphone/i.test(e),o=/chrome/i.test(e),S=/android/i.test(e);x.mask={definitions:{9:"[0-9]",a:"[A-Za-z]","*":"[A-Za-z0-9]"},autoclear:!0,dataName:"rawMaskFn",placeholder:"_"},x.fn.extend({caret:function(e,t){var i;if(0!==this.length&&!this.is(":hidden"))return"number"==typeof e?(t="number"==typeof t?t:e,this.each(function(){this.setSelectionRange?this.setSelectionRange(e,t):this.createTextRange&&((i=this.createTextRange()).collapse(!0),i.moveEnd("character",t),i.moveStart("character",e),i.select())})):(this[0].setSelectionRange?(e=this[0].selectionStart,t=this[0].selectionEnd):document.selection&&document.selection.createRange&&(i=document.selection.createRange(),e=0-i.duplicate().moveStart("character",-1e5),t=e+i.text.length),{begin:e,end:t})},unmask:function(){return this.trigger("unmask")},mask:function(t,v){var i,$,_,b,y,k,w;if(!t&&0<this.length){var e=x(this[0]).data(x.mask.dataName);return e?e():void 0}return v=x.extend({autoclear:x.mask.autoclear,placeholder:x.mask.placeholder,completed:null},v),i=x.mask.definitions,$=[],_=k=t.length,b=null,x.each(t.split(""),function(e,t){"?"==t?(k--,_=e):i[t]?($.push(new RegExp(i[t])),null===b&&(b=$.length-1),e<_&&(y=$.length-1)):$.push(null)}),this.trigger("unmask").each(function(){function s(){if(v.completed){for(var e=b;e<=y;e++)if($[e]&&m[e]===r(e))return;v.completed.call(p)}}function r(e){return v.placeholder.charAt(e<v.placeholder.length?e:0)}function l(e){for(;++e<k&&!$[e];);return e}function c(e,t){var i,n;if(!(e<0)){for(i=e,n=l(t);i<k;i++)if($[i]){if(!(n<k&&$[i].test(m[n])))break;m[i]=m[n],m[n]=r(n),n=l(n)}d(),p.caret(Math.max(b,e))}}function a(){h(),p.val()!=g&&p.change()}function u(e,t){var i;for(i=e;i<t&&i<k;i++)$[i]&&(m[i]=r(i))}function d(){p.val(m.join(""))}function h(e){var t,i,n,o=p.val(),a=-1;for(n=t=0;t<k;t++)if($[t]){for(m[t]=r(t);n++<o.length;)if(i=o.charAt(n-1),$[t].test(i)){m[t]=i,a=t;break}if(n>o.length){u(t+1,k);break}}else m[t]===o.charAt(n)&&n++,t<_&&(a=t);return e?d():a+1<_?v.autoclear||m.join("")===f?(p.val()&&p.val(""),u(0,k)):d():(d(),p.val(p.val().substring(0,a+1))),_?t:b}var p=x(this),m=x.map(t.split(""),function(e,t){return"?"!=e?i[e]?r(t):e:void 0}),f=m.join(""),g=p.val();p.data(x.mask.dataName,function(){return x.map(m,function(e,t){return $[t]&&e!=r(t)?e:null}).join("")}),p.one("unmask",function(){p.off(".mask").removeData(x.mask.dataName)}).on("focus.mask",function(){var e;p.prop("readonly")||(clearTimeout(n),g=p.val(),e=h(),n=setTimeout(function(){p.get(0)===document.activeElement&&(d(),e==t.replace("?","").length?p.caret(0,e):p.caret(e))},10))}).on("blur.mask",a).on("keydown.mask",function(e){if(!p.prop("readonly")){var t,i,n,o=e.which||e.keyCode;w=p.val(),8===o||46===o||C&&127===o?(i=(t=p.caret()).begin,(n=t.end)-i==0&&(i=46!==o?function(e){for(;0<=--e&&!$[e];);return e}(i):n=l(i-1),n=46===o?l(n):n),u(i,n),c(i,n-1),e.preventDefault()):13===o?a.call(this,e):27===o&&(p.val(g),p.caret(0,h()),e.preventDefault())}}).on("keypress.mask",function(e){if(!p.prop("readonly")){var t,i,n,o=e.which||e.keyCode,a=p.caret();e.ctrlKey||e.altKey||e.metaKey||o<32||!o||13===o||(a.end-a.begin!=0&&(u(a.begin,a.end),c(a.begin,a.end-1)),(t=l(a.begin-1))<k&&(i=String.fromCharCode(o),$[t].test(i))&&(function(e){var t,i,n,o;for(i=r(t=e);t<k;t++)if($[t]){if(n=l(t),o=m[t],m[t]=i,!(n<k&&$[n].test(o)))break;i=o}}(t),m[t]=i,d(),n=l(t),S?setTimeout(function(){x.proxy(x.fn.caret,p,n)()},0):p.caret(n),a.begin<=y&&s()),e.preventDefault())}}).on("input.mask paste.mask",function(){p.prop("readonly")||setTimeout(function(){var e=h(!0);p.caret(e),s()},0)}),o&&S&&p.off("input.mask").on("input.mask",function(){var e=p.val(),t=p.caret();if(w&&w.length&&w.length>e.length){for(h(!0);0<t.begin&&!$[t.begin-1];)t.begin--;if(0===t.begin)for(;t.begin<b&&!$[t.begin];)t.begin++;p.caret(t.begin,t.begin)}else{for(h(!0);t.begin<k&&!$[t.begin];)t.begin++;p.caret(t.begin,t.begin)}s()}),h()})}})},"function"==typeof define&&define.amd?define(["jquery"],t):t("object"==typeof exports?require("jquery"):jQuery),function(r,e){function n(e,t){var i=e.nodeName.toLowerCase();if("area"!==i)return(/input|select|textarea|button|object/.test(i)?!e.disabled:"a"==i&&e.href||t)&&s(e);var n,o=e.parentNode,a=o.name;return!(!e.href||!a||"map"!==o.nodeName.toLowerCase())&&(!!(n=r("img[usemap=#"+a+"]")[0])&&s(n))}function s(e){return!r(e).parents().andSelf().filter(function(){return"hidden"===r.curCSS(this,"visibility")||r.expr.filters.hidden(this)}).length}r.ui=r.ui||{},r.ui.version||(r.extend(r.ui,{version:"1.8.13",keyCode:{ALT:18,BACKSPACE:8,CAPS_LOCK:20,COMMA:188,COMMAND:91,COMMAND_LEFT:91,COMMAND_RIGHT:93,CONTROL:17,DELETE:46,DOWN:40,END:35,ENTER:13,ESCAPE:27,HOME:36,INSERT:45,LEFT:37,MENU:93,NUMPAD_ADD:107,NUMPAD_DECIMAL:110,NUMPAD_DIVIDE:111,NUMPAD_ENTER:108,NUMPAD_MULTIPLY:106,NUMPAD_SUBTRACT:109,PAGE_DOWN:34,PAGE_UP:33,PERIOD:190,RIGHT:39,SHIFT:16,SPACE:32,TAB:9,UP:38,WINDOWS:91}}),r.fn.extend({_focus:r.fn.focus,focus:function(t,i){return"number"==typeof t?this.each(function(){var e=this;setTimeout(function(){r(e).focus(),i&&i.call(e)},t)}):this._focus.apply(this,arguments)},scrollParent:function(){var e;return e=r.browser.msie&&/(static|relative)/.test(this.css("position"))||/absolute/.test(this.css("position"))?this.parents().filter(function(){return/(relative|absolute|fixed)/.test(r.curCSS(this,"position",1))&&/(auto|scroll)/.test(r.curCSS(this,"overflow",1)+r.curCSS(this,"overflow-y",1)+r.curCSS(this,"overflow-x",1))}).eq(0):this.parents().filter(function(){return/(auto|scroll)/.test(r.curCSS(this,"overflow",1)+r.curCSS(this,"overflow-y",1)+r.curCSS(this,"overflow-x",1))}).eq(0),/fixed/.test(this.css("position"))||!e.length?r(document):e},zIndex:function(e){if(void 0!==e)return this.css("zIndex",e);if(this.length)for(var t,i,n=r(this[0]);n.length&&n[0]!==document;){if(("absolute"===(t=n.css("position"))||"relative"===t||"fixed"===t)&&(i=parseInt(n.css("zIndex"),10),!isNaN(i)&&0!==i))return i;n=n.parent()}return 0},disableSelection:function(){return this.bind((r.support.selectstart?"selectstart":"mousedown")+".ui-disableSelection",function(e){e.preventDefault()})},enableSelection:function(){return this.unbind(".ui-disableSelection")}}),r.each(["Width","Height"],function(e,i){var o="Width"===i?["Left","Right"]:["Top","Bottom"],n=i.toLowerCase(),a={innerWidth:r.fn.innerWidth,innerHeight:r.fn.innerHeight,outerWidth:r.fn.outerWidth,outerHeight:r.fn.outerHeight};function s(e,t,i,n){return r.each(o,function(){t-=parseFloat(r.curCSS(e,"padding"+this,!0))||0,i&&(t-=parseFloat(r.curCSS(e,"border"+this+"Width",!0))||0),n&&(t-=parseFloat(r.curCSS(e,"margin"+this,!0))||0)}),t}r.fn["inner"+i]=function(e){return void 0===e?a["inner"+i].call(this):this.each(function(){r(this).css(n,s(this,e)+"px")})},r.fn["outer"+i]=function(e,t){return"number"!=typeof e?a["outer"+i].call(this,e):this.each(function(){r(this).css(n,s(this,e,!0,t)+"px")})}}),r.extend(r.expr[":"],{data:function(e,t,i){return!!r.data(e,i[3])},focusable:function(e){return n(e,!isNaN(r.attr(e,"tabindex")))},tabbable:function(e){var t=r.attr(e,"tabindex"),i=isNaN(t);return(i||0<=t)&&n(e,!i)}}),r(function(){var e=document.body,t=e.appendChild(t=document.createElement("div"));r.extend(t.style,{minHeight:"100px",height:"auto",padding:0,borderWidth:0}),r.support.minHeight=100===t.offsetHeight,r.support.selectstart="onselectstart"in t,e.removeChild(t).style.display="none"}),r.extend(r.ui,{plugin:{add:function(e,t,i){var n=r.ui[e].prototype;for(var o in i)n.plugins[o]=n.plugins[o]||[],n.plugins[o].push([t,i[o]])},call:function(e,t,i){var n=e.plugins[t];if(n&&e.element[0].parentNode)for(var o=0;o<n.length;o++)e.options[n[o][0]]&&n[o][1].apply(e.element,i)}},contains:function(e,t){return document.compareDocumentPosition?16&e.compareDocumentPosition(t):e!==t&&e.contains(t)},hasScroll:function(e,t){if("hidden"===r(e).css("overflow"))return!1;var i,n=t&&"left"===t?"scrollLeft":"scrollTop";return 0<e[n]||(e[n]=1,i=0<e[n],e[n]=0,i)},isOverAxis:function(e,t,i){return t<e&&e<t+i},isOver:function(e,t,i,n,o,a){return r.ui.isOverAxis(e,i,o)&&r.ui.isOverAxis(t,n,a)}}))}(jQuery),function(s,e){if(s.cleanData){var n=s.cleanData;s.cleanData=function(e){for(var t,i=0;null!=(t=e[i]);i++)s(t).triggerHandler("remove");n(e)}}else{var i=s.fn.remove;s.fn.remove=function(e,t){return this.each(function(){return t||e&&!s.filter(e,[this]).length||s("*",this).add([this]).each(function(){s(this).triggerHandler("remove")}),i.call(s(this),e,t)})}}s.widget=function(t,e,i){var n,o=t.split(".")[0];n=o+"-"+(t=t.split(".")[1]),i||(i=e,e=s.Widget),s.expr[":"][n]=function(e){return!!s.data(e,t)},s[o]=s[o]||{},s[o][t]=function(e,t){arguments.length&&this._createWidget(e,t)};var a=new e;a.options=s.extend(!0,{},a.options),s[o][t].prototype=s.extend(!0,a,{namespace:o,widgetName:t,widgetEventPrefix:s[o][t].prototype.widgetEventPrefix||t,widgetBaseClass:n},i),s.widget.bridge(t,s[o][t])},s.widget.bridge=function(a,t){s.fn[a]=function(i){var e="string"==typeof i,n=Array.prototype.slice.call(arguments,1),o=this;return i=!e&&n.length?s.extend.apply(null,[!0,i].concat(n)):i,e&&"_"===i.charAt(0)||(e?this.each(function(){var e=s.data(this,a),t=e&&s.isFunction(e[i])?e[i].apply(e,n):e;if(t!==e&&void 0!==t)return o=t,!1}):this.each(function(){var e=s.data(this,a);e?e.option(i||{})._init():s.data(this,a,new t(i,this))})),o}},s.Widget=function(e,t){arguments.length&&this._createWidget(e,t)},s.Widget.prototype={widgetName:"widget",widgetEventPrefix:"",options:{disabled:!1},_createWidget:function(e,t){s.data(t,this.widgetName,this),this.element=s(t),this.options=s.extend(!0,{},this.options,this._getCreateOptions(),e);var i=this;this.element.bind("remove."+this.widgetName,function(){i.destroy()}),this._create(),this._trigger("create"),this._init()},_getCreateOptions:function(){return s.metadata&&s.metadata.get(this.element[0])[this.widgetName]},_create:function(){},_init:function(){},destroy:function(){this.element.unbind("."+this.widgetName).removeData(this.widgetName),this.widget().unbind("."+this.widgetName).removeAttr("aria-disabled").removeClass(this.widgetBaseClass+"-disabled ui-state-disabled")},widget:function(){return this.element},option:function(e,t){var i=e;if(0===arguments.length)return s.extend({},this.options);if("string"==typeof e){if(void 0===t)return this.options[e];(i={})[e]=t}return this._setOptions(i),this},_setOptions:function(e){var i=this;return s.each(e,function(e,t){i._setOption(e,t)}),this},_setOption:function(e,t){return this.options[e]=t,"disabled"===e&&this.widget()[t?"addClass":"removeClass"](this.widgetBaseClass+"-disabled ui-state-disabled").attr("aria-disabled",t),this},enable:function(){return this._setOption("disabled",!1)},disable:function(){return this._setOption("disabled",!0)},_trigger:function(e,t,i){var n=this.options[e];if((t=s.Event(t)).type=(e===this.widgetEventPrefix?e:this.widgetEventPrefix+e).toLowerCase(),i=i||{},t.originalEvent)for(var o,a=s.event.props.length;a;)t[o=s.event.props[--a]]=t.originalEvent[o];return this.element.trigger(t,i),!(s.isFunction(n)&&!1===n.call(this.element[0],t,i)||t.isDefaultPrevented())}}}(jQuery),s=jQuery,r=!1,s(document).mousedown(function(e){r=!1}),s.widget("ui.mouse",{options:{cancel:":input,option",distance:1,delay:0},_mouseInit:function(){var t=this;this.element.bind("mousedown."+this.widgetName,function(e){return t._mouseDown(e)}).bind("click."+this.widgetName,function(e){if(!0===s.data(e.target,t.widgetName+".preventClickEvent"))return s.removeData(e.target,t.widgetName+".preventClickEvent"),e.stopImmediatePropagation(),!1}),this.started=!1},_mouseDestroy:function(){this.element.unbind("."+this.widgetName)},_mouseDown:function(e){if(!r){this._mouseStarted&&this._mouseUp(e),this._mouseDownEvent=e;var t=this,i=1==e.which,n="string"==typeof this.options.cancel&&s(e.target).parents().add(e.target).filter(this.options.cancel).length;return!(i&&!n&&this._mouseCapture(e))||(this.mouseDelayMet=!this.options.delay,this.mouseDelayMet||(this._mouseDelayTimer=setTimeout(function(){t.mouseDelayMet=!0},this.options.delay)),this._mouseDistanceMet(e)&&this._mouseDelayMet(e)&&(this._mouseStarted=!1!==this._mouseStart(e),!this._mouseStarted)?(e.preventDefault(),!0):(!0===s.data(e.target,this.widgetName+".preventClickEvent")&&s.removeData(e.target,this.widgetName+".preventClickEvent"),this._mouseMoveDelegate=function(e){return t._mouseMove(e)},this._mouseUpDelegate=function(e){return t._mouseUp(e)},s(document).bind("mousemove."+this.widgetName,this._mouseMoveDelegate).bind("mouseup."+this.widgetName,this._mouseUpDelegate),e.preventDefault(),r=!0))}},_mouseMove:function(e){return!s.browser.msie||9<=document.documentMode||e.button?this._mouseStarted?(this._mouseDrag(e),e.preventDefault()):(this._mouseDistanceMet(e)&&this._mouseDelayMet(e)&&(this._mouseStarted=!1!==this._mouseStart(this._mouseDownEvent,e),this._mouseStarted?this._mouseDrag(e):this._mouseUp(e)),!this._mouseStarted):this._mouseUp(e)},_mouseUp:function(e){return s(document).unbind("mousemove."+this.widgetName,this._mouseMoveDelegate).unbind("mouseup."+this.widgetName,this._mouseUpDelegate),this._mouseStarted&&(this._mouseStarted=!1,e.target==this._mouseDownEvent.target&&s.data(e.target,this.widgetName+".preventClickEvent",!0),this._mouseStop(e)),!1},_mouseDistanceMet:function(e){return Math.max(Math.abs(this._mouseDownEvent.pageX-e.pageX),Math.abs(this._mouseDownEvent.pageY-e.pageY))>=this.options.distance},_mouseDelayMet:function(e){return this.mouseDelayMet},_mouseStart:function(e){},_mouseDrag:function(e){},_mouseStop:function(e){},_mouseCapture:function(e){return!0}}),(u=jQuery).widget("ui.slider",u.ui.mouse,{widgetEventPrefix:"slide",options:{animate:!1,distance:0,max:100,min:0,orientation:"horizontal",range:!1,step:1,value:0,values:null},_create:function(){var s=this,e=this.options,t=this.element.find(".ui-slider-handle").addClass("ui-state-default ui-corner-all"),i=e.values&&e.values.length||1,n=[];this._keySliding=!1,this._mouseSliding=!1,this._animateOff=!0,this._handleIndex=null,this._detectOrientation(),this._mouseInit(),this.element.addClass("ui-slider ui-slider-"+this.orientation+" ui-widget ui-widget-content ui-corner-all"+(e.disabled?" ui-slider-disabled ui-disabled":"")),this.range=u([]),e.range&&(!0===e.range&&(e.values||(e.values=[this._valueMin(),this._valueMin()]),e.values.length&&2!==e.values.length&&(e.values=[e.values[0],e.values[0]])),this.range=u("<div></div>").appendTo(this.element).addClass("ui-slider-range ui-widget-header"+("min"===e.range||"max"===e.range?" ui-slider-range-"+e.range:"")));for(var o=t.length;o<i;o+=1)n.push("<a class='ui-slider-handle ui-state-default ui-corner-all' href='#'></a>");this.handles=t.add(u(n.join("")).appendTo(s.element)),this.handle=this.handles.eq(0),this.handles.add(this.range).filter("a").click(function(e){e.preventDefault()}).hover(function(){e.disabled||u(this).addClass("ui-state-hover")},function(){u(this).removeClass("ui-state-hover")}).focus(function(){e.disabled?u(this).blur():(u(".ui-slider .ui-state-focus").removeClass("ui-state-focus"),u(this).addClass("ui-state-focus"))}).blur(function(){u(this).removeClass("ui-state-focus")}),this.handles.each(function(e){u(this).data("index.ui-slider-handle",e)}),this.handles.keydown(function(e){var t,i,n,o=!0,a=u(this).data("index.ui-slider-handle");if(!s.options.disabled){switch(e.keyCode){case u.ui.keyCode.HOME:case u.ui.keyCode.END:case u.ui.keyCode.PAGE_UP:case u.ui.keyCode.PAGE_DOWN:case u.ui.keyCode.UP:case u.ui.keyCode.RIGHT:case u.ui.keyCode.DOWN:case u.ui.keyCode.LEFT:if(o=!1,!s._keySliding&&(s._keySliding=!0,u(this).addClass("ui-state-active"),!1===s._start(e,a)))return}switch(n=s.options.step,t=i=s.options.values&&s.options.values.length?s.values(a):s.value(),e.keyCode){case u.ui.keyCode.HOME:i=s._valueMin();break;case u.ui.keyCode.END:i=s._valueMax();break;case u.ui.keyCode.PAGE_UP:i=s._trimAlignValue(t+(s._valueMax()-s._valueMin())/5);break;case u.ui.keyCode.PAGE_DOWN:i=s._trimAlignValue(t-(s._valueMax()-s._valueMin())/5);break;case u.ui.keyCode.UP:case u.ui.keyCode.RIGHT:if(t===s._valueMax())return;i=s._trimAlignValue(t+n);break;case u.ui.keyCode.DOWN:case u.ui.keyCode.LEFT:if(t===s._valueMin())return;i=s._trimAlignValue(t-n)}return s._slide(e,a,i),o}}).keyup(function(e){var t=u(this).data("index.ui-slider-handle");s._keySliding&&(s._keySliding=!1,s._stop(e,t),s._change(e,t),u(this).removeClass("ui-state-active"))}),this._refreshValue(),this._animateOff=!1},destroy:function(){return this.handles.remove(),this.range.remove(),this.element.removeClass("ui-slider ui-slider-horizontal ui-slider-vertical ui-slider-disabled ui-widget ui-widget-content ui-corner-all").removeData("slider").unbind(".slider"),this._mouseDestroy(),this},_mouseCapture:function(e){var t,i,n,o,a,s,r,l,c=this.options;return!c.disabled&&(this.elementSize={width:this.element.outerWidth(),height:this.element.outerHeight()},this.elementOffset=this.element.offset(),t={x:e.pageX,y:e.pageY},i=this._normValueFromMouse(t),n=this._valueMax()-this._valueMin()+1,(a=this).handles.each(function(e){var t=Math.abs(i-a.values(e));t<n&&(n=t,o=u(this),s=e)}),!0===c.range&&this.values(1)===c.min&&(s+=1,o=u(this.handles[s])),!1!==this._start(e,s)&&(this._mouseSliding=!0,a._handleIndex=s,o.addClass("ui-state-active").focus(),r=o.offset(),l=!u(e.target).parents().andSelf().is(".ui-slider-handle"),this._clickOffset=l?{left:0,top:0}:{left:e.pageX-r.left-o.width()/2,top:e.pageY-r.top-o.height()/2-(parseInt(o.css("borderTopWidth"),10)||0)-(parseInt(o.css("borderBottomWidth"),10)||0)+(parseInt(o.css("marginTop"),10)||0)},this.handles.hasClass("ui-state-hover")||this._slide(e,s,i),this._animateOff=!0))},_mouseStart:function(e){return!0},_mouseDrag:function(e){var t={x:e.pageX,y:e.pageY},i=this._normValueFromMouse(t);return this._slide(e,this._handleIndex,i),!1},_mouseStop:function(e){return this.handles.removeClass("ui-state-active"),this._mouseSliding=!1,this._stop(e,this._handleIndex),this._change(e,this._handleIndex),this._handleIndex=null,this._clickOffset=null,this._animateOff=!1},_detectOrientation:function(){this.orientation="vertical"===this.options.orientation?"vertical":"horizontal"},_normValueFromMouse:function(e){var t,i,n,o;return 1<(i=("horizontal"===this.orientation?(t=this.elementSize.width,e.x-this.elementOffset.left-(this._clickOffset?this._clickOffset.left:0)):(t=this.elementSize.height,e.y-this.elementOffset.top-(this._clickOffset?this._clickOffset.top:0)))/t)&&(i=1),i<0&&(i=0),"vertical"===this.orientation&&(i=1-i),n=this._valueMax()-this._valueMin(),o=this._valueMin()+i*n,this._trimAlignValue(o)},_start:function(e,t){var i={handle:this.handles[t],value:this.value()};return this.options.values&&this.options.values.length&&(i.value=this.values(t),i.values=this.values()),this._trigger("start",e,i)},_slide:function(e,t,i){var n,o,a;this.options.values&&this.options.values.length?(n=this.values(t?0:1),2===this.options.values.length&&!0===this.options.range&&(0===t&&n<i||1===t&&i<n)&&(i=n),i!==this.values(t)&&((o=this.values())[t]=i,a=this._trigger("slide",e,{handle:this.handles[t],value:i,values:o}),n=this.values(t?0:1),!1!==a&&this.values(t,i,!0))):i!==this.value()&&!1!==(a=this._trigger("slide",e,{handle:this.handles[t],value:i}))&&this.value(i)},_stop:function(e,t){var i={handle:this.handles[t],value:this.value()};this.options.values&&this.options.values.length&&(i.value=this.values(t),i.values=this.values()),this._trigger("stop",e,i)},_change:function(e,t){if(!this._keySliding&&!this._mouseSliding){var i={handle:this.handles[t],value:this.value()};this.options.values&&this.options.values.length&&(i.value=this.values(t),i.values=this.values()),this._trigger("change",e,i)}},value:function(e){return arguments.length?(this.options.value=this._trimAlignValue(e),this._refreshValue(),void this._change(null,0)):this._value()},values:function(e,t){var i,n,o;if(1<arguments.length)return this.options.values[e]=this._trimAlignValue(t),this._refreshValue(),void this._change(null,e);if(!arguments.length)return this._values();if(!u.isArray(e))return this.options.values&&this.options.values.length?this._values(e):this.value();for(i=this.options.values,n=e,o=0;o<i.length;o+=1)i[o]=this._trimAlignValue(n[o]),this._change(null,o);this._refreshValue()},_setOption:function(e,t){var i,n=0;switch(u.isArray(this.options.values)&&(n=this.options.values.length),u.Widget.prototype._setOption.apply(this,arguments),e){case"disabled":t?(this.handles.filter(".ui-state-focus").blur(),this.handles.removeClass("ui-state-hover"),this.handles.attr("disabled","disabled"),this.element.addClass("ui-disabled")):(this.handles.removeAttr("disabled"),this.element.removeClass("ui-disabled"));break;case"orientation":this._detectOrientation(),this.element.removeClass("ui-slider-horizontal ui-slider-vertical").addClass("ui-slider-"+this.orientation),this._refreshValue();break;case"value":this._animateOff=!0,this._refreshValue(),this._change(null,0),this._animateOff=!1;break;case"values":for(this._animateOff=!0,this._refreshValue(),i=0;i<n;i+=1)this._change(null,i);this._animateOff=!1}},_value:function(){var e=this.options.value;return e=this._trimAlignValue(e)},_values:function(e){var t,i,n;if(arguments.length)return t=this.options.values[e],t=this._trimAlignValue(t);for(i=this.options.values.slice(),n=0;n<i.length;n+=1)i[n]=this._trimAlignValue(i[n]);return i},_trimAlignValue:function(e){if(e<=this._valueMin())return this._valueMin();if(e>=this._valueMax())return this._valueMax();var t=0<this.options.step?this.options.step:1,i=(e-this._valueMin())%t;return alignValue=e-i,2*Math.abs(i)>=t&&(alignValue+=0<i?t:-t),parseFloat(alignValue.toFixed(5))},_valueMin:function(){return this.options.min},_valueMax:function(){return this.options.max},_refreshValue:function(){var i,n,e,t,o,a=this.options.range,s=this.options,r=this,l=!this._animateOff&&s.animate,c={};this.options.values&&this.options.values.length?this.handles.each(function(e,t){i=(r.values(e)-r._valueMin())/(r._valueMax()-r._valueMin())*100,c["horizontal"===r.orientation?"left":"bottom"]=i+"%",u(this).stop(1,1)[l?"animate":"css"](c,s.animate),!0===r.options.range&&("horizontal"===r.orientation?(0===e&&r.range.stop(1,1)[l?"animate":"css"]({left:i+"%"},s.animate),1===e&&r.range[l?"animate":"css"]({width:i-n+"%"},{queue:!1,duration:s.animate})):(0===e&&r.range.stop(1,1)[l?"animate":"css"]({bottom:i+"%"},s.animate),1===e&&r.range[l?"animate":"css"]({height:i-n+"%"},{queue:!1,duration:s.animate}))),n=i}):(e=this.value(),t=this._valueMin(),o=this._valueMax(),i=o!==t?(e-t)/(o-t)*100:0,c["horizontal"===r.orientation?"left":"bottom"]=i+"%",this.handle.stop(1,1)[l?"animate":"css"](c,s.animate),"min"===a&&"horizontal"===this.orientation&&this.range.stop(1,1)[l?"animate":"css"]({width:i+"%"},s.animate),"max"===a&&"horizontal"===this.orientation&&this.range[l?"animate":"css"]({width:100-i+"%"},{queue:!1,duration:s.animate}),"min"===a&&"vertical"===this.orientation&&this.range.stop(1,1)[l?"animate":"css"]({height:i+"%"},s.animate),"max"===a&&"vertical"===this.orientation&&this.range[l?"animate":"css"]({height:100-i+"%"},{queue:!1,duration:s.animate}))}}),u.extend(u.ui.slider,{version:"1.8.13"}),function a(s,r,l){function c(i,e){if(!r[i]){if(!s[i]){var t="function"==typeof require&&require;if(!e&&t)return t(i,!0);if(u)return u(i,!0);var n=new Error("Cannot find module '"+i+"'");throw n.code="MODULE_NOT_FOUND",n}var o=r[i]={exports:{}};s[i][0].call(o.exports,function(e){var t=s[i][1][e];return c(t||e)},o,o.exports,a,s,r,l)}return r[i].exports}for(var u="function"==typeof require&&require,e=0;e<l.length;e++)c(l[e]);return c}({1:[function(e,t,i){function r(e){this.message=e}(r.prototype=new Error).name="InvalidCharacterError",t.exports="undefined"!=typeof window&&window.atob&&window.atob.bind(window)||function(e){var t=String(e).replace(/=+$/,"");if(t.length%4==1)throw new r("'atob' failed: The string to be decoded is not correctly encoded.");for(var i,n,o=0,a=0,s="";n=t.charAt(a++);~n&&(i=o%4?64*i+n:n,o++%4)?s+=String.fromCharCode(255&i>>(-2*o&6)):0)n="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=".indexOf(n);return s}},{}],2:[function(e,t,i){var n=e("./atob");t.exports=function(e){var t=e.replace(/-/g,"+").replace(/_/g,"/");switch(t.length%4){case 0:break;case 2:t+="==";break;case 3:t+="=";break;default:throw"Illegal base64url string!"}try{return decodeURIComponent(n(t).replace(/(.)/g,function(e,t){var i=t.charCodeAt(0).toString(16).toUpperCase();return i.length<2&&(i="0"+i),"%"+i}))}catch(e){return n(t)}}},{"./atob":1}],3:[function(e,t,i){"use strict";function n(e){this.message=e}var o=e("./base64_url_decode");(n.prototype=new Error).name="InvalidTokenError",t.exports=function(e,t){if("string"!=typeof e)throw new n("Invalid token specified");var i=!0===(t=t||{}).header?0:1;try{return JSON.parse(o(e.split(".")[i]))}catch(e){throw new n("Invalid token specified: "+e.message)}},t.exports.InvalidTokenError=n},{"./base64_url_decode":2}],4:[function(i,e,t){(function(e){var t=i("./lib/index");"function"==typeof e.window.define&&e.window.define.amd?e.window.define("jwt_decode",function(){return t}):e.window&&(e.window.jwt_decode=t)}).call(this,"undefined"!=typeof global?global:"undefined"!=typeof self?self:"undefined"!=typeof window?window:{})},{"./lib/index":3}]},{},[4]),$(".menuMob").click(function(){1==n?(n=0,console.log(777),$("header .container.headerTop").css("display","none"),$("header .mobileMenu").css("display","none")):($("header .container.headerTop").css("display","inline-block"),$("header .mobileMenu").css("display","inline-block"),n=1,console.log(888))}),console.log("ok");var f=function(e){var t=$(".votingBox .votingBox__voting"),i=$(".votingBox .votingBox__votingG");switch(e.id){case"p5":$(t[4]).css("background","orange"),$(i[4]).css("background","orange");case"p4":$(t[3]).css("background","orange"),$(i[3]).css("background","orange");case"p3":$(t[2]).css("background","orange"),$(i[2]).css("background","orange");case"p2":$(t[1]).css("background","orange"),$(i[1]).css("background","orange");case"p1":$(t[0]).css("background","orange"),$(i[0]).css("background","orange");break;default:console.log("eror voting")}};$(".votingBox__voting").mouseenter(function(){f(this)}),$(".votingBox__votingG").mouseenter(function(){f(this)}),$(".votingBox__voting").mouseleave(function(){$(".votingBox__voting").css("background","none"),$(".votingBox__votingG").css("background","none")}),$(".votingBox__votingG").mouseleave(function(){$(".votingBox__votingG").css("background","none"),$(".votingBox__voting").css("background","none")}),$(".productView__mainPhoto img").imageLens({lensSize:200}),$(".productPhotoGalery__preview").click(function(){$(".productPhotoGalery__preview").removeClass("active"),$(this).addClass("active"),src=$(".productPhotoGalery .active img").attr("src"),console.log(src),$(".productView__mainPhoto").empty(),$(".productView__mainPhoto").append('<img id="img" src='+src+' alt="">'),$(".productView__mainPhoto img").imageLens({lensSize:200})}),timerH=$("#timerH").text(),timerM=$("#timerM").text(),timerS=$("#timerS").text(),timerH=23-timerH,timerM=59-timerM,timerS=59-timerS,$("#timerH").text(timerH),$("#timerM").text(timerM),$("#timerS").text(timerS),setInterval(function(){timerS--,0==timerS?($("#timerH").text(timerH),$("#timerM").text(timerM),$("#timerS").text(timerS),timerM--,timerS=60,timerM<0&&(timerM,timerH--)):($("#timerH").text(timerH),$("#timerM").text(timerM),$("#timerS").text(timerS))},1e3),$(".moreCharacteristic__Button").click(function(){var e=$(this).parent().parent();$(e).hasClass("characteristicBox_open")?($(e).removeClass("characteristicBox_open"),$(e).css("max-height","200px"),$(this).html("Больше⯆")):($(e).addClass("characteristicBox_open"),$(e).css("max-height","1000px"),$(this).html("Менше⯅"))});for(var g,v,_=$(".characteristicBox"),b=0;b<_.length;b++)$(_[b]).height()<150&&$(_[b]).find(".moreCharacteristic__Button").css("display","none");if($("#shareButton").click(function(){$(".productView__shareBox").addClass("open"),$("#shareButton").addClass("active")}),$("#addToCart").click(function(){$("#addToCart").attr("id","toOrder"),$("#toOrder").text("Оформити замовлення")}),$("#mobileBottomBlockOptions").click(function(){$(".mobileBottomBlock").css("bottom","-48px"),$(".mobileBottomBlockBig").css("bottom","0")}),$(".mobileBottomBlock__close").click(function(){$(".mobileBottomBlockBig").css("bottom","-128px"),$(".mobileBottomBlock ").css("bottom","0")}),sliderBlock.addEventListener("touchstart",function(e){g=e.changedTouches[0]},!1),sliderBlock.addEventListener("touchend",function(e){e.preventDefault(),e.stopPropagation(),v=e.changedTouches[0];var t=Math.abs(g.pageX-v.pageX),i=Math.abs(g.pageY-v.pageY);(20<t||20<i)&&(i<t?v.pageX<g.pageX?console.log("vlevo"+t):console.log("vpravo"+t):v.pageY<g.pageY?console.log("up"):console.log("down"))},!1),$("#scrollPage2").on("touchstart",function(){$("#main").css("transform","translate(-100%)"),$("#page2").css("transform","translate(0%)"),$("#toNext").removeClass("littleBtn"),$("#toNext").addClass("bigBtn"),$("#toMain").removeClass("bigBtn"),$("#toMain").addClass("littleBtn")}),$("#scrollMain").on("touchstart",function(){$("#main").css("transform","translate(0)"),$("#page2").css("transform","translate(100%)"),$("#toNext").removeClass(""),$("#toNext").addClass("littleBtn"),$("#toMain").removeClass("littleBtn"),$("#toMain").addClass("bigBtn")}),$("#scrollPage2").click(function(){$("#main").css("transform","translate(-100%)"),$("#page2").css("transform","translate(0%)"),$("#toNext").removeClass("littleBtn"),$("#toNext").addClass("bigBtn"),$("#toMain").removeClass("bigBtn"),$("#toMain").addClass("littleBtn")}),$("#scrollMain").click(function(){$("#main").css("transform","translate(0)"),$("#page2").css("transform","translate(100%)"),$("#toNext").removeClass(""),$("#toNext").addClass("littleBtn"),$("#toMain").removeClass("littleBtn"),$("#toMain").addClass("bigBtn")}),$("#toNext").click(function(){$("#main").css("transform","translate(-100%)"),$("#page2").css("transform","translate(0%)"),$("#toNext").removeClass("littleBtn"),$("#toNext").addClass("bigBtn"),$("#toMain").removeClass("bigBtn"),$("#toMain").addClass("littleBtn")}),$("#toMain").click(function(){$("#main").css("transform","translate(0)"),$("#page2").css("transform","translate(100%)"),$("#toNext").removeClass(""),$("#toNext").addClass("littleBtn"),$("#toMain").removeClass("littleBtn"),$("#toMain").addClass("bigBtn")}),$("#toNext").on("touchstart",function(){$("#main").css("transform","translate(-100%)"),$("#page2").css("transform","translate(0%)"),$("#toNext").removeClass("littleBtn"),$("#toNext").addClass("bigBtn"),$("#toMain").removeClass("bigBtn"),$("#toMain").addClass("littleBtn")}),$("#toMain").on("touchstart",function(){$("#main").css("transform","translate(0)"),$("#page2").css("transform","translate(100%)"),$("#toNext").removeClass(""),$("#toNext").addClass("littleBtn"),$("#toMain").removeClass("littleBtn"),$("#toMain").addClass("bigBtn")}),$("a").on("touchstart",function(){location.href=$(this).attr("href")}),width=document.body.clientWidth,console.log(width),width<768)var y=360;else y=600;if($("body").mouseup(function(){}),$(".slider1ArowRight").mousedown(function(){var e;e=$(".akciyniTovari").scrollLeft(),$(".akciyniTovari").animate({scrollLeft:e+255},100,"linear"),(e/y).toFixed(0)}),$(".slider1ArowRight").mouseleave(function(){clearInterval(void 0)}),$(".slider1ArowLeft").mousedown(function(){var e;e=$(".akciyniTovari").scrollLeft(),$(".akciyniTovari").animate({scrollLeft:e-255},100,"linear"),(e/y).toFixed(0)}),$(".slider1ArowLeft").mouseleave(function(){}),width=document.body.clientWidth,console.log(width),width<768)y=360;else y=600;$(".slider2ArowRight").mousedown(function(){var e;e=$(".recomendTovari").scrollLeft(),$(".recomendTovari").animate({scrollLeft:e+255},100,"linear"),(e/y).toFixed(0)}),$(".slider2ArowLeft").mousedown(function(){var e;e=$(".recomendTovari").scrollLeft(),$(".recomendTovari").animate({scrollLeft:e-255},100,"linear"),(e/y).toFixed(0)}),console.log("zamovlenya"),$("#oformitZ").click(function(){var e=$("#adres").val(),t=$("#phone").val();if(t=(t=(t=(t=(t=t.replace("(","")).replace(")","")).replace(" ","")).replace("+","")).replace("-",""),console.log(e+" "+t),$(".zamovlenya .error").css("opacity","0"),$(".zamovlenya .error h6").text(""),t.length<3)$(".zamovlenya .error").css("opacity","1"),$(".zamovlenya .error h6").append("Введіть номер телефону");else if(e.length<3)$(".zamovlenya .error").css("opacity","1"),$(".zamovlenya .error h6").append("Введіть адресу");else if($("#umovi").prop("checked")){$(".zamovlenya .error").css("opacity","0"),$(".zamovlenya .error h6").text("ok");var i=[];zamovlenya=localStorage.getItem("cart"),zamovlenya=JSON.parse(zamovlenya);for(var n=0;n<zamovlenya.orderItems.length;n++)i[n]={productCount:zamovlenya.orderItems[n].productCount,productId:zamovlenya.orderItems[n].product.id};formData={address:e,phoneNumber:t,orderItems:i},formData=JSON.stringify(formData),console.log(formData),$.ajax({headers:{Authorization:"Bearer "+localStorage.getItem("token")},url:"https://web-store-sample-vs.herokuapp.com/web-store/orders",type:"POST",contentType:"application/json",data:formData,success:function(e){console.log("order ok"),localStorage.removeItem("cartId"),localStorage.removeItem("cartVersion"),localStorage.removeItem("cart"),localStorage.removeItem("productCounter"),localStorage.removeItem("totalPrise"),$(".content .zamovPage").remove(),$(".content ").append("<h5>Дякуємо! Ваше замовлення оформлено!</h5>"),setTimeout(function(){document.location.href="index.php"},5e3),document.location.href="#"},error:function(e,t){console.log("order error ")}})}else $(".zamovlenya .error").css("opacity","1"),$(".zamovlenya .error h6").append("Ви не погодились з правилами")});
+function getCart(){
+             
+                            $.ajax({
+                                url:'https://web-store-sample-vs.herokuapp.com/web-store/shopping-carts/'+localStorage.getItem("username")
+                                 , headers: {
+                                                    Authorization : 'Bearer ' + localStorage.getItem("token")
+                                                  },
+                                 type:'GET',
+                              contentType:"application/json",
+                                 success: function(res) {
+                                        console.log('Корзина Отримана');
+
+                                        localStorage.setItem("cartId", res.id);
+                                            var productCounter=0;
+                                            var totalPrise=0;
+                                           for(var i=0; i<res.orderItems.length;i++){
+                                             productCounter+= res.orderItems[i].productCount;
+                                            totalPrise+=res.orderItems[i].product.priceWithVAT*res.orderItems[i].productCount;
+                                           }
+                                           localStorage.setItem("productCounter", productCounter);
+                                           localStorage.setItem("totalPrise", totalPrise.toFixed(2));
+                                          
+                                       var cart=JSON.stringify(res);
+                                        localStorage.setItem("cart", cart);
+                                        setCartsCounter();
+                                        setTotalPrise();
+              
+                              }, error: function (jqXHR, exception){
+             
+                                 if (jqXHR.status == 401 && localStorage.getItem("token")==null) {
+                                                     document.location.href = 'autorization.php';
+                                                     }else
+                                                     {
+                                                      if (jqXHR.status == 401){
+                                                        refreshToken();
+                                                        getCart();
+                                                      }  
+                              }
+                              
+
+                                }
+                               });
+
+}
+
+
+function deleteCart(){
+        console.log("deleteCart");   
+                                          
+                            $.ajax({
+                                url:'https://web-store-sample-vs.herokuapp.com/web-store/shopping-carts/'+localStorage.getItem("cartId")
+                                 , headers: {
+                                                    Authorization : 'Bearer ' + localStorage.getItem("token")
+                                                  },
+                                 type:'DELETE',
+                              contentType:"application/json",
+                                 success: function(res) {
+                                        console.log('Корзина видаленна');
+                                         localStorage.removeItem("cartId");
+                                          localStorage.removeItem("cart");                           
+                              }, error: function (jqXHR, exception){
+             
+                                console.log("error корзина не видаленна");  
+                //   
+                                return false;  
+                              }
+
+                               });
+
+}
+
+function renderCartPage(){
+	console.log("script");
+	$('.content .cartList').text('');
+
+				getCart();
+        var cart=localStorage.getItem("cart");
+          cart=JSON.parse(cart);           
+                            for(var i=0; i<cart.orderItems.length;i++){
+                            	$('.content .cartList').append('<div class="productCart" id="'+cart.orderItems[i].product.id+'"></div>');
+                            	$('.content .cartList #'+cart.orderItems[i].product.id+'').append('<span class="name">'+cart.orderItems[i].product.name+'</span>');
+                              $('.content .cartList #'+cart.orderItems[i].product.id+'').append('<span class="productCount"> x'+cart.orderItems[i].productCount+'</span>');
+                            	$('.content .cartList #'+cart.orderItems[i].product.id+'').append('<span class="price">'+(cart.orderItems[i].product.priceWithVAT*cart.orderItems[i].productCount).toFixed(2)+'</span>');
+                            	$('.content .cartList #'+cart.orderItems[i].product.id+'').append('<button class="removeProduct" id="'+cart.orderItems[i].product.id+'">X</Button>');
+                            }
+                              $(".content .cartList button").click(function() {
+                                 var productItem=this;
+                      
+                                         
+                                deleteProduct(this.id);
+           
+                         });  
+   };
+
+
+
+
+
+function refreshToken(id){
+                                                 
+
+                                                 formData ={
+                                                  "refreshToken" :  localStorage.getItem("refresh_token")
+                                                
+                                                }
+                                                formData=JSON.stringify(formData);
+
+                                               // formData=JSON.parse(formData);
+                                                  console.log(formData);
+                                                  $.ajax({
+                                          
+                                                  
+                                                    url:'https://web-store-sample-vs.herokuapp.com/web-store/auth/refresh-token'
+                                                    , type:'POST',
+                                                    contentType:"application/json",
+                                                  data:formData,
+                                                    success: function(res) {
+                                                           var token = res.access_token;
+                                                            var refresh_token = res.refresh_token;
+                                                             localStorage.setItem('token', token);
+                                                              localStorage.setItem('refresh_token', refresh_token);                                              
+                                                        console.log("refreshToken ok");
+
+                                                    }, error: function (jqXHR, exception){console.log("error refreshToken"); 
+                                                                           document.location.href = 'autorization.php';
+                                                  }
+                                                    });
+
+
+}
+function addProduct(id) {
+ 
+                                               var cartVersion=0;
+                                               var productCounter=0;
+                                               var formData=0;
+                                               if (localStorage.getItem("cart")==null){
+                                                 formData ={
+                                                  "orderItems":
+                                                 [{
+                                                   "productCount": 1,
+                                                    "productId": id
+                                                }]
+                                                }
+                                                formData=JSON.stringify(formData);
+
+                                               // formData=JSON.parse(formData);
+                                                  console.log(formData);
+                                                  $.ajax({
+                                          
+                                                    headers: {
+                                                      Authorization : 'Bearer ' + localStorage.getItem("token")
+                                                    },
+                                                    url:'https://web-store-sample-vs.herokuapp.com/web-store/shopping-carts'
+                                                    , type:'POST',
+                                                    contentType:"application/json",
+                                                  data:formData,
+                                                    success: function(res) {
+                                                   localStorage.setItem('cartId', res.id);     
+                                                     console.log("!!!");
+                                                   
+                                                formData=JSON.stringify(formData);
+                                                     getCart();
+
+                                               
+                                                  },
+                                                  error: function (jqXHR, exception){  
+                                                     if (jqXHR.status == 401 && localStorage.getItem("token")==null) {
+                                                     document.location.href = 'autorization.php';
+                                                     }else
+                                                     {
+                                                      if (jqXHR.status == 401){
+                                                        refreshToken();
+                                                        addProduct(id);
+                                                      }
+                                                     }
+                                          
+                                                   }
+                                                 });
+
+                                                  }else{
+
+                                                     formData ={
+                                                  "orderItems":
+                                                 [ {
+                                                
+                                                   
+                                                }]
+                                                }
+                                                var newProduct=true;
+                                                        cart=localStorage.getItem("cart");
+                                                    cart=JSON.parse(cart);
+                                                  for(var i=0; i<cart.orderItems.length; i++ )    {  
+                                                     if(cart.orderItems[i].product.id==id) {
+
+                                                       formData.orderItems[i]={
+                                                   "productCount": cart.orderItems[i].productCount+1,
+                                                   "productId": cart.orderItems[i].product.id
+                                                      
+                                                    }   
+                                                        newProduct=false;
+                                                     }else{
+
+                                                   formData.orderItems[i]={
+                                                   "productCount": cart.orderItems[i].productCount,
+                                                   "productId": cart.orderItems[i].product.id
+                                                    }
+                                                    }
+                                                  }
+                                                      if (newProduct){
+                                                           formData.orderItems[cart.orderItems.length]={
+                                                          "productCount": 1,
+                                                          "productId": id
+                                                           }
+                                                      }
+                                                      formData.version=cart.version+1;
+
+                                                formData=JSON.stringify(formData);
+
+                                                      //  for(i=0;i<formData.orderItems.lenght)
+
+                                                   console.log(formData);
+
+
+                                                     $.ajax({
+                                          
+                                                    headers: {
+                                                      Authorization : 'Bearer ' + localStorage.getItem("token")
+                                                     },
+                                                    url:'https://web-store-sample-vs.herokuapp.com/web-store/shopping-carts/'+ localStorage.getItem("cartId")
+                                                    , type:'PUT',
+                                                    contentType:"application/json",
+                                                  data:formData,
+                                                    success: function(res) {
+
+                                                     console.log("add ok");
+                                             
+                                     
+                                                      getCart();
+                                                      
+                                                  },
+                                                  error: function (jqXHR, exception){  
+                                                     if (jqXHR.status == 401 && localStorage.getItem("token")==null) {
+                                                     document.location.href = 'autorization.php';
+                                                     }else
+                                                     {
+                                                      if (jqXHR.status == 401){
+                                                        refreshToken();
+                                                        addProduct(id);
+                                                      }
+                                                     }
+                              
+                                                   }
+                                                 });
+
+
+                                                  }
+
+
+
+
+
+
+
+
+                                             }
+function deleteProduct(id){
+
+ var cart=localStorage.getItem("cart");
+          cart=JSON.parse(cart); 
+
+console.log(id);
+
+                                                 var deleteElement=null;
+                                                   formData ={
+                                                  "orderItems":
+                                                 [ {  }]
+                                                }
+                                               
+                                                  for(var i=0; i<cart.orderItems.length; i++ )    {  
+                                                     formData.orderItems[i]={
+                                                                "productCount": cart.orderItems[i].productCount,
+                                                               "productId": cart.orderItems[i].product.id
+                                                               } 
+                                                     if(cart.orderItems[i].product.id==id) {
+                                                            if(cart.orderItems[i].productCount==1){
+                                                                //видалення продукта
+                                                              
+                                                               deleteElement=i;
+                                                              $('.content .cartList #'+cart.orderItems[i].product.id+'').remove();
+
+                                                            }else{
+                                                              formData.orderItems[i]={
+                                                                "productCount": cart.orderItems[i].productCount-1,
+                                                               "productId": cart.orderItems[i].product.id
+                                                               }
+                                                                $('.content .cartList #'+cart.orderItems[i].product.id+' .productCount' ).text(' x'+formData.orderItems[i].productCount+''); 
+                                                            }
+
+                                                                  }
+                                                                   
+                                                                  
+                                                                }
+                                                                if (deleteElement!=null && cart.orderItems.length==1){
+                                                                
+                                                                  deleteCart();
+                                                                }
+                                                                if (deleteElement!=null){
+                                                      formData.orderItems.splice(deleteElement, 1);}
+
+
+
+                                                      formData.version=cart.version+1;
+
+                                               formData=JSON.stringify(formData);
+
+                                               
+
+                                                   console.log(formData);
+
+                                                        $.ajax({
+                                          
+                                                    headers: {
+                                                      Authorization : 'Bearer ' + localStorage.getItem("token")
+                                                     },
+                                                    url:'https://web-store-sample-vs.herokuapp.com/web-store/shopping-carts/'+ localStorage.getItem("cartId")
+                                                    , type:'PUT',
+                                                    contentType:"application/json",
+                                                  data:formData,
+                                                    success: function(res) {
+                                                     console.log("delete ok");
+                                                      getCart();  
+
+                                                  },
+                                                  error: function (jqXHR, exception){  
+                                                     if (jqXHR.status == 401 && localStorage.getItem("token")==null) {
+                                                     document.location.href = 'autorization.php';
+                                                     }else
+                                                     {
+                                                      if (jqXHR.status == 401){
+                                                        refreshToken();
+                                                        addProduct(id);
+                                                      }
+                                                     }
+                              
+                                                   }
+                                                 });
+
+} 
+
+
+
+
+
+
+
+$(" document").ready(function() {
+
+console.log("h4");
+
+
+
+function renderCategoriya(){
+     $(".sliderBox").css("display","none");
+
+  $(".catalogPoslugi").css("display","none");
+}
+
+
+$( ".catalogMenu .kategoria_in" ).hover(function() {
+renderCategoriya()
+ $(".catalogBlock .ktg").css("display","none");
+console.log(this.id);
+  $(".catalogBlock").css("display","inline-block");
+   $(".catalogBlock .kategoria"+this.id).css("display","inline-block");
+ 
+
+});
+
+$( ".row" ).hover(function() {
+  //
+});
+$( ".topBlock" ).mouseleave(function() {
+  $(".sliderBox").css("display","inline-block");
+ $(".catalogBlock").css("display","none");
+  $(".catalogPoslugi").css("display","inline-block");
+
+});
+
+$( "header .tovaryButton" ).hover(function() {
+  $(".tovaryMenu").css("display","inline-block");
+  $(".arrow").css("display","inline-block");
+  $(".content").css("opacity", "0.3");
+  $(".poslugiMenu").css("display","none");
+  $(".arrowP").css("display","none");
+  $(".content").css("opacity", "1");
+});
+
+$( ".tovaryMenu" ).mouseleave(function() {
+  $(".tovaryMenu").css("display","none");
+  $(".arrow").css("display","none");
+  $(".content").css("opacity", "1");
+});
+
+$( "header .poslugiButton" ).hover(function() {
+  console.log("poslugi")
+  $(".poslugiMenu").css("display","inline-block");
+  $(".arrowP").css("display","inline-block");
+  $(".content").css("opacity", "0.3");
+  $(".tovaryMenu").css("display","none");
+  $(".arrow").css("display","none");
+  $(".content").css("opacity", "1");
+});
+
+$( ".poslugiMenu" ).mouseleave(function() {
+  $(".poslugiMenu").css("display","none");
+  $(".arrowP").css("display","none");
+  $(".content").css("opacity", "1");
+
+
+});
+
+$(document).mouseup(function (e) {
+    var container = $(".tovaryMenu");
+    if (container.has(e.target).length === 0){
+        $(".tovaryMenu").css("display","none");
+        $(".arrow").css("display","none");
+        $(".content").css("opacity", "1");
+    }
+});
+
+ $.ajax({
+            url:'https://web-store-sample-vs.herokuapp.com/web-store/catalog/'
+            , type:'GET',
+          contentType:"application/json",
+             success: function(res) {
+               for(i=0;i<res.length;i++){
+               $(".preparaty").prepend("<h5 id="+res[i].id+">"+res[i].name+"</h5>");
+         }
+       }
+     });
+//дві точки
+
+$( "lecarstveniPreparati" ).hover(function() {
+  $(".catalogBlock").empty();
+
+  $.ajax({
+            url:'https://web-store-sample-vs.herokuapp.com/web-store/catalog/'
+            , type:'GET',
+          contentType:"application/json",
+             success: function(res) {
+               for(i=0;i<res.length;i++){
+               $(".catalogBlock").prepend("<h5 id="+res[i].id+">"+res[i].name+"</h5>");
+
+              
+            
+         }
+
+ $(".catalogBlock h5").click(function() {
+                console.log("h5");
+
+          $.ajax({
+             url:'https://web-store-sample-vs.herokuapp.com/web-store/catalog/'+this.id
+             , type:'GET',
+           contentType:"application/json",
+             success: function(res) {
+               $(".content .container .row").empty();
+               for(i=0;i<res.length;i++){
+
+               $(".content .container .row").prepend("<div class='col-md-4 col-lg-3 col-sm-6 productBlock '> <div class='product' id="+res[i].id+"></div></div>");
+                $(".content .container .row #"+res[i].id+" ").prepend(" <h5>"+res[i].name+"</h5>");
+
+                //картинка
+                $(".content .container .row #"+res[i].id+" ").append(" <img src='img/test.jpg' >");
+                //картинка
+
+                $(".content .container .row #"+res[i].id+" ").append(" <p class='manufacturer'>Производитель:"+res[i].product.manufacturer+"</p>");
+                
+                $(".content .container .row #"+res[i].id+" ").append(" <p class='price'>Цена:"+res[i].product.priceWithVAT+"</p>");
+
+                $(".content .container .row #"+res[i].id+" ").append(" <button onclick='addProduct("+res[i].product.id+")' id="+res[i].product.id+">Добавить в корзину</button>");
+              
+                                         }
+//--------------------------------------------------------
+                                            // $(".content button").click(catalog() );
+//--------------------------------------------------------
+
+                                       }
+
+
+
+                });
+
+  
+
+
+                 });
+
+        
+
+
+
+
+
+        }
+     });
+
+ // $(".catalogBlock").append("<a href='https://web-store-sample-vs.herokuapp.com/web-store/catalog/'>Усі товари <i class='fas fa-angle-down'></i></a>");
+ 
+
+
+});
+  
+// $( ".krasotaIUhod" ).hover(function() {
+//   $(".catalogBlock").empty();
+ 
+// });
+// $( ".gigiena" ).hover(function() {
+//   $(".catalogBlock").empty();
+ 
+// });
+// $( ".tovaruDlyaDitey" ).hover(function() {
+//   $(".catalogBlock").empty();
+ 
+// });
+// $( ".kosmetica" ).hover(function() {
+//   $(".catalogBlock").empty();
+ 
+// });
+// $( ".medtehnika" ).hover(function() {
+//   $(".catalogBlock").empty();
+ 
+// });
+// $( ".tovaryZdorovya" ).hover(function() {
+//   $(".catalogBlock").empty();
+ 
+// });
+// $( ".vitaminu" ).hover(function() {
+//   $(".catalogBlock").empty();
+ 
+// });
+// $( ".allCateg" ).hover(function() {
+//   $(".catalogBlock").empty();
+ 
+// });
+
+
+
+});
+
+//перевірка і вивід імя користувача
+function username(){
+  name= localStorage.getItem("username");
+  if(typeof(localStorage.getItem("username"))==="object"){
+     $("header .access ").append("<a href='autorization.php'><i class='far fa-user'></i><span>Увійти / Зареєструватись</span></a>");
+   }else{
+    $("header .access ").append("<i class='far fa-user'></i><span>"+name+"</span><span class='exit'> Вийти</span>");
+  }
+}
+username();
+
+$("span.exit").click(function() {
+  localStorage.removeItem("username");
+  localStorage.removeItem("token");
+  localStorage.removeItem("cartId");
+  localStorage.removeItem("cartVersion");
+  localStorage.removeItem("cart");
+  localStorage.removeItem("productCounter");
+  localStorage.removeItem("totalPrise");
+  localStorage.removeItem("refresh_token")
+  
+  
+  document.location.href = 'index.php';
+});
+//форма регистрации
+ $("#registrationform").submit(function() {
+ 		if($("#password").val()!=$("#password2").val()){
+ 			$("#password").css("background-color", "#f77");
+ 			$("#password2").css("background-color", "#f77");
+ 			$("#registrationResults").text("Паролі не співпадають");
+ 			 return false;
+ 		}
+ 		if(isNaN($("#phone").val())){
+ 				$("#phone").css("background-color", "#f77");
+ 				$("#registrationResults").text("невірний номер");
+ 			 return false;	
+ 		}
+
+        var formData = {
+            "firstName":$("#firstName").val()
+            , "lastName":$("#lastName").val()
+            , "email":$("#email").val().toLowerCase()
+            , "password":$("#password").val()
+            , "phone":$("#phone").val()
+        };
+        formData=JSON.stringify(formData);
+        $.ajax({
+ 
+            url:'https://web-store-sample-vs.herokuapp.com/web-store/users'
+            , type:'POST',
+          contentType:"application/json",
+           data:formData,
+             success: function(res) {
+                console.log(res);
+
+                       
+                  $(".authorization form").css("display","none");
+                  $(".authorization").append("<h5>Вітаю! Ви успішно зареєструвлись</h5>");
+               // alert("Вітаю! Ви успішно зареєструвлись");
+ 				      setTimeout(redirect, 3000);
+              
+               function redirect() {
+                     document.location.href = 'index.php';
+                }
+          
+
+            },
+             error: function (jqXHR, exception){	
+            if (jqXHR.status == 500) {
+	            	$("#email").css("background-color", "#f77");
+ 					$("#registrationResults").text("користувач з таким Email уже зареєстрований");
+ 			 return false;	
+	        }}
+        });
+        return false;
+    });
+//форма авторизации
+ $("#authorizationForm").submit(function() {
+        var formData = {
+            "username":$("#email").val(),
+			"password":$("#password").val()
+    
+        };
+        formData=JSON.stringify(formData);
+        $.ajax({
+ 
+            url:'https://web-store-sample-vs.herokuapp.com/web-store/auth/signin'
+            , type:'POST',
+          contentType:"application/json",
+           data:formData,
+             success: function(res) {
+
+               
+
+   
+                var token = res.access_token;
+                var refresh_token = res.refresh_token;
+                localStorage.setItem('token', token);
+                 localStorage.setItem('refresh_token', refresh_token);
+                var decoded = jwt_decode(token);
+                
+                localStorage.setItem('username', decoded.user_name);
+                  username();
+                  getCart(); 
+              //  отримання корзини
+
+                    $.ajax({
+                           headers: {
+                                                Authorization : 'Bearer ' + localStorage.getItem("token")
+                                             },
+                        url:'https://web-store-sample-vs.herokuapp.com/web-store/shopping-carts/'+localStorage.getItem("username")
+                        , type:'GET',
+                      contentType:"application/json",
+                         success: function(res) {
+                          
+         
+
+                          document.location.href = 'index.php';
+
+                    },
+
+        error: function (jqXHR, exception){  
+              document.location.href = 'index.php';
+       return false;  
+          }
+ 
+        });
+    
+   
+
+
+            },
+             error: function (jqXHR, exception){	
+              alert("невірний логин або пароль");
+ 			 return false;	
+	        }
+        });
+        return false;
+    });
+
+
+ $(".poslugiButton").click(function(){
+
+
+  document.location.href = 'filter.php';
+
+ });
+
+  $(".tovaryButton").click(function(){
+
+
+  document.location.href = 'filter.php';
+
+ });
+
+
+
+
+var filter=false;
+
+$(" .filter-off").click(function() {
+
+if(filter){
+	filter=false;
+
+	$(" .filter").css("display","none")
+
+
+}
+	else{
+
+	filter=true;
+
+	$(" .filter").css("display","block")
+} 
+
+
+//$(" .filter-off").addClass("filter-on");
+//$(" .filter-off").removeClass("filter-off");
+//console.log("123");
+
+});
+
+$(" .filterSend").click(function() {
+filter=false;
+
+	$(" .filter").css("display","none");
+
+});
+
+
+var optionCatalog=localStorage.getItem("optionCatalogList");
+if (optionCatalog===null){
+	localStorage.setItem("optionCatalogList",'false');
+}else{
+	
+	
+}
+
+function setList(){
+$(" .catelogElemet").addClass("productBlockList");
+$(".catelogElemet").removeClass("productBlock");
+$(" .glyphicon-th").removeClass("selected");
+$(" .glyphicon-th-list").addClass("selected");
+//
+}
+
+function setNotList(){
+$(" .catelogElemet").addClass("productBlock");
+$(" .catelogElemet").removeClass("productBlockList");
+$(" .glyphicon-th-list").removeClass("selected");
+$(" .glyphicon-th ").addClass("selected");
+//localStorage.setItem("optionCatalogList",false);
+}
+
+$(" .glyphicon-th-list").click(function() {
+setList();
+localStorage.setItem("optionCatalogList",'true');
+});
+
+$(" .glyphicon-th").click(function() {
+setNotList();
+localStorage.setItem("optionCatalogList",'false');
+
+});
+
+
+
+function setCartsCounter()
+{
+$("header .basket a .productCounter").text('');
+if( localStorage.getItem("productCounter")==null){
+	$("header .basket a .productCounter").append("0");
+}else{
+
+$("header .basket a .productCounter").append(localStorage.getItem("productCounter"));}
+}
+
+function setTotalPrise(){
+$(".basket #totalPrise").text('');
+$("#endPrise").text('');
+
+if( localStorage.getItem("totalPrise")==null){
+	$(".basket #totalPrise").append("0");
+	$("#endPrise").append("0");
+}else{
+
+$(".basket #totalPrise").append(localStorage.getItem("totalPrise"));
+$("#endPrise").append(localStorage.getItem("totalPrise"));
+}
+}
+
+
+
+
+
+setCartsCounter();
+setTotalPrise();
+/*  
+    http://www.dailycoding.com/ 
+*/
+(function ($) {
+    $.fn.imageLens = function (options) {
+
+        var defaults = {
+            lensSize: 100,
+            borderSize: 4,
+            borderColor: "#888"
+        };
+        var options = $.extend(defaults, options);
+        var lensStyle = "background-position: 0px 0px;width: " + String(options.lensSize) + "px;height: " + String(options.lensSize)
+            + "px;float: left;display: none;border-radius: " + String(options.lensSize / 2 + options.borderSize)
+            + "px;border: " + String(options.borderSize) + "px solid " + options.borderColor 
+            + ";background-repeat: no-repeat;position: absolute;";
+
+        return this.each(function () {
+            obj = $(this);
+
+            var offset = $(this).offset();
+
+            // Creating lens
+            var target = $("<div style='" + lensStyle + "' class='" + options.lensCss + "'>&nbsp;</div>").appendTo($(this).parent());
+            var targetSize = target.size();
+
+            // Calculating actual size of image
+            var imageSrc = options.imageSrc ? options.imageSrc : $(this).attr("src");
+            var imageTag = "<img style='display:none;' src='" + imageSrc + "' />";
+
+            var widthRatio = 0;
+            var heightRatio = 0;
+
+            $(imageTag).load(function () {
+                widthRatio = $(this).width() / obj.width();
+                heightRatio = $(this).height() / obj.height();
+            }).appendTo($(this).parent());
+
+            target.css({ backgroundImage: "url('" + imageSrc + "')" });
+
+            target.mousemove(setPosition);
+            $(this).mousemove(setPosition);
+
+            function setPosition(e) {
+
+                var leftPos = parseInt(e.pageX - offset.left);
+                var topPos = parseInt(e.pageY - offset.top);
+
+                if (leftPos < 0 || topPos < 0 || leftPos > obj.width() || topPos > obj.height()) {
+                    target.hide();
+                }
+                else {
+                    target.show();
+
+                    leftPos = String(((e.pageX - offset.left) * widthRatio - target.width() / 2) * (-1));
+                    topPos = String(((e.pageY - offset.top) * heightRatio - target.height() / 2) * (-1));
+                    target.css({ backgroundPosition: leftPos + 'px ' + topPos + 'px' });
+
+                    leftPos = String(e.pageX - target.width() / 2);
+                    topPos = String(e.pageY - target.height() / 2);
+                    target.css({ left: leftPos + 'px', top: topPos + 'px' });
+                }
+            }
+        });
+    };
+})(jQuery);
+/*
+    jQuery Masked Input Plugin
+    Copyright (c) 2007 - 2015 Josh Bush (digitalbush.com)
+    Licensed under the MIT license (http://digitalbush.com/projects/masked-input-plugin/#license)
+    Version: 1.4.1
+*/
+!function(a){"function"==typeof define&&define.amd?define(["jquery"],a):a("object"==typeof exports?require("jquery"):jQuery)}(function(a){var b,c=navigator.userAgent,d=/iphone/i.test(c),e=/chrome/i.test(c),f=/android/i.test(c);a.mask={definitions:{9:"[0-9]",a:"[A-Za-z]","*":"[A-Za-z0-9]"},autoclear:!0,dataName:"rawMaskFn",placeholder:"_"},a.fn.extend({caret:function(a,b){var c;if(0!==this.length&&!this.is(":hidden"))return"number"==typeof a?(b="number"==typeof b?b:a,this.each(function(){this.setSelectionRange?this.setSelectionRange(a,b):this.createTextRange&&(c=this.createTextRange(),c.collapse(!0),c.moveEnd("character",b),c.moveStart("character",a),c.select())})):(this[0].setSelectionRange?(a=this[0].selectionStart,b=this[0].selectionEnd):document.selection&&document.selection.createRange&&(c=document.selection.createRange(),a=0-c.duplicate().moveStart("character",-1e5),b=a+c.text.length),{begin:a,end:b})},unmask:function(){return this.trigger("unmask")},mask:function(c,g){var h,i,j,k,l,m,n,o;if(!c&&this.length>0){h=a(this[0]);var p=h.data(a.mask.dataName);return p?p():void 0}return g=a.extend({autoclear:a.mask.autoclear,placeholder:a.mask.placeholder,completed:null},g),i=a.mask.definitions,j=[],k=n=c.length,l=null,a.each(c.split(""),function(a,b){"?"==b?(n--,k=a):i[b]?(j.push(new RegExp(i[b])),null===l&&(l=j.length-1),k>a&&(m=j.length-1)):j.push(null)}),this.trigger("unmask").each(function(){function h(){if(g.completed){for(var a=l;m>=a;a++)if(j[a]&&C[a]===p(a))return;g.completed.call(B)}}function p(a){return g.placeholder.charAt(a<g.placeholder.length?a:0)}function q(a){for(;++a<n&&!j[a];);return a}function r(a){for(;--a>=0&&!j[a];);return a}function s(a,b){var c,d;if(!(0>a)){for(c=a,d=q(b);n>c;c++)if(j[c]){if(!(n>d&&j[c].test(C[d])))break;C[c]=C[d],C[d]=p(d),d=q(d)}z(),B.caret(Math.max(l,a))}}function t(a){var b,c,d,e;for(b=a,c=p(a);n>b;b++)if(j[b]){if(d=q(b),e=C[b],C[b]=c,!(n>d&&j[d].test(e)))break;c=e}}function u(){var a=B.val(),b=B.caret();if(o&&o.length&&o.length>a.length){for(A(!0);b.begin>0&&!j[b.begin-1];)b.begin--;if(0===b.begin)for(;b.begin<l&&!j[b.begin];)b.begin++;B.caret(b.begin,b.begin)}else{for(A(!0);b.begin<n&&!j[b.begin];)b.begin++;B.caret(b.begin,b.begin)}h()}function v(){A(),B.val()!=E&&B.change()}function w(a){if(!B.prop("readonly")){var b,c,e,f=a.which||a.keyCode;o=B.val(),8===f||46===f||d&&127===f?(b=B.caret(),c=b.begin,e=b.end,e-c===0&&(c=46!==f?r(c):e=q(c-1),e=46===f?q(e):e),y(c,e),s(c,e-1),a.preventDefault()):13===f?v.call(this,a):27===f&&(B.val(E),B.caret(0,A()),a.preventDefault())}}function x(b){if(!B.prop("readonly")){var c,d,e,g=b.which||b.keyCode,i=B.caret();if(!(b.ctrlKey||b.altKey||b.metaKey||32>g)&&g&&13!==g){if(i.end-i.begin!==0&&(y(i.begin,i.end),s(i.begin,i.end-1)),c=q(i.begin-1),n>c&&(d=String.fromCharCode(g),j[c].test(d))){if(t(c),C[c]=d,z(),e=q(c),f){var k=function(){a.proxy(a.fn.caret,B,e)()};setTimeout(k,0)}else B.caret(e);i.begin<=m&&h()}b.preventDefault()}}}function y(a,b){var c;for(c=a;b>c&&n>c;c++)j[c]&&(C[c]=p(c))}function z(){B.val(C.join(""))}function A(a){var b,c,d,e=B.val(),f=-1;for(b=0,d=0;n>b;b++)if(j[b]){for(C[b]=p(b);d++<e.length;)if(c=e.charAt(d-1),j[b].test(c)){C[b]=c,f=b;break}if(d>e.length){y(b+1,n);break}}else C[b]===e.charAt(d)&&d++,k>b&&(f=b);return a?z():k>f+1?g.autoclear||C.join("")===D?(B.val()&&B.val(""),y(0,n)):z():(z(),B.val(B.val().substring(0,f+1))),k?b:l}var B=a(this),C=a.map(c.split(""),function(a,b){return"?"!=a?i[a]?p(b):a:void 0}),D=C.join(""),E=B.val();B.data(a.mask.dataName,function(){return a.map(C,function(a,b){return j[b]&&a!=p(b)?a:null}).join("")}),B.one("unmask",function(){B.off(".mask").removeData(a.mask.dataName)}).on("focus.mask",function(){if(!B.prop("readonly")){clearTimeout(b);var a;E=B.val(),a=A(),b=setTimeout(function(){B.get(0)===document.activeElement&&(z(),a==c.replace("?","").length?B.caret(0,a):B.caret(a))},10)}}).on("blur.mask",v).on("keydown.mask",w).on("keypress.mask",x).on("input.mask paste.mask",function(){B.prop("readonly")||setTimeout(function(){var a=A(!0);B.caret(a),h()},0)}),e&&f&&B.off("input.mask").on("input.mask",u),A()})}})});
+
+/*!
+ * jQuery UI 1.8.13
+ *
+ * Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)
+ * Dual licensed under the MIT or GPL Version 2 licenses.
+ * http://jquery.org/license
+ *
+ * http://docs.jquery.com/UI
+ */
+(function($,undefined){$.ui=$.ui||{};if($.ui.version){return}$.extend($.ui,{version:"1.8.13",keyCode:{ALT:18,BACKSPACE:8,CAPS_LOCK:20,COMMA:188,COMMAND:91,COMMAND_LEFT:91,COMMAND_RIGHT:93,CONTROL:17,DELETE:46,DOWN:40,END:35,ENTER:13,ESCAPE:27,HOME:36,INSERT:45,LEFT:37,MENU:93,NUMPAD_ADD:107,NUMPAD_DECIMAL:110,NUMPAD_DIVIDE:111,NUMPAD_ENTER:108,NUMPAD_MULTIPLY:106,NUMPAD_SUBTRACT:109,PAGE_DOWN:34,PAGE_UP:33,PERIOD:190,RIGHT:39,SHIFT:16,SPACE:32,TAB:9,UP:38,WINDOWS:91}});$.fn.extend({_focus:$.fn.focus,focus:function(delay,fn){return typeof delay==="number"?this.each(function(){var elem=this;setTimeout(function(){$(elem).focus();if(fn){fn.call(elem)}},delay)}):this._focus.apply(this,arguments)},scrollParent:function(){var scrollParent;if(($.browser.msie&&(/(static|relative)/).test(this.css('position')))||(/absolute/).test(this.css('position'))){scrollParent=this.parents().filter(function(){return(/(relative|absolute|fixed)/).test($.curCSS(this,'position',1))&&(/(auto|scroll)/).test($.curCSS(this,'overflow',1)+$.curCSS(this,'overflow-y',1)+$.curCSS(this,'overflow-x',1))}).eq(0)}else{scrollParent=this.parents().filter(function(){return(/(auto|scroll)/).test($.curCSS(this,'overflow',1)+$.curCSS(this,'overflow-y',1)+$.curCSS(this,'overflow-x',1))}).eq(0)}return(/fixed/).test(this.css('position'))||!scrollParent.length?$(document):scrollParent},zIndex:function(zIndex){if(zIndex!==undefined){return this.css("zIndex",zIndex)}if(this.length){var elem=$(this[0]),position,value;while(elem.length&&elem[0]!==document){position=elem.css("position");if(position==="absolute"||position==="relative"||position==="fixed"){value=parseInt(elem.css("zIndex"),10);if(!isNaN(value)&&value!==0){return value}}elem=elem.parent()}}return 0},disableSelection:function(){return this.bind(($.support.selectstart?"selectstart":"mousedown")+".ui-disableSelection",function(event){event.preventDefault()})},enableSelection:function(){return this.unbind(".ui-disableSelection")}});$.each(["Width","Height"],function(i,name){var side=name==="Width"?["Left","Right"]:["Top","Bottom"],type=name.toLowerCase(),orig={innerWidth:$.fn.innerWidth,innerHeight:$.fn.innerHeight,outerWidth:$.fn.outerWidth,outerHeight:$.fn.outerHeight};function reduce(elem,size,border,margin){$.each(side,function(){size-=parseFloat($.curCSS(elem,"padding"+this,true))||0;if(border){size-=parseFloat($.curCSS(elem,"border"+this+"Width",true))||0}if(margin){size-=parseFloat($.curCSS(elem,"margin"+this,true))||0}});return size}$.fn["inner"+name]=function(size){if(size===undefined){return orig["inner"+name].call(this)}return this.each(function(){$(this).css(type,reduce(this,size)+"px")})};$.fn["outer"+name]=function(size,margin){if(typeof size!=="number"){return orig["outer"+name].call(this,size)}return this.each(function(){$(this).css(type,reduce(this,size,true,margin)+"px")})}});function focusable(element,isTabIndexNotNaN){var nodeName=element.nodeName.toLowerCase();if("area"===nodeName){var map=element.parentNode,mapName=map.name,img;if(!element.href||!mapName||map.nodeName.toLowerCase()!=="map"){return false}img=$("img[usemap=#"+mapName+"]")[0];return!!img&&visible(img)}return(/input|select|textarea|button|object/.test(nodeName)?!element.disabled:"a"==nodeName?element.href||isTabIndexNotNaN:isTabIndexNotNaN)&&visible(element)}function visible(element){return!$(element).parents().andSelf().filter(function(){return $.curCSS(this,"visibility")==="hidden"||$.expr.filters.hidden(this)}).length}$.extend($.expr[":"],{data:function(elem,i,match){return!!$.data(elem,match[3])},focusable:function(element){return focusable(element,!isNaN($.attr(element,"tabindex")))},tabbable:function(element){var tabIndex=$.attr(element,"tabindex"),isTabIndexNaN=isNaN(tabIndex);return(isTabIndexNaN||tabIndex>=0)&&focusable(element,!isTabIndexNaN)}});$(function(){var body=document.body,div=body.appendChild(div=document.createElement("div"));$.extend(div.style,{minHeight:"100px",height:"auto",padding:0,borderWidth:0});$.support.minHeight=div.offsetHeight===100;$.support.selectstart="onselectstart"in div;body.removeChild(div).style.display="none"});$.extend($.ui,{plugin:{add:function(module,option,set){var proto=$.ui[module].prototype;for(var i in set){proto.plugins[i]=proto.plugins[i]||[];proto.plugins[i].push([option,set[i]])}},call:function(instance,name,args){var set=instance.plugins[name];if(!set||!instance.element[0].parentNode){return}for(var i=0;i<set.length;i++){if(instance.options[set[i][0]]){set[i][1].apply(instance.element,args)}}}},contains:function(a,b){return document.compareDocumentPosition?a.compareDocumentPosition(b)&16:a!==b&&a.contains(b)},hasScroll:function(el,a){if($(el).css("overflow")==="hidden"){return false}var scroll=(a&&a==="left")?"scrollLeft":"scrollTop",has=false;if(el[scroll]>0){return true}el[scroll]=1;has=(el[scroll]>0);el[scroll]=0;return has},isOverAxis:function(x,reference,size){return(x>reference)&&(x<(reference+size))},isOver:function(y,x,top,left,height,width){return $.ui.isOverAxis(y,top,height)&&$.ui.isOverAxis(x,left,width)}})})(jQuery);(function($,undefined){if($.cleanData){var _cleanData=$.cleanData;$.cleanData=function(elems){for(var i=0,elem;(elem=elems[i])!=null;i++){$(elem).triggerHandler("remove")}_cleanData(elems)}}else{var _remove=$.fn.remove;$.fn.remove=function(selector,keepData){return this.each(function(){if(!keepData){if(!selector||$.filter(selector,[this]).length){$("*",this).add([this]).each(function(){$(this).triggerHandler("remove")})}}return _remove.call($(this),selector,keepData)})}}$.widget=function(name,base,prototype){var namespace=name.split(".")[0],fullName;name=name.split(".")[1];fullName=namespace+"-"+name;if(!prototype){prototype=base;base=$.Widget}$.expr[":"][fullName]=function(elem){return!!$.data(elem,name)};$[namespace]=$[namespace]||{};$[namespace][name]=function(options,element){if(arguments.length){this._createWidget(options,element)}};var basePrototype=new base();basePrototype.options=$.extend(true,{},basePrototype.options);$[namespace][name].prototype=$.extend(true,basePrototype,{namespace:namespace,widgetName:name,widgetEventPrefix:$[namespace][name].prototype.widgetEventPrefix||name,widgetBaseClass:fullName},prototype);$.widget.bridge(name,$[namespace][name])};$.widget.bridge=function(name,object){$.fn[name]=function(options){var isMethodCall=typeof options==="string",args=Array.prototype.slice.call(arguments,1),returnValue=this;options=!isMethodCall&&args.length?$.extend.apply(null,[true,options].concat(args)):options;if(isMethodCall&&options.charAt(0)==="_"){return returnValue}if(isMethodCall){this.each(function(){var instance=$.data(this,name),methodValue=instance&&$.isFunction(instance[options])?instance[options].apply(instance,args):instance;if(methodValue!==instance&&methodValue!==undefined){returnValue=methodValue;return false}})}else{this.each(function(){var instance=$.data(this,name);if(instance){instance.option(options||{})._init()}else{$.data(this,name,new object(options,this))}})}return returnValue}};$.Widget=function(options,element){if(arguments.length){this._createWidget(options,element)}};$.Widget.prototype={widgetName:"widget",widgetEventPrefix:"",options:{disabled:false},_createWidget:function(options,element){$.data(element,this.widgetName,this);this.element=$(element);this.options=$.extend(true,{},this.options,this._getCreateOptions(),options);var self=this;this.element.bind("remove."+this.widgetName,function(){self.destroy()});this._create();this._trigger("create");this._init()},_getCreateOptions:function(){return $.metadata&&$.metadata.get(this.element[0])[this.widgetName]},_create:function(){},_init:function(){},destroy:function(){this.element.unbind("."+this.widgetName).removeData(this.widgetName);this.widget().unbind("."+this.widgetName).removeAttr("aria-disabled").removeClass(this.widgetBaseClass+"-disabled "+"ui-state-disabled")},widget:function(){return this.element},option:function(key,value){var options=key;if(arguments.length===0){return $.extend({},this.options)}if(typeof key==="string"){if(value===undefined){return this.options[key]}options={};options[key]=value}this._setOptions(options);return this},_setOptions:function(options){var self=this;$.each(options,function(key,value){self._setOption(key,value)});return this},_setOption:function(key,value){this.options[key]=value;if(key==="disabled"){this.widget()[value?"addClass":"removeClass"](this.widgetBaseClass+"-disabled"+" "+"ui-state-disabled").attr("aria-disabled",value)}return this},enable:function(){return this._setOption("disabled",false)},disable:function(){return this._setOption("disabled",true)},_trigger:function(type,event,data){var callback=this.options[type];event=$.Event(event);event.type=(type===this.widgetEventPrefix?type:this.widgetEventPrefix+type).toLowerCase();data=data||{};if(event.originalEvent){for(var i=$.event.props.length,prop;i;){prop=$.event.props[--i];event[prop]=event.originalEvent[prop]}}this.element.trigger(event,data);return!($.isFunction(callback)&&callback.call(this.element[0],event,data)===false||event.isDefaultPrevented())}}})(jQuery);(function($,undefined){var mouseHandled=false;$(document).mousedown(function(e){mouseHandled=false});$.widget("ui.mouse",{options:{cancel:':input,option',distance:1,delay:0},_mouseInit:function(){var self=this;this.element.bind('mousedown.'+this.widgetName,function(event){return self._mouseDown(event)}).bind('click.'+this.widgetName,function(event){if(true===$.data(event.target,self.widgetName+'.preventClickEvent')){$.removeData(event.target,self.widgetName+'.preventClickEvent');event.stopImmediatePropagation();return false}});this.started=false},_mouseDestroy:function(){this.element.unbind('.'+this.widgetName)},_mouseDown:function(event){if(mouseHandled){return};(this._mouseStarted&&this._mouseUp(event));this._mouseDownEvent=event;var self=this,btnIsLeft=(event.which==1),elIsCancel=(typeof this.options.cancel=="string"?$(event.target).parents().add(event.target).filter(this.options.cancel).length:false);if(!btnIsLeft||elIsCancel||!this._mouseCapture(event)){return true}this.mouseDelayMet=!this.options.delay;if(!this.mouseDelayMet){this._mouseDelayTimer=setTimeout(function(){self.mouseDelayMet=true},this.options.delay)}if(this._mouseDistanceMet(event)&&this._mouseDelayMet(event)){this._mouseStarted=(this._mouseStart(event)!==false);if(!this._mouseStarted){event.preventDefault();return true}}if(true===$.data(event.target,this.widgetName+'.preventClickEvent')){$.removeData(event.target,this.widgetName+'.preventClickEvent')}this._mouseMoveDelegate=function(event){return self._mouseMove(event)};this._mouseUpDelegate=function(event){return self._mouseUp(event)};$(document).bind('mousemove.'+this.widgetName,this._mouseMoveDelegate).bind('mouseup.'+this.widgetName,this._mouseUpDelegate);event.preventDefault();mouseHandled=true;return true},_mouseMove:function(event){if($.browser.msie&&!(document.documentMode>=9)&&!event.button){return this._mouseUp(event)}if(this._mouseStarted){this._mouseDrag(event);return event.preventDefault()}if(this._mouseDistanceMet(event)&&this._mouseDelayMet(event)){this._mouseStarted=(this._mouseStart(this._mouseDownEvent,event)!==false);(this._mouseStarted?this._mouseDrag(event):this._mouseUp(event))}return!this._mouseStarted},_mouseUp:function(event){$(document).unbind('mousemove.'+this.widgetName,this._mouseMoveDelegate).unbind('mouseup.'+this.widgetName,this._mouseUpDelegate);if(this._mouseStarted){this._mouseStarted=false;if(event.target==this._mouseDownEvent.target){$.data(event.target,this.widgetName+'.preventClickEvent',true)}this._mouseStop(event)}return false},_mouseDistanceMet:function(event){return(Math.max(Math.abs(this._mouseDownEvent.pageX-event.pageX),Math.abs(this._mouseDownEvent.pageY-event.pageY))>=this.options.distance)},_mouseDelayMet:function(event){return this.mouseDelayMet},_mouseStart:function(event){},_mouseDrag:function(event){},_mouseStop:function(event){},_mouseCapture:function(event){return true}})})(jQuery);(function($,undefined){var numPages=5;$.widget("ui.slider",$.ui.mouse,{widgetEventPrefix:"slide",options:{animate:false,distance:0,max:100,min:0,orientation:"horizontal",range:false,step:1,value:0,values:null},_create:function(){var self=this,o=this.options,existingHandles=this.element.find(".ui-slider-handle").addClass("ui-state-default ui-corner-all"),handle="<a class='ui-slider-handle ui-state-default ui-corner-all' href='#'></a>",handleCount=(o.values&&o.values.length)||1,handles=[];this._keySliding=false;this._mouseSliding=false;this._animateOff=true;this._handleIndex=null;this._detectOrientation();this._mouseInit();this.element.addClass("ui-slider"+" ui-slider-"+this.orientation+" ui-widget"+" ui-widget-content"+" ui-corner-all"+(o.disabled?" ui-slider-disabled ui-disabled":""));this.range=$([]);if(o.range){if(o.range===true){if(!o.values){o.values=[this._valueMin(),this._valueMin()]}if(o.values.length&&o.values.length!==2){o.values=[o.values[0],o.values[0]]}}this.range=$("<div></div>").appendTo(this.element).addClass("ui-slider-range"+" ui-widget-header"+((o.range==="min"||o.range==="max")?" ui-slider-range-"+o.range:""))}for(var i=existingHandles.length;i<handleCount;i+=1){handles.push(handle)}this.handles=existingHandles.add($(handles.join("")).appendTo(self.element));this.handle=this.handles.eq(0);this.handles.add(this.range).filter("a").click(function(event){event.preventDefault()}).hover(function(){if(!o.disabled){$(this).addClass("ui-state-hover")}},function(){$(this).removeClass("ui-state-hover")}).focus(function(){if(!o.disabled){$(".ui-slider .ui-state-focus").removeClass("ui-state-focus");$(this).addClass("ui-state-focus")}else{$(this).blur()}}).blur(function(){$(this).removeClass("ui-state-focus")});this.handles.each(function(i){$(this).data("index.ui-slider-handle",i)});this.handles.keydown(function(event){var ret=true,index=$(this).data("index.ui-slider-handle"),allowed,curVal,newVal,step;if(self.options.disabled){return}switch(event.keyCode){case $.ui.keyCode.HOME:case $.ui.keyCode.END:case $.ui.keyCode.PAGE_UP:case $.ui.keyCode.PAGE_DOWN:case $.ui.keyCode.UP:case $.ui.keyCode.RIGHT:case $.ui.keyCode.DOWN:case $.ui.keyCode.LEFT:ret=false;if(!self._keySliding){self._keySliding=true;$(this).addClass("ui-state-active");allowed=self._start(event,index);if(allowed===false){return}}break}step=self.options.step;if(self.options.values&&self.options.values.length){curVal=newVal=self.values(index)}else{curVal=newVal=self.value()}switch(event.keyCode){case $.ui.keyCode.HOME:newVal=self._valueMin();break;case $.ui.keyCode.END:newVal=self._valueMax();break;case $.ui.keyCode.PAGE_UP:newVal=self._trimAlignValue(curVal+((self._valueMax()-self._valueMin())/numPages));break;case $.ui.keyCode.PAGE_DOWN:newVal=self._trimAlignValue(curVal-((self._valueMax()-self._valueMin())/numPages));break;case $.ui.keyCode.UP:case $.ui.keyCode.RIGHT:if(curVal===self._valueMax()){return}newVal=self._trimAlignValue(curVal+step);break;case $.ui.keyCode.DOWN:case $.ui.keyCode.LEFT:if(curVal===self._valueMin()){return}newVal=self._trimAlignValue(curVal-step);break}self._slide(event,index,newVal);return ret}).keyup(function(event){var index=$(this).data("index.ui-slider-handle");if(self._keySliding){self._keySliding=false;self._stop(event,index);self._change(event,index);$(this).removeClass("ui-state-active")}});this._refreshValue();this._animateOff=false},destroy:function(){this.handles.remove();this.range.remove();this.element.removeClass("ui-slider"+" ui-slider-horizontal"+" ui-slider-vertical"+" ui-slider-disabled"+" ui-widget"+" ui-widget-content"+" ui-corner-all").removeData("slider").unbind(".slider");this._mouseDestroy();return this},_mouseCapture:function(event){var o=this.options,position,normValue,distance,closestHandle,self,index,allowed,offset,mouseOverHandle;if(o.disabled){return false}this.elementSize={width:this.element.outerWidth(),height:this.element.outerHeight()};this.elementOffset=this.element.offset();position={x:event.pageX,y:event.pageY};normValue=this._normValueFromMouse(position);distance=this._valueMax()-this._valueMin()+1;self=this;this.handles.each(function(i){var thisDistance=Math.abs(normValue-self.values(i));if(distance>thisDistance){distance=thisDistance;closestHandle=$(this);index=i}});if(o.range===true&&this.values(1)===o.min){index+=1;closestHandle=$(this.handles[index])}allowed=this._start(event,index);if(allowed===false){return false}this._mouseSliding=true;self._handleIndex=index;closestHandle.addClass("ui-state-active").focus();offset=closestHandle.offset();mouseOverHandle=!$(event.target).parents().andSelf().is(".ui-slider-handle");this._clickOffset=mouseOverHandle?{left:0,top:0}:{left:event.pageX-offset.left-(closestHandle.width()/2),top:event.pageY-offset.top-(closestHandle.height()/2)-(parseInt(closestHandle.css("borderTopWidth"),10)||0)-(parseInt(closestHandle.css("borderBottomWidth"),10)||0)+(parseInt(closestHandle.css("marginTop"),10)||0)};if(!this.handles.hasClass("ui-state-hover")){this._slide(event,index,normValue)}this._animateOff=true;return true},_mouseStart:function(event){return true},_mouseDrag:function(event){var position={x:event.pageX,y:event.pageY},normValue=this._normValueFromMouse(position);this._slide(event,this._handleIndex,normValue);return false},_mouseStop:function(event){this.handles.removeClass("ui-state-active");this._mouseSliding=false;this._stop(event,this._handleIndex);this._change(event,this._handleIndex);this._handleIndex=null;this._clickOffset=null;this._animateOff=false;return false},_detectOrientation:function(){this.orientation=(this.options.orientation==="vertical")?"vertical":"horizontal"},_normValueFromMouse:function(position){var pixelTotal,pixelMouse,percentMouse,valueTotal,valueMouse;if(this.orientation==="horizontal"){pixelTotal=this.elementSize.width;pixelMouse=position.x-this.elementOffset.left-(this._clickOffset?this._clickOffset.left:0)}else{pixelTotal=this.elementSize.height;pixelMouse=position.y-this.elementOffset.top-(this._clickOffset?this._clickOffset.top:0)}percentMouse=(pixelMouse/pixelTotal);if(percentMouse>1){percentMouse=1}if(percentMouse<0){percentMouse=0}if(this.orientation==="vertical"){percentMouse=1-percentMouse}valueTotal=this._valueMax()-this._valueMin();valueMouse=this._valueMin()+percentMouse*valueTotal;return this._trimAlignValue(valueMouse)},_start:function(event,index){var uiHash={handle:this.handles[index],value:this.value()};if(this.options.values&&this.options.values.length){uiHash.value=this.values(index);uiHash.values=this.values()}return this._trigger("start",event,uiHash)},_slide:function(event,index,newVal){var otherVal,newValues,allowed;if(this.options.values&&this.options.values.length){otherVal=this.values(index?0:1);if((this.options.values.length===2&&this.options.range===true)&&((index===0&&newVal>otherVal)||(index===1&&newVal<otherVal))){newVal=otherVal}if(newVal!==this.values(index)){newValues=this.values();newValues[index]=newVal;allowed=this._trigger("slide",event,{handle:this.handles[index],value:newVal,values:newValues});otherVal=this.values(index?0:1);if(allowed!==false){this.values(index,newVal,true)}}}else{if(newVal!==this.value()){allowed=this._trigger("slide",event,{handle:this.handles[index],value:newVal});if(allowed!==false){this.value(newVal)}}}},_stop:function(event,index){var uiHash={handle:this.handles[index],value:this.value()};if(this.options.values&&this.options.values.length){uiHash.value=this.values(index);uiHash.values=this.values()}this._trigger("stop",event,uiHash)},_change:function(event,index){if(!this._keySliding&&!this._mouseSliding){var uiHash={handle:this.handles[index],value:this.value()};if(this.options.values&&this.options.values.length){uiHash.value=this.values(index);uiHash.values=this.values()}this._trigger("change",event,uiHash)}},value:function(newValue){if(arguments.length){this.options.value=this._trimAlignValue(newValue);this._refreshValue();this._change(null,0);return}return this._value()},values:function(index,newValue){var vals,newValues,i;if(arguments.length>1){this.options.values[index]=this._trimAlignValue(newValue);this._refreshValue();this._change(null,index);return}if(arguments.length){if($.isArray(arguments[0])){vals=this.options.values;newValues=arguments[0];for(i=0;i<vals.length;i+=1){vals[i]=this._trimAlignValue(newValues[i]);this._change(null,i)}this._refreshValue()}else{if(this.options.values&&this.options.values.length){return this._values(index)}else{return this.value()}}}else{return this._values()}},_setOption:function(key,value){var i,valsLength=0;if($.isArray(this.options.values)){valsLength=this.options.values.length}$.Widget.prototype._setOption.apply(this,arguments);switch(key){case"disabled":if(value){this.handles.filter(".ui-state-focus").blur();this.handles.removeClass("ui-state-hover");this.handles.attr("disabled","disabled");this.element.addClass("ui-disabled")}else{this.handles.removeAttr("disabled");this.element.removeClass("ui-disabled")}break;case"orientation":this._detectOrientation();this.element.removeClass("ui-slider-horizontal ui-slider-vertical").addClass("ui-slider-"+this.orientation);this._refreshValue();break;case"value":this._animateOff=true;this._refreshValue();this._change(null,0);this._animateOff=false;break;case"values":this._animateOff=true;this._refreshValue();for(i=0;i<valsLength;i+=1){this._change(null,i)}this._animateOff=false;break}},_value:function(){var val=this.options.value;val=this._trimAlignValue(val);return val},_values:function(index){var val,vals,i;if(arguments.length){val=this.options.values[index];val=this._trimAlignValue(val);return val}else{vals=this.options.values.slice();for(i=0;i<vals.length;i+=1){vals[i]=this._trimAlignValue(vals[i])}return vals}},_trimAlignValue:function(val){if(val<=this._valueMin()){return this._valueMin()}if(val>=this._valueMax()){return this._valueMax()}var step=(this.options.step>0)?this.options.step:1,valModStep=(val-this._valueMin())%step;alignValue=val-valModStep;if(Math.abs(valModStep)*2>=step){alignValue+=(valModStep>0)?step:(-step)}return parseFloat(alignValue.toFixed(5))},_valueMin:function(){return this.options.min},_valueMax:function(){return this.options.max},_refreshValue:function(){var oRange=this.options.range,o=this.options,self=this,animate=(!this._animateOff)?o.animate:false,valPercent,_set={},lastValPercent,value,valueMin,valueMax;if(this.options.values&&this.options.values.length){this.handles.each(function(i,j){valPercent=(self.values(i)-self._valueMin())/(self._valueMax()-self._valueMin())*100;_set[self.orientation==="horizontal"?"left":"bottom"]=valPercent+"%";$(this).stop(1,1)[animate?"animate":"css"](_set,o.animate);if(self.options.range===true){if(self.orientation==="horizontal"){if(i===0){self.range.stop(1,1)[animate?"animate":"css"]({left:valPercent+"%"},o.animate)}if(i===1){self.range[animate?"animate":"css"]({width:(valPercent-lastValPercent)+"%"},{queue:false,duration:o.animate})}}else{if(i===0){self.range.stop(1,1)[animate?"animate":"css"]({bottom:(valPercent)+"%"},o.animate)}if(i===1){self.range[animate?"animate":"css"]({height:(valPercent-lastValPercent)+"%"},{queue:false,duration:o.animate})}}}lastValPercent=valPercent})}else{value=this.value();valueMin=this._valueMin();valueMax=this._valueMax();valPercent=(valueMax!==valueMin)?(value-valueMin)/(valueMax-valueMin)*100:0;_set[self.orientation==="horizontal"?"left":"bottom"]=valPercent+"%";this.handle.stop(1,1)[animate?"animate":"css"](_set,o.animate);if(oRange==="min"&&this.orientation==="horizontal"){this.range.stop(1,1)[animate?"animate":"css"]({width:valPercent+"%"},o.animate)}if(oRange==="max"&&this.orientation==="horizontal"){this.range[animate?"animate":"css"]({width:(100-valPercent)+"%"},{queue:false,duration:o.animate})}if(oRange==="min"&&this.orientation==="vertical"){this.range.stop(1,1)[animate?"animate":"css"]({height:valPercent+"%"},o.animate)}if(oRange==="max"&&this.orientation==="vertical"){this.range[animate?"animate":"css"]({height:(100-valPercent)+"%"},{queue:false,duration:o.animate})}}}});$.extend($.ui.slider,{version:"1.8.13"})}(jQuery));
+!function a(b,c,d){function e(g,h){if(!c[g]){if(!b[g]){var i="function"==typeof require&&require;if(!h&&i)return i(g,!0);if(f)return f(g,!0);var j=new Error("Cannot find module '"+g+"'");throw j.code="MODULE_NOT_FOUND",j}var k=c[g]={exports:{}};b[g][0].call(k.exports,function(a){var c=b[g][1][a];return e(c?c:a)},k,k.exports,a,b,c,d)}return c[g].exports}for(var f="function"==typeof require&&require,g=0;g<d.length;g++)e(d[g]);return e}({1:[function(a,b,c){function d(a){this.message=a}function e(a){var b=String(a).replace(/=+$/,"");if(b.length%4==1)throw new d("'atob' failed: The string to be decoded is not correctly encoded.");for(var c,e,g=0,h=0,i="";e=b.charAt(h++);~e&&(c=g%4?64*c+e:e,g++%4)?i+=String.fromCharCode(255&c>>(-2*g&6)):0)e=f.indexOf(e);return i}var f="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";d.prototype=new Error,d.prototype.name="InvalidCharacterError",b.exports="undefined"!=typeof window&&window.atob&&window.atob.bind(window)||e},{}],2:[function(a,b,c){function d(a){return decodeURIComponent(e(a).replace(/(.)/g,function(a,b){var c=b.charCodeAt(0).toString(16).toUpperCase();return c.length<2&&(c="0"+c),"%"+c}))}var e=a("./atob");b.exports=function(a){var b=a.replace(/-/g,"+").replace(/_/g,"/");switch(b.length%4){case 0:break;case 2:b+="==";break;case 3:b+="=";break;default:throw"Illegal base64url string!"}try{return d(b)}catch(c){return e(b)}}},{"./atob":1}],3:[function(a,b,c){"use strict";function d(a){this.message=a}var e=a("./base64_url_decode");d.prototype=new Error,d.prototype.name="InvalidTokenError",b.exports=function(a,b){if("string"!=typeof a)throw new d("Invalid token specified");b=b||{};var c=b.header===!0?0:1;try{return JSON.parse(e(a.split(".")[c]))}catch(f){throw new d("Invalid token specified: "+f.message)}},b.exports.InvalidTokenError=d},{"./base64_url_decode":2}],4:[function(a,b,c){(function(b){var c=a("./lib/index");"function"==typeof b.window.define&&b.window.define.amd?b.window.define("jwt_decode",function(){return c}):b.window&&(b.window.jwt_decode=c)}).call(this,"undefined"!=typeof global?global:"undefined"!=typeof self?self:"undefined"!=typeof window?window:{})},{"./lib/index":3}]},{},[4]);
+// $("span.exit").click(function() {
+function menuFunction(){
+	
+ if (triger==1){
+ 	triger=0;
+ 	console.log(777);
+ 	 $("header .container.headerTop").css("display","none");
+ //$("header .tovaryButtonBlock").css("display","none");
+ // $("header .poslugiButton").css("display","none");
+ // $("header .logo").css("display","none");
+  //$("header .access").css("display","none");
+ // $("header .phoneNumber").css("display","none");
+  $("header .mobileMenu").css("display","none");
+ }else{
+ $("header .container.headerTop").css("display","inline-block");
+// $("header .tovaryButtonBlock").css("display","inline-block");
+ // $("header .poslugiButton").css("display","inline-block");
+ // $("header .logo").css("display","inline-block");
+ // $("header .access").css("display","inline-block");
+ // $("header .phoneNumber").css("display","inline-block");
+  $("header .mobileMenu").css("display","inline-block");
+
+ 	triger=1;
+ 	console.log(888);
+
+
+
+
+
+ }
+};
+var triger;
+$(".menuMob").click(function() {
+menuFunction();
+});
+
+
+
+
+// });
+console.log("ok");
+
+var voting= function(elem)	{
+	      var stars=	$('.votingBox .votingBox__voting');
+		  	var starsG=	$('.votingBox .votingBox__votingG');
+		switch (elem.id) {
+		  case 'p5':
+		  	$(stars[4]).css("background","orange");
+		     $(starsG[4]).css("background","orange"); 
+		  case 'p4':
+
+		 	 $(stars[3]).css("background","orange");
+		 	 $(starsG[3]).css("background","orange");  
+		  case 'p3':
+
+		    $(stars[2]).css("background","orange"); 
+		     $(starsG[2]).css("background","orange"); 
+		  case 'p2':
+
+		    $(stars[1]).css("background","orange");
+		     $(starsG[1]).css("background","orange");  
+
+		  case 'p1': 
+
+ 			$(stars[0]).css("background","orange"); 
+ 			 $(starsG[0]).css("background","orange"); 
+		  break;
+		  default:
+		  console.log("eror voting");
+		
+		    break;
+		}
+}
+
+
+   $('.votingBox__voting').mouseenter( function() {
+   		voting(this);
+    });
+$('.votingBox__votingG').mouseenter( function() {
+   		voting(this);
+    });
+
+  
+ $('.votingBox__voting').mouseleave( function() {
+
+$('.votingBox__voting').css("background","none");
+$('.votingBox__votingG').css("background","none");
+	 });
+
+
+  $('.votingBox__votingG').mouseleave( function() {
+
+$('.votingBox__votingG').css("background","none");
+$('.votingBox__voting').css("background","none");
+	 });
+
+
+$('.productView__mainPhoto img').imageLens({ lensSize: 200 });
+
+$('.productPhotoGalery__preview').click(function() {
+$('.productPhotoGalery__preview').removeClass('active');
+$(this).addClass('active');
+src= $('.productPhotoGalery .active img').attr( "src" );
+console.log(src);
+$('.productView__mainPhoto').empty();
+$('.productView__mainPhoto').append('<img id="img" src='+src+' alt="">');
+$('.productView__mainPhoto img').imageLens({ lensSize: 200 });
+});
+
+//timer
+
+
+   timerH= $('#timerH').text();
+ timerM= $('#timerM').text();
+ timerS= $('#timerS').text();
+timerH=23-timerH;
+timerM=59-timerM;
+timerS=59-timerS;
+$('#timerH').text(timerH);
+$('#timerM').text(timerM);
+$('#timerS').text(timerS);
+
+function timerAkcia() {
+
+timerS--;
+if (timerS==0){
+	
+	
+	$('#timerH').text(timerH);
+	$('#timerM').text(timerM);
+	$('#timerS').text(timerS);
+	timerM--;
+	timerS=60;
+	if(timerM<0){
+		timerM==59;
+		timerH--;
+	}
+}
+else{
+$('#timerH').text(timerH);
+$('#timerM').text(timerM);
+$('#timerS').text(timerS);
+}
+
+}
+
+setInterval(timerAkcia, 1000);
+
+$('.moreCharacteristic__Button').click(function(){
+	var element=$(this).parent().parent();
+	if ($(element).hasClass('characteristicBox_open')){
+	$(element).removeClass('characteristicBox_open');
+	$(element).css("max-height","200px");
+	//$(this).parent().parent().css("height","200px");
+	$(this).html('Больше⯆');
+
+	}else{
+	$(element).addClass('characteristicBox_open');
+	$(element).css("max-height","1000px");
+	//$(this).parent().parent().css("height","auto");
+	$(this).html('Менше⯅');
+	}
+
+});
+var characteristicBox=$('.characteristicBox');
+for (var i=0; i<characteristicBox.length;  i++ ) {
+	if($(characteristicBox[i]).height()<150){
+		$(characteristicBox[i]).find('.moreCharacteristic__Button').css('display','none');
+	//	$((characteristicBox[i]) + ' .moreCharacteristic__Button ').css("display","none");	
+	}
+
+}
+
+$('#shareButton').click(function(){
+	$('.productView__shareBox').addClass('open');
+	$('#shareButton').addClass('active');
+
+});
+
+$('#addToCart').click(function(){
+$('#addToCart').attr('id', 'toOrder');
+$('#toOrder').text('Оформити замовлення');
+
+});
+
+
+$('#mobileBottomBlockOptions').click(function(){
+$('.mobileBottomBlock').css('bottom','-48px');
+$('.mobileBottomBlockBig').css('bottom','0');
+	});
+
+$('.mobileBottomBlock__close').click(function(){
+$('.mobileBottomBlockBig').css('bottom','-128px');
+$('.mobileBottomBlock ').css('bottom','0');
+	});
+// var initialPoint;
+// var finalPoint;
+// sliderBlock.addEventListener('touchstart', function(event)   {
+
+// //event.preventDefault();
+// //event.stopPropagation();
+// initialPoint=event.changedTouches[0];
+// }, false);
+// sliderBlock.addEventListener('touchend', function(event) {
+// event.preventDefault();
+// event.stopPropagation();
+// finalPoint=event.changedTouches[0];
+// var xAbs = Math.abs(initialPoint.pageX - finalPoint.pageX);
+// var yAbs = Math.abs(initialPoint.pageY - finalPoint.pageY);
+// if (xAbs > 20 || yAbs > 20) {
+// if (xAbs > yAbs) {
+// if (finalPoint.pageX < initialPoint.pageX){
+// 	console.log("vlevo"+xAbs);
+	 
+	
+	 
+// 	}
+// else{
+// /*СВАЙП ВПРАВО*/
+
+// console.log("vpravo"+xAbs);
+
+// }
+// }
+// else {
+// if (finalPoint.pageY < initialPoint.pageY){
+// /*СВАЙП ВВЕРХ*/
+// console.log("up");
+// }
+// else{
+// 	console.log("down");
+// /*СВАЙП ВНИЗ*/}
+// }
+// }
+// }, false);
+
+
+
+
+
+// $("#scrollPage2").on('touchstart', function() {
+//    $("#main").css("transform","translate(-100%)");
+// 	$("#page2").css("transform","translate(0%)");
+
+// 	$("#toNext").removeClass("littleBtn")
+// 	$("#toNext").addClass("bigBtn")
+// 	$("#toMain").removeClass("bigBtn")
+// 	$("#toMain").addClass("littleBtn")
+
+// });
+
+// $("#scrollMain").on('touchstart', function() {
+// 	$("#main").css("transform","translate(0)");
+// 	$("#page2").css("transform","translate(100%)");
+
+
+// 		$("#toNext").removeClass("")
+// 	$("#toNext").addClass("littleBtn")
+// 	$("#toMain").removeClass("littleBtn")
+// 	$("#toMain").addClass("bigBtn")
+
+// });
+
+
+// $("#scrollPage2").click(function(){
+// $("#main").css("transform","translate(-100%)")
+// 	$("#page2").css("transform","translate(0%)")
+
+// 		$("#toNext").removeClass("littleBtn")
+// 	$("#toNext").addClass("bigBtn")
+// 	$("#toMain").removeClass("bigBtn")
+// 	$("#toMain").addClass("littleBtn")
+// })
+
+// $("#scrollMain").click(function(){
+// $("#main").css("transform","translate(0)");
+// 	$("#page2").css("transform","translate(100%)");
+// 	$("#toNext").removeClass("")
+// 	$("#toNext").addClass("littleBtn")
+// 	$("#toMain").removeClass("littleBtn")
+// 	$("#toMain").addClass("bigBtn")
+// })
+
+
+
+// $("#toNext").click(function(){
+// $("#main").css("transform","translate(-100%)")
+// 	$("#page2").css("transform","translate(0%)")
+
+// 		$("#toNext").removeClass("littleBtn")
+// 	$("#toNext").addClass("bigBtn")
+// 	$("#toMain").removeClass("bigBtn")
+// 	$("#toMain").addClass("littleBtn")
+// })
+
+// $("#toMain").click(function(){
+// $("#main").css("transform","translate(0)");
+// 	$("#page2").css("transform","translate(100%)");
+// 	$("#toNext").removeClass("")
+// 	$("#toNext").addClass("littleBtn")
+// 	$("#toMain").removeClass("littleBtn")
+// 	$("#toMain").addClass("bigBtn")
+// })
+
+// $("#toNext").on('touchstart', function() {
+//    $("#main").css("transform","translate(-100%)");
+// 	$("#page2").css("transform","translate(0%)");
+
+// 	$("#toNext").removeClass("littleBtn")
+// 	$("#toNext").addClass("bigBtn")
+// 	$("#toMain").removeClass("bigBtn")
+// 	$("#toMain").addClass("littleBtn")
+
+// });
+
+// $("#toMain").on('touchstart', function() {
+// 	$("#main").css("transform","translate(0)");
+// 	$("#page2").css("transform","translate(100%)");
+
+
+// 		$("#toNext").removeClass("")
+// 	$("#toNext").addClass("littleBtn")
+// 	$("#toMain").removeClass("littleBtn")
+// 	$("#toMain").addClass("bigBtn")
+
+// });
+
+// $("a").on('touchstart', function() {
+// 	location.href = $(this).attr('href');
+// });
+function startSearch(name, page){
+ $.ajax({
+             url:'https://web-store-sample-vs.herokuapp.com/web-store/catalog/search?name='+name+'&page='+page+'&size=12'
+             , type:'GET',
+          contentType:"application/json",
+              success: function(res) {
+              	if (res.content.length==0){
+         				console.log("Не знайдено")
+         				$(".content .container .row .search").append("<h3>Нічого не знайдено</h3>")
+         			}
+         		
+         	
+
+				for(i=0;i<res.content.length;i++){
+//test
+
+               $("#Пошук .content .container .row .search").append("<div class='col-md-4 col-lg-3 col-sm-6 catelogElemet'> <div class='product' id="+res.content[i].id+"></div></div>");
+
+               $("#Товар .content .container .row .search").append("<div class='col-md-4 col-lg-4 col-sm-6  catelogElemet'> <div class='product' id="+res.content[i].id+"></div></div>");
+               
+                $(".content .container .row .search #"+res.content[i].id+" ").prepend(" <h5>"+res.content[i].name+"</h5>");
+
+                //картинка
+                $(".content .container .row .search #"+res.content[i].id+" ").append(" <img src='img/test.jpg' >");
+                //картинка
+
+                $(".content .container .row .search #"+res.content[i].id+" ").append(" <p class='manufacturer'>Производитель:"+res.content[i].product.manufacturer+"</p>");
+                
+                $(".content .container .row .search #"+res.content[i].id+" ").append(" <p class='price'>Цена:"+res.content[i].product.priceWithVAT+"</p>");
+
+                $(".content .container .row .search #"+res.content[i].id+" ").append(" <button onclick='addProduct("+res.content[i].product.id+")' id="+res.content[i].product.id+">Добавить в корзину</button>");
+              
+                                         }
+                                            optionCatalog=localStorage.getItem("optionCatalogList");
+                                            if (optionCatalog=="true"){
+                                              setList();  
+                                              console.log("ser")
+
+                                            }else{
+                                              setNotList();
+                                              console.log("not ser")
+
+                                            }
+
+
+					if (res.content.length==12){
+         				console.log("Дуже багато")
+         				$(".content .container .row .search").append("<button id='searchMore'>Показати ще результати</button>")
+         			}
+         				$(".content .container .row .search #searchMore").click(function() {
+         					$(".content .container .row .search #searchMore").remove();
+         					page++;
+         						startSearch(name, page);
+         				});
+
+
+               },
+
+         error: function (jqXHR, exception){
+         
+         console.log("error");  
+            //   
+        return false;  
+           }
+
+        });
+
+  }
+
+function search()
+{
+var name = $(".search #name").text().replace(/\s+/g,'');
+name =name.replace(/\s+/g,'&nbsp');
+$(".search #name").remove();
+console.log(name);
+$("#Пошук .search").append("<h3>результат пошуку <span>"+ name+"</span>:</h3>")
+startSearch(name, 0)
+			//var name=$(".search #name");
+
+        
+         };
+
+	width=document.body.clientWidth;
+console.log(width);
+
+
+
+
+if (width<768){
+var step=360;
+
+}else{
+var step=600;
+}
+	$("body").mouseup(function () {
+
+		//	clearInterval(timerId);
+
+		//	$("#search-results-live").animate({scrollLeft: leftPos }, 100, "linear");
+	});
+
+$(".slider1ArowRight").mousedown(function () {
+		 function func() {
+		 		 var leftPos = $('.akciyniTovari').scrollLeft();
+				$(".akciyniTovari").animate({scrollLeft: leftPos + 255}, 100, "linear");
+				var pointer=(leftPos /step).toFixed(0); 
+			
+				
+
+			//	
+			}
+		//	clearInterval(timerId);
+			func();
+		//	 timerId =setInterval(func, 100);	 		
+	});
+
+$(".slider1ArowRight").mouseleave(function () {
+
+clearInterval(timerId);
+});
+
+
+
+	$(".slider1ArowLeft").mousedown(function () {
+		 function func2() {
+		 		 var rightPos = $('.akciyniTovari').scrollLeft();
+				$(".akciyniTovari").animate({scrollLeft: rightPos - 255}, 100, "linear");
+				var pointer=(rightPos /step).toFixed(0); 
+				
+
+			}
+		//	clearInterval(timerId);
+			func2();
+
+		//	 timerId =setInterval(func2, 100);	
+			
+			
+	});
+$(".slider1ArowLeft").mouseleave(function () {
+
+//clearInterval(timerId);
+});
+
+
+
+	var timerId;
+	width=document.body.clientWidth;
+console.log(width);
+
+if (width<768){
+var step=360;
+
+}else{
+var step=600;
+}
+
+$(".slider2ArowRight").mousedown(function () {
+		 function func() {
+		 		 var leftPos = $('.recomendTovari').scrollLeft();
+				$(".recomendTovari").animate({scrollLeft: leftPos + 255}, 100, "linear");
+				var pointer=(leftPos /step).toFixed(0); 
+			
+				
+
+			//	
+			}
+		//	clearInterval(timerId);
+			func();
+			// timerId =setInterval(func, 100);	 		
+	});
+
+//$(".slider2ArowRight").mouseleave(function () {
+
+//learInterval(timerId);
+//});
+
+
+
+//	$("body").mouseup(function () {
+
+		//	clearInterval(timerId);
+		
+		//	$("#search-results-live").animate({scrollLeft: leftPos }, 100, "linear");
+//	});
+
+
+	$(".slider2ArowLeft").mousedown(function () {
+		 function func2() {
+		 		 var rightPos = $('.recomendTovari').scrollLeft();
+				$(".recomendTovari").animate({scrollLeft: rightPos - 255}, 100, "linear");
+				var pointer=(rightPos /step).toFixed(0); 
+				
+
+			}
+		//	clearInterval(timerId);
+			func2();
+
+			// timerId =setInterval(func2, 100);	
+			
+			
+	});
+	//$(".slider2ArowLeft").mouseleave(function () {
+
+//clearInterval(timerId);
+//});
+
+
+console.log("zamovlenya");
+
+$("#oformitZ").click(function(){
+
+		var adres = $("#adres").val();
+		var phone = $("#phone").val();
+		 phone=  phone.replace('(','');
+		  phone=  phone.replace(')','');
+		    phone=  phone.replace(' ','');
+		      phone=  phone.replace('+','');
+		       phone=  phone.replace('-','');
+
+		console.log(adres+" "+ phone);
+			$(".zamovlenya .error").css("opacity","0");
+			$(".zamovlenya .error h6").text("");	
+
+		
+
+		if (phone.length<3){
+			$(".zamovlenya .error").css("opacity","1");
+			$(".zamovlenya .error h6").append("Введіть номер телефону");	
+		}else
+
+		if (adres.length<3){
+			$(".zamovlenya .error").css("opacity","1");
+			$(".zamovlenya .error h6").append("Введіть адресу");	
+		}else
+
+			if ( !$("#umovi").prop('checked')){
+				$(".zamovlenya .error").css("opacity","1");
+				$(".zamovlenya .error h6").append("Ви не погодились з правилами");			
+			}else
+			{
+
+			$(".zamovlenya .error").css("opacity","0");
+			$(".zamovlenya .error h6").text("ok");
+
+var orderItems=[];
+zamovlenya=localStorage.getItem("cart");
+zamovlenya=JSON.parse(zamovlenya);
+ for(var i=0; i<zamovlenya.orderItems.length; i++ )    {
+ orderItems[i]={
+                                                   "productCount": zamovlenya.orderItems[i].productCount,
+                                                    "productId": zamovlenya.orderItems[i].product.id
+                                                }
+ }
+
+
+
+
+
+				formData={
+					"address": adres,
+					"phoneNumber" : phone,
+
+					 "orderItems": orderItems
+				}
+
+				formData=JSON.stringify(formData);
+				console.log(formData);
+ 					 $.ajax({
+                                          
+                                                    headers: {
+                                                      Authorization : 'Bearer ' + localStorage.getItem("token")
+                                                     },
+                                                    url:'https://web-store-sample-vs.herokuapp.com/web-store/orders'
+                                                    , type:'POST',
+                                                    contentType:"application/json",
+                                                  data:formData,
+                                                    success: function(res) {
+
+                                                     console.log("order ok");
+                                                       localStorage.removeItem("cartId");
+														  localStorage.removeItem("cartVersion");
+														  localStorage.removeItem("cart");
+														  localStorage.removeItem("productCounter");
+														  localStorage.removeItem("totalPrise");
+                                             			 $(".content .zamovPage").remove();
+											                  $(".content ").append("<h5>Дякуємо! Ваше замовлення оформлено!</h5>");
+											               // alert("Вітаю! Ви успішно зареєструвлись");
+											 				      setTimeout(redirect, 5000);
+											 				       document.location.href = '#';
+											               function redirect() {
+											                     document.location.href = 'index.php';
+											                }
+                                     
+                                                     // getCart();
+                                                      
+                                                  },
+                                                  error: function (jqXHR, exception){  
+                                                  
+                                                    console.log("order error ");
+                                                      
+                                                     
+                              
+                                                   }
+                                                 });
+
+  
+
+
+				
+
+
+			}
+
+
+
+});

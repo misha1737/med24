@@ -50,7 +50,7 @@
 
 
 
-<script src="libs/jquery/jquery-2.1.4.min.js"></script>
+<!-- <script src="libs/jquery/jquery-2.1.4.min.js"></script>
 <script src="libs/bootstrap/js/bootstrap.min.js"></script>
 <script src="js/common.js"></script>
 <script src="js/mobMenu.js"></script>
@@ -62,4 +62,5 @@
 <script src="js/search.js"></script>
 <script src="js/sliderProducts.js"></script>
 <script src="js/jquery.maskedinput.min.js"></script>
-<script src="js/filter.js"></script>
+<script src="js/filter.js"></script> -->
+<script src="build/js/all.js"></script>

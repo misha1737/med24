@@ -28,10 +28,10 @@ function styles(){
 
 function scripts(){
 	    return gulp.src('./src/js/*.js')
-    .pipe(concat('all.js'))
-    .pipe(uglify({
-    	toplevel: true
-		}))
+   .pipe(concat('all.js'))
+  //   .pipe(uglify({
+  //   	toplevel: true
+		// }))
     .pipe(gulp.dest('./build/js/'))
     .pipe(browserSync.stream())
 }

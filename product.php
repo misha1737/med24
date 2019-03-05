@@ -395,8 +395,8 @@
 
 	
 
-	<script src="js/jquery.imageLens.js"></script>
+	<!-- <script src="js/jquery.imageLens.js"></script>
 	<script src="js/product.js"></script>
-
+ -->
 	
 </body>

@@ -123,7 +123,7 @@ $("span.exit").click(function() {
               document.location.href = 'index.php';
        return false;  
           }
-
+ 
         });
     
    
