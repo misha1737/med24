@@ -350,13 +350,129 @@ console.log(id);
 
 
 
-
-
+//catalog
 
 $(" document").ready(function() {
 
-console.log("h4");
+function headerMenuCatalogRender(){
 
+function eventHover(){
+
+  $('.tovaryMenu .catalogMenu h5').hover(function(){
+    $('.tovaryMenu .catalogMenu h5').removeClass('active');
+    $('.tovaryMenu .catalog .categoria').removeClass('active');
+      $(this).addClass('active');
+      
+              $('.tovaryMenu .catalog .id'+this.id+'').addClass('active');
+    });
+
+}
+
+
+
+ function eventClick(node){
+  $.ajax({
+            url:'https://web-store-sample-vs.herokuapp.com/web-store/catalog/'+node+'/products'
+            , type:'GET',
+          contentType:"application/json",
+             success: function(res) {
+              $('.products').empty();
+                   for(i=0;i<res.length;i++){
+              $('.products').append("<p>id="+res[i].id+"<p>");
+        $('.products').append("<p>externalId="+res[i].externalId+"<p>");
+        $('.products').append("<p>name="+res[i].name+"<p>");
+        $('.products').append("<p>price="+res[i].priceWithVAT+"<p>");
+           }
+       }
+   
+     });
+
+}
+
+ function getPodPodcategoria(idCategoria,idPodCategoria, node){
+     $.ajax({
+                url:'https://web-store-sample-vs.herokuapp.com/web-store/catalog/'+node
+                , type:'GET',
+      
+              contentType:"application/json",
+                 success: function(res) {
+                   for(i=0;i<res.length;i++){
+                   $(".tovaryMenu .catalog .podcatalog."+idCategoria+" .podpodcatalog."+idPodCategoria+" ").prepend("<h6 id="+res[i].nodeId+">"+res[i].name+"</h6>");
+            if(res[i].hasLinkedProducts){
+                 $(".tovaryMenu .catalog .podcatalog."+idCategoria+" .podpodcatalog."+idPodCategoria+" h6#"+res[i].nodeId+" ").addClass('hasProducts');
+                  $(".tovaryMenu .catalog .podcatalog."+idCategoria+" .podpodcatalog."+idPodCategoria+" h6#"+res[i].nodeId+" ").on("click", function() {
+                  
+                    eventClick(this.id);
+                      });
+
+              }
+             }
+             
+           },
+           error: function (jqXHR, exception){  
+              console.log(jqXHR);
+           }
+         });
+          return true;
+}
+
+ function  getPodcategoria(idCategoria, node){
+     $.ajax({
+                url:'https://web-store-sample-vs.herokuapp.com/web-store/catalog/'+node
+                , type:'GET',
+              contentType:"application/json",
+                 success: function(res) {
+
+                   for(i=0;i<res.length;i++){
+                   $(".tovaryMenu .catalog .podcatalog."+idCategoria+"").prepend("<div class='podcategoria'><h5 id="+i+">"+res[i].name+"</h5><div class='podpodcatalog "+i+"'></div></div>");
+                  
+                getPodPodcategoria(idCategoria,i, res[i].nodeId);      
+            if(res[i].hasLinkedProducts){
+                 $(".tovaryMenu .catalog .podcatalog."+idCategoria+" h5#"+i+" ").addClass('hasProducts');
+
+              }   
+
+             }
+
+           },
+           error: function (jqXHR, exception){  
+              console.log(jqXHR);
+           }
+
+       
+         });
+          return true;
+ }
+
+ function getCategoria(){
+   $.ajax({
+            url:'https://web-store-sample-vs.herokuapp.com/web-store/catalog/'
+            , type:'GET',
+          contentType:"application/json",
+             success: function(res) {
+               for(i=0;i<res.length;i++){
+               $(".tovaryMenu .catalog").prepend("<div class='categoria id"+i+"'><h4>"+res[i].name+"</h4><div class='podcatalog "+i+"'></div></div>");
+               $(".tovaryMenu .catalogMenu").prepend("<h5 id="+i+">"+res[i].name+"</h5>");
+               getPodcategoria(i, res[i].nodeId);
+         }
+          eventHover();
+       }
+   
+     });
+
+      return true;
+
+ }
+
+getCategoria();
+
+
+ }
+
+
+
+
+function MenuCatalogRender(){
 
 
 function renderCategoriya(){
@@ -366,25 +482,188 @@ function renderCategoriya(){
 }
 
 
-$( ".catalogMenu .kategoria_in" ).hover(function() {
-renderCategoriya()
- $(".catalogBlock .ktg").css("display","none");
-console.log(this.id);
-  $(".catalogBlock").css("display","inline-block");
-   $(".catalogBlock .kategoria"+this.id).css("display","inline-block");
+
+
+
+
+
+
+
+
+
+
+
+
+
+function eventHover(){
+
+  $('.topBlock .catalogMenu h5').hover(function(){
+    $('.topBlock  .catalogMenu h5').removeClass('active');
+    $('.topBlock .catalogBlock .categoria').removeClass('active');
+      $(this).addClass('active');
+              $('.topBlock .catalogBlock .id'+this.id+'').addClass('active');
+              renderCategoriya();
+               $(".catalogBlock .ktg").css("display","none");
+              $(".catalogBlock").css("display","inline-block");
+              $( ".topBlock" ).mouseleave(function() {
+              $(".sliderBox").css("display","inline-block");
+             $(".catalogBlock").css("display","none");
+              $(".catalogPoslugi").css("display","inline-block");
+
+            });
+
+
+    });
+
+}
+
+
+
+ function eventClick(node){
+  $.ajax({
+            url:'https://web-store-sample-vs.herokuapp.com/web-store/catalog/'+node+'/products'
+            , type:'GET',
+          contentType:"application/json",
+             success: function(res) {
+              $('.products').empty();
+                   for(i=0;i<res.length;i++){
+              $('.products').append("<p>id="+res[i].id+"<p>");
+        $('.products').append("<p>externalId="+res[i].externalId+"<p>");
+        $('.products').append("<p>name="+res[i].name+"<p>");
+        $('.products').append("<p>price="+res[i].priceWithVAT+"<p>");
+           }
+       }
+   
+     });
+
+}
+
+ function getPodPodcategoria(idCategoria,idPodCategoria, node){
+     $.ajax({
+                url:'https://web-store-sample-vs.herokuapp.com/web-store/catalog/'+node
+                , type:'GET',
+      
+              contentType:"application/json",
+                 success: function(res) {
+                   for(i=0;i<res.length;i++){
+                   $(".topBlock .catalogBlock .podcatalog."+idCategoria+" .podpodcatalog."+idPodCategoria+" ").prepend("<h6 id="+res[i].nodeId+">"+res[i].name+"</h6>");
+            if(res[i].hasLinkedProducts){
+                 $(".topBlock .catalogBlock .podcatalog."+idCategoria+" .podpodcatalog."+idPodCategoria+" h6#"+res[i].nodeId+" ").addClass('hasProducts');
+                  $(".topBlock .catalogBlock .podcatalog."+idCategoria+" .podpodcatalog."+idPodCategoria+" h6#"+res[i].nodeId+" ").on("click", function() {
+                  
+                    eventClick(this.id);
+                      });
+
+              }
+             }
+             
+           },
+           error: function (jqXHR, exception){  
+              console.log(jqXHR);
+           }
+         });
+          return true;
+}
+
+  function  getPodcategoria(idCategoria, node){
+     $.ajax({
+                url:'https://web-store-sample-vs.herokuapp.com/web-store/catalog/'+node
+                , type:'GET',
+              contentType:"application/json",
+                 success: function(res) {
+
+                   for(i=0;i<res.length;i++){
+                   $(".topBlock .catalogBlock .podcatalog."+idCategoria+"").prepend("<div class='podcategoria'><h5 id="+i+">"+res[i].name+"</h5><div class='podpodcatalog "+i+"'></div></div>");
+                  
+                getPodPodcategoria(idCategoria,i, res[i].nodeId);      
+            if(res[i].hasLinkedProducts){
+                 $(".topBlock .catalogBlock .podcatalog."+idCategoria+" h5#"+i+" ").addClass('hasProducts');
+
+              }   
+
+             }
+
+           },
+           error: function (jqXHR, exception){  
+              console.log(jqXHR);
+           }
+
+       
+         });
+          return true;
+ }
+
+ function getCategoria(){
+   $.ajax({
+            url:'https://web-store-sample-vs.herokuapp.com/web-store/catalog/'
+            , type:'GET',
+          contentType:"application/json",
+             success: function(res) {
+               for(i=0;i<res.length;i++){
+               $(".topBlock .catalogBlock").prepend("<div class='categoria id"+i+"'><h4>"+res[i].name+"</h4><div class='podcatalog "+i+"'></div></div>");
+               $(".topBlock  .catalogMenu .menuBlock").prepend("<h5 id="+i+">"+res[i].name+"</h5>");
+               getPodcategoria(i, res[i].nodeId);
+         }
+          eventHover();
+       }
+   
+     });
+
+      return true;
+
+ }
+
+getCategoria();
+
+
+ }
+
+
+
+
+   headerMenuCatalogRender();
+   MenuCatalogRender();
+
  
 
-});
+ 
 
-$( ".row" ).hover(function() {
-  //
-});
-$( ".topBlock" ).mouseleave(function() {
-  $(".sliderBox").css("display","inline-block");
- $(".catalogBlock").css("display","none");
-  $(".catalogPoslugi").css("display","inline-block");
 
-});
+ $(".menuBlock li").click(function() {
+                console.log("h5");
+                console.log("id="+this.id);
+          $.ajax({
+             url:'https://web-store-sample-vs.herokuapp.com/web-store/catalog/'+this.id
+             , type:'GET',
+           contentType:"application/json",
+             success: function(res) {
+
+               $(".content .container .row").empty();
+
+                for(i=0;i<res.length;i++){
+
+                $(".content .container .row").prepend("<div class='productBlock'> <div class='product' id="+res[i].name+">"+res[i].name+"</div></div>");
+       
+                                         }
+
+                                       }
+
+                });
+
+  
+
+
+                 });
+
+        
+
+
+
+
+
+
+
+
 
 $( "header .tovaryButton" ).hover(function() {
   $(".tovaryMenu").css("display","inline-block");
@@ -438,6 +717,42 @@ $(document).mouseup(function (e) {
          }
        }
      });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //дві точки
 
 $( "lecarstveniPreparati" ).hover(function() {
@@ -504,48 +819,13 @@ $( "lecarstveniPreparati" ).hover(function() {
         }
      });
 
- // $(".catalogBlock").append("<a href='https://web-store-sample-vs.herokuapp.com/web-store/catalog/'>Усі товари <i class='fas fa-angle-down'></i></a>");
- 
+
+});
 
 
 });
-  
-// $( ".krasotaIUhod" ).hover(function() {
-//   $(".catalogBlock").empty();
- 
-// });
-// $( ".gigiena" ).hover(function() {
-//   $(".catalogBlock").empty();
- 
-// });
-// $( ".tovaruDlyaDitey" ).hover(function() {
-//   $(".catalogBlock").empty();
- 
-// });
-// $( ".kosmetica" ).hover(function() {
-//   $(".catalogBlock").empty();
- 
-// });
-// $( ".medtehnika" ).hover(function() {
-//   $(".catalogBlock").empty();
- 
-// });
-// $( ".tovaryZdorovya" ).hover(function() {
-//   $(".catalogBlock").empty();
- 
-// });
-// $( ".vitaminu" ).hover(function() {
-//   $(".catalogBlock").empty();
- 
-// });
-// $( ".allCateg" ).hover(function() {
-//   $(".catalogBlock").empty();
- 
-// });
 
 
-
-});
 
 //перевірка і вивід імя користувача
 function username(){

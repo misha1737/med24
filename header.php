@@ -61,20 +61,14 @@
 					<button class="tovaryButton ">Товари <i class="fas fa-angle-down"></i></button>
 					<div class="arrow"></div>
 						<div class="tovaryMenu">
-							
-
 							<div class="col-md-3 catalogMenu">
-								 <?php include 'menu_catalog.php'; ?>
 							</div>
-							<!-- <div class="col-md-6 preparaty">
-								
-							</div>  -->
 
-						<div class="col-md-6 catalogBlockHeader">
-						
-								 <?php include 'categorii.php'; ?>
-								
-						</div>
+							<div class="col-md-6 catalog">
+
+							</div>
+
+							
 
 
 							<div class="col-md-3 bannerHeader">
@@ -90,7 +84,7 @@
 						<div class="poslugiMenu">
 							
 
-							<div class="col-md-3 catalogMenu">
+							<div class="col-md-3 catalogMenuPoslugi">
 								 <?php include 'menu_catalog.php'; ?>
 							</div>
 							<!-- <div class="col-md-6 preparaty">

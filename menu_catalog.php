@@ -1,4 +1,4 @@
-<ul>
+<!-- <ul>
 								
 								<li id="1" class=" kategoria_in lecarstveniPreparati">
 									<a href="catalog.php?categoria=1"><i class="fas fa-pills"></i>Категорія 1<i class="fas fa-angle-right"></a></i></li>
@@ -18,3 +18,15 @@
 									<a href="catalog.php?categoria=8"><i class="fas fa-pills"></i>Категорія 8<i class="fas fa-angle-right"></i></a></li>
 								<li  class="allCateg">All Categories<i class="fas fa-angle-right"></i></li>
 							</ul>
+ -->
+<div class="menuBlock">
+	<ul>
+		
+
+	</ul>
+</div>
+
+	
+
+
+

@@ -34,14 +34,15 @@
 
 <div class="catalogBlock col-md-9 ">
 	
-		<div class="ktg kategoria1">	<?php include 'categoriya1.php'; ?></div>
+	<!-- 	<div class="ktg kategoria1">	<?php include 'categoriya1.php'; ?></div>
 		<div class="ktg kategoria2">	<?php include 'categoriya2.php'; ?></div>
 		<div class="ktg kategoria3">	<?php include 'categoriya3.php'; ?></div>
 		<div class="ktg kategoria4">	<?php include 'categoriya4.php'; ?></div>
 		<div class="ktg kategoria5">	<?php include 'categoriya5.php'; ?></div>
 		<div class="ktg kategoria6">	<?php include 'categoriya6.php'; ?></div>
 		<div class="ktg kategoria7">	<?php include 'categoriya7.php'; ?></div>
-		<div class="ktg kategoria8">	<?php include 'categoriya8.php'; ?></div>
+		<div class="ktg kategoria8">	<?php include 'categoriya8.php'; ?></div> -->
+		 <?php include 'categorii.php'; ?>
 		
 
 	</div>

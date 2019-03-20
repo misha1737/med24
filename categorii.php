@@ -1,84 +1,22 @@
-<h5>Заголовок</h5>
-	<div class="row">	
-		<div class="col-md-3">			
-		<h4>Підкатегорія 1777</h4>
-		<p>Товар1</p>
-		<p>Товар2</p>
-		<p>Товар3</p>
-		</div>
-			<div class="col-md-3">			
-		<h4>Підкатегорія 1</h4>
-		<p>Товар1</p>
-		<p>Товар2</p>
-		<p>Товар3</p>
-		<p>Товар4</p>
-		<p>Товар5</p>
-		</div>
-		<div class="col-md-3">			
-		<h4>Підкатегорія 1</h4>
-		<p>Товар1</p>
-		<p>Товар2</p>
-		<p>Товар3</p>
-		</div>
-		<div class="col-md-3">			
-		<h4>Підкатегорія 1</h4>
-		<p>Товар1</p>
-		<p>Товар2</p>
-		<p>Товар3</p>
-		<p>Товар4</p>
-		<p>Товар5</p>
-		<p>Товар6</p>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-md-3">			
-		<h4>Підкатегорія 1</h4>
-		<p>Товар1</p>
-		<p>Товар2</p>
-		<p>Товар3</p>
-		<p>Товар4</p>
-		</div>
-		<div class="col-md-3">			
-		<h4>Підкатегорія 1</h4>
-		<p>Товар1</p>
-		<p>Товар2</p>
-		<p>Товар3</p>
-		<p>Товар4</p>
-		<p>Товар5</p>
-		</div>
-		<div class="col-md-3">			
-		<h4>Підкатегорія 1</h4>
-		<p>Товар1</p>
-		<p>Товар2</p>
-		<p>Товар3</p>
-		</div>
-		<div class="col-md-3">			
-		<h4>Підкатегорія 1</h4>
-		<p>Товар1</p>
-		<p>Товар2</p>
-		<p>Товар3</p>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-md-3">			
-		<h4>Підкатегорія 1</h4>
-		<p>Товар1</p>
-		<p>Товар2</p>
-		<p>Товар3</p>
-		<p>Товар4</p>
-		<p>Товар5</p>
-		<p>Товар6</p>
-		</div>
-		<div class="col-md-3">			
-		<h4>Підкатегорія 1</h4>
-		<p>Товар1</p>
-		<p>Товар2</p>
-		<p>Товар3</p>
-		</div>
-		<div class="col-md-3">			
-		<h4>Підкатегорія 1</h4>
-		<p>Товар1</p>
-		<p>Товар2</p>
-		<p>Товар3</p>
-		</div>
-	</div>
+
+
+<script>
+	
+
+  //  $.ajax({
+   //          url:'https://web-store-sample-vs.herokuapp.com/web-store/catalog/'+this.id
+   //          , type:'GET',
+   //        contentType:"application/json",
+   //           success: function(res) {
+   //             for(i=0;i<res.length;i++){
+   //             $(".catalogBlock").prepend("<h5 id="+res[i].id+">"+res[i].name+"</h5>");
+   //       }
+   //     }
+   //   });
+
+
+
+</script>
+	
+
+

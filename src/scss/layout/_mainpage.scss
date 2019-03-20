@@ -8,6 +8,67 @@
 cursor: pointer;
 	
 }
+
+
+
+.topBlock {
+
+		
+		h5{
+				font-size: 14px;
+					margin:0;
+		}
+		h6{
+			font-size: 12px;
+				margin: 5px 0;
+				cursor:pointer;
+		}
+		.categoria{
+
+			display:none;
+			&.active{
+				display:block;
+			}
+
+				.podcatalog{
+				display:flex;
+				width:100%;
+			//	float:right;
+			
+
+					.podpodcatalog{
+			display:inline-block;
+
+					}
+
+		}
+			h4{
+			@include text(14px, $green);
+			text-align: center;
+			}
+			.podcategoria{
+				padding:10px;
+				
+				//display:inline-block;
+			}
+		}
+		.catalogMenu{
+			h5{
+			@include text(14px);
+			margin:10px 0px;
+				&.active{
+					color:$green;
+				}
+			}
+		}
+	
+
+	}
+
+
+
+
+
 h3{
 	margin-top: 40px;
 	margin-bottom: 0px;
