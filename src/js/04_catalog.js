@@ -1,7 +1,5 @@
 
 
-
-
 function refreshToken(id){
                                                  
 
@@ -35,7 +33,7 @@ function refreshToken(id){
 
 }
 function addProduct(id) {
- 
+
                                                var cartVersion=0;
                                                var productCounter=0;
                                                var formData=0;
@@ -118,7 +116,7 @@ function addProduct(id) {
                                                           "productId": id
                                                            }
                                                       }
-                                                      formData.version=cart.version+1;
+                                                      formData.version=cart.version;
 
                                                 formData=JSON.stringify(formData);
 
@@ -215,7 +213,7 @@ console.log(id);
 
 
 
-                                                      formData.version=cart.version+1;
+                                                      formData.version=cart.version;
 
                                                formData=JSON.stringify(formData);
 
@@ -276,24 +274,7 @@ function eventHover(){
 
 
 
- function eventClick(node){
-  $.ajax({
-            url:'https://web-store-sample-vs.herokuapp.com/web-store/catalog/'+node+'/products'
-            , type:'GET',
-          contentType:"application/json",
-             success: function(res) {
-              $('.products').empty();
-                   for(i=0;i<res.length;i++){
-              $('.products').append("<p>id="+res[i].id+"<p>");
-        $('.products').append("<p>externalId="+res[i].externalId+"<p>");
-        $('.products').append("<p>name="+res[i].name+"<p>");
-        $('.products').append("<p>price="+res[i].priceWithVAT+"<p>");
-           }
-       }
-   
-     });
 
-}
 
  function getPodPodcategoria(idCategoria,idPodCategoria, node){
      $.ajax({
@@ -303,14 +284,13 @@ function eventHover(){
               contentType:"application/json",
                  success: function(res) {
                    for(i=0;i<res.length;i++){
-                   $(".tovaryMenu .catalog .podcatalog."+idCategoria+" .podpodcatalog."+idPodCategoria+" ").prepend("<h6 id="+res[i].nodeId+">"+res[i].name+"</h6>");
-            if(res[i].hasLinkedProducts){
-                 $(".tovaryMenu .catalog .podcatalog."+idCategoria+" .podpodcatalog."+idPodCategoria+" h6#"+res[i].nodeId+" ").addClass('hasProducts');
-                  $(".tovaryMenu .catalog .podcatalog."+idCategoria+" .podpodcatalog."+idPodCategoria+" h6#"+res[i].nodeId+" ").on("click", function() {
                   
-                    eventClick(this.id);
-                      });
+            if(res[i].hasLinkedProducts){
+              $(".tovaryMenu .catalog .podcatalog."+idCategoria+" .podpodcatalog."+idPodCategoria+" ").prepend("<a href=catalog.php?nodeId="+res[i].nodeId+"&product=true><h6 id="+res[i].nodeId+">"+res[i].name+"</h6></a>");
+                 
 
+              }else{
+                $(".tovaryMenu .catalog .podcatalog."+idCategoria+" .podpodcatalog."+idPodCategoria+" ").prepend("<a href=catalog.php?nodeId="+res[i].nodeId+"&product=false><h6 id="+res[i].nodeId+">"+res[i].name+"</h6></a>");
               }
              }
              
@@ -330,11 +310,14 @@ function eventHover(){
                  success: function(res) {
 
                    for(i=0;i<res.length;i++){
-                   $(".tovaryMenu .catalog .podcatalog."+idCategoria+"").prepend("<div class='podcategoria'><h5 id="+i+">"+res[i].name+"</h5><div class='podpodcatalog "+i+"'></div></div>");
+                   
                   
                 getPodPodcategoria(idCategoria,i, res[i].nodeId);      
             if(res[i].hasLinkedProducts){
-                 $(".tovaryMenu .catalog .podcatalog."+idCategoria+" h5#"+i+" ").addClass('hasProducts');
+               $(".tovaryMenu .catalog .podcatalog."+idCategoria+"").prepend("<div class='podcategoria'><a href=catalog.php?nodeId="+res[i].nodeId+"&product=true><h5 id="+i+">"+res[i].name+"</h5></a><div class='podpodcatalog "+i+"'></div></div>");
+
+              }else{
+              $(".tovaryMenu .catalog .podcatalog."+idCategoria+"").prepend("<div class='podcategoria'><a href=catalog.php?nodeId="+res[i].nodeId+"&product=false><h5 id="+i+">"+res[i].name+"</h5></a><div class='podpodcatalog "+i+"'></div></div>");
 
               }   
 
@@ -357,8 +340,8 @@ function eventHover(){
           contentType:"application/json",
              success: function(res) {
                for(i=0;i<res.length;i++){
-               $(".tovaryMenu .catalog").prepend("<div class='categoria id"+i+"'><h4>"+res[i].name+"</h4><div class='podcatalog "+i+"'></div></div>");
-               $(".tovaryMenu .catalogMenu").prepend("<h5 id="+i+">"+res[i].name+"</h5>");
+               $(".tovaryMenu .catalog").prepend("<div class='categoria id"+i+"'><a href=catalog.php?nodeId="+res[i].nodeId+"&product=false><h4>"+res[i].name+"</h4></a><div class='podcatalog "+i+"'></div></div>");
+               $(".tovaryMenu .catalogMenu").prepend("<a href=catalog.php?nodeId="+res[i].nodeId+"&product=false><h5 id="+i+">"+res[i].name+"</h5></a>");
                getPodcategoria(i, res[i].nodeId);
          }
           eventHover();
@@ -376,8 +359,6 @@ getCategoria();
  }
 
 
-
-
 function MenuCatalogRender(){
 
 
@@ -386,19 +367,6 @@ function renderCategoriya(){
 
   $(".catalogPoslugi").css("display","none");
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 function eventHover(){
@@ -425,25 +393,6 @@ function eventHover(){
 
 
 
- function eventClick(node){
-  $.ajax({
-            url:'https://web-store-sample-vs.herokuapp.com/web-store/catalog/'+node+'/products'
-            , type:'GET',
-          contentType:"application/json",
-             success: function(res) {
-              $('.products').empty();
-                   for(i=0;i<res.length;i++){
-              $('.products').append("<p>id="+res[i].id+"<p>");
-        $('.products').append("<p>externalId="+res[i].externalId+"<p>");
-        $('.products').append("<p>name="+res[i].name+"<p>");
-        $('.products').append("<p>price="+res[i].priceWithVAT+"<p>");
-           }
-       }
-   
-     });
-
-}
-
  function getPodPodcategoria(idCategoria,idPodCategoria, node){
      $.ajax({
                 url:'https://web-store-sample-vs.herokuapp.com/web-store/catalog/'+node
@@ -452,15 +401,14 @@ function eventHover(){
               contentType:"application/json",
                  success: function(res) {
                    for(i=0;i<res.length;i++){
-                   $(".topBlock .catalogBlock .podcatalog."+idCategoria+" .podpodcatalog."+idPodCategoria+" ").prepend("<h6 id="+res[i].nodeId+">"+res[i].name+"</h6>");
-            if(res[i].hasLinkedProducts){
-                 $(".topBlock .catalogBlock .podcatalog."+idCategoria+" .podpodcatalog."+idPodCategoria+" h6#"+res[i].nodeId+" ").addClass('hasProducts');
-                  $(".topBlock .catalogBlock .podcatalog."+idCategoria+" .podpodcatalog."+idPodCategoria+" h6#"+res[i].nodeId+" ").on("click", function() {
                   
-                    eventClick(this.id);
-                      });
-
-              }
+            if(res[i].hasLinkedProducts){
+                    $(".topBlock .catalogBlock .podcatalog."+idCategoria+" .podpodcatalog."+idPodCategoria+" ").prepend("<a href=catalog.php?nodeId="+res[i].nodeId+"&product=true><h6 id="+res[i].nodeId+">"+res[i].name+"</h6></a>");
+                  }else{
+                     $(".topBlock .catalogBlock .podcatalog."+idCategoria+" .podpodcatalog."+idPodCategoria+" ").prepend("<a href=catalog.php?nodeId="+res[i].nodeId+"&product=false><h6 id="+res[i].nodeId+">"+res[i].name+"</h6></a>");
+                  }
+         
+              
              }
              
            },
@@ -479,14 +427,17 @@ function eventHover(){
                  success: function(res) {
 
                    for(i=0;i<res.length;i++){
-                   $(".topBlock .catalogBlock .podcatalog."+idCategoria+"").prepend("<div class='podcategoria'><h5 id="+i+">"+res[i].name+"</h5><div class='podpodcatalog "+i+"'></div></div>");
+                   
                   
-                getPodPodcategoria(idCategoria,i, res[i].nodeId);      
+                
             if(res[i].hasLinkedProducts){
-                 $(".topBlock .catalogBlock .podcatalog."+idCategoria+" h5#"+i+" ").addClass('hasProducts');
+                 $(".topBlock .catalogBlock .podcatalog."+idCategoria+"").prepend("<div class='podcategoria'><a href=catalog.php?nodeId="+res[i].nodeId+"&product=true><h5 id="+i+">"+res[i].name+"</h5></a><div class='podpodcatalog "+i+"'></div></div>");
 
-              }   
-
+              }else{
+                $(".topBlock .catalogBlock .podcatalog."+idCategoria+"").prepend("<div class='podcategoria'><a href=catalog.php?nodeId="+res[i].nodeId+"&product=false><h5 id="+i+">"+res[i].name+"</h5></a><div class='podpodcatalog "+i+"'></div></div>");
+                  
+              }
+              getPodPodcategoria(idCategoria,i, res[i].nodeId);      
              }
 
            },
@@ -506,8 +457,8 @@ function eventHover(){
           contentType:"application/json",
              success: function(res) {
                for(i=0;i<res.length;i++){
-               $(".topBlock .catalogBlock").prepend("<div class='categoria id"+i+"'><h4>"+res[i].name+"</h4><div class='podcatalog "+i+"'></div></div>");
-               $(".topBlock  .catalogMenu .menuBlock").prepend("<h5 id="+i+">"+res[i].name+"</h5>");
+               $(".topBlock .catalogBlock").prepend("<div class='categoria id"+i+"'><a href=catalog.php?nodeId="+res[i].nodeId+"&product=false><h4>"+res[i].name+"</h4></a><div class='podcatalog "+i+"'></div></div>");
+               $(".topBlock  .catalogMenu .menuBlock").prepend("<a href=catalog.php?nodeId="+res[i].nodeId+"&product=false><h5 id="+i+">"+res[i].name+"</h5></a>");
                getPodcategoria(i, res[i].nodeId);
          }
           eventHover();
@@ -524,42 +475,35 @@ getCategoria();
 
  }
 
-
-
-
    headerMenuCatalogRender();
    MenuCatalogRender();
 
- 
 
- 
+ // $(".menuBlock li").click(function() {
+ //                console.log("h5");
+ //                console.log("id="+this.id);
+ //          $.ajax({
+ //             url:'https://web-store-sample-vs.herokuapp.com/web-store/catalog/'+this.id
+ //             , type:'GET',
+ //           contentType:"application/json",
+ //             success: function(res) {
 
+ //               $(".content .container .row").empty();
 
- $(".menuBlock li").click(function() {
-                console.log("h5");
-                console.log("id="+this.id);
-          $.ajax({
-             url:'https://web-store-sample-vs.herokuapp.com/web-store/catalog/'+this.id
-             , type:'GET',
-           contentType:"application/json",
-             success: function(res) {
+ //                for(i=0;i<res.length;i++){
 
-               $(".content .container .row").empty();
-
-                for(i=0;i<res.length;i++){
-
-                $(".content .container .row").prepend("<div class='productBlock'> <div class='product' id="+res[i].name+">"+res[i].name+"</div></div>");
+ //                $(".content .container .row").prepend("<div class='productBlock'> <div class='product' id="+res[i].name+">"+res[i].name+"</div></div>");
        
-                                         }
+ //                                         }
 
-                                       }
+ //                                       }
 
-                });
+ //                });
 
   
 
 
-                 });
+ //                 });
 
         
 
@@ -623,32 +567,6 @@ $(document).mouseup(function (e) {
          }
        }
      });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -732,3 +650,71 @@ $( "lecarstveniPreparati" ).hover(function() {
 });
 
 
+
+  function renderProducts(){
+
+var breadcrumbs;
+    var catalog= $('.productsList').text();
+    if(!catalog){
+      return 0;
+    }
+    catalog=catalog.slice(0, -1);
+
+    $('.productsList').empty();
+     catalog= JSON.parse(catalog);
+
+      for (var i=0 ; i<catalog.length; i++) {
+        // breadcrumbs= catalog[i].path;
+       if(catalog[i].hasLinkedProducts){
+
+        $(' .productsList').append("<a href=catalog.php?nodeId="+catalog[i].nodeId+"&product=ture><h4>"+catalog[i].name+"</h4></a>");
+      }else
+      {
+       $(' .productsList').append("<a href=catalog.php?nodeId="+catalog[i].nodeId+"&product=false><h4>"+catalog[i].name+"</h4></a>");
+      }
+
+   // console.log(products[1].nodeId);
+  } 
+  if (catalog.length>0){
+  $('.productsList').css('display','block');
+  }
+
+   var products= $('.products').text();
+    if(!products){
+      return 0;
+    }
+    products=products.slice(0, -1);
+    $('.products').empty();
+     products= JSON.parse(products);
+        for (var i=0 ; i<products.length; i++) {
+
+           // alert( products[i].name);
+           $('.products').append("<div class='catelogElemet'><div class='product' id="+products[i].id+"><img src='img/test.jpg'><h5>"+products[i].name+"</h5><p class='price'>Ціна ="+products[i].priceWithVAT+ "</p></div></div>");
+            $('.products  #'+products[i].id).append(" <button onclick='addProduct("+products[i].id+")' id="+products[i].id+">Добавить в корзину</button>");
+        $('.products #'+products[i].id).append(" <a href=product.php?productId="+products[i].id+">Детальніше</a>");
+ }
+     if (products.length>0){
+       $('.products').css('display','block');   
+      }
+    //  console.log(products.length);
+     // console.log(catalog.length);
+      // if (products.length==0 && catalog.length==0){
+      //     alert("ffff");
+      //   $('.productsList').css('display','block');
+      //   $(' .productsList').append("<h5>В цій категорії товарів немає</h5>");
+      //  }
+   // return 1;
+  
+$('.breadcrumbs .thisPage').empty();
+$('.breadcrumbs .thisPage').append(breadcrumbs);
+
+  }  
+ 
+renderProducts();
+         var linkstoProducts=$('.productsList a');
+         var linkstoCatalog=$('.products a');
+        if((linkstoProducts.length+linkstoCatalog.length)>0){
+        }else{
+           $('.productsList').css('display','block');
+           $(' .testList .productsList').append("<h5>В цій категорії товарів немає</h5>");
+        }

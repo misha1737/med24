@@ -36,7 +36,7 @@
 
 	</footer>
 <script>
-	renderCartPage()
+	renderCartPage();
 </script>
 	
 </body>

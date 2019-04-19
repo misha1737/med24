@@ -1,5 +1,5 @@
 
-
+//alert(filter);
 var filter=false;
 
 $(" .filter-off").click(function() {
@@ -56,7 +56,7 @@ $(" .glyphicon-th-list").removeClass("selected");
 $(" .glyphicon-th ").addClass("selected");
 //localStorage.setItem("optionCatalogList",false);
 }
-
+setList();
 $(" .glyphicon-th-list").click(function() {
 setList();
 localStorage.setItem("optionCatalogList",'true');

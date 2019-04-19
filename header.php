@@ -85,7 +85,7 @@
 							
 
 							<div class="col-md-3 catalogMenuPoslugi">
-								 <?php include 'menu_catalog.php'; ?>
+								 
 							</div>
 							<!-- <div class="col-md-6 preparaty">
 								

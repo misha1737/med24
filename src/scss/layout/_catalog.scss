@@ -71,14 +71,14 @@
 	overflow: hidden;
 	position: relative;
 	a{
-		position: absolute;
+	
 		bottom:0;
 		background:white;
 		@include text(16px);
 		line-height: 36px;
-		color:$green;
+		color:$blue;
 		display:block;
-		text-align: center;
+		text-align: left;
 		width:100%;
 		text-decoration: none;
 
@@ -164,10 +164,16 @@
 	}
 }
 .productBlock{
+
 	    padding-top: 10px;
+	    //min-height: 300px;
+	    width:24%;
+		display:inline-block;
+		margin-right:5px;
 	.product{
+			//display:flex;
 		background: $white;
-		min-height: 490px;
+		min-height: 300px;
 		h5{
 			height: 72px;
 			overflow:hidden;
@@ -175,6 +181,7 @@
 			padding: 3px 18px;
 		}
 		img{
+			margin-top: 15px;
 			width:86%;
 			margin-left: 7%;
 		}
@@ -190,6 +197,15 @@
 			padding: 3px 18px;
 			margin: 0px;
 			
+		}
+		a{
+			display:inline-block;
+			@include button(14px, 5px, 86%, $green);
+			margin-left: 7%;
+			text-align: center;
+			margin-top: 10px;
+			margin-bottom: 10px;
+			text-decoration: none;
 		}
 		button{
 			@include button(14px, 5px, 86%, $blue);
@@ -207,8 +223,15 @@
 	    border-right:15px solid $lGray;
 	      border-left:15px solid $lGray;
 	 .product{
-	 	
+	 	position: relative;
+	 	//display: flex;
+	 	height:200px;
 	// 	min-height: 490px;
+		a{
+			//    width: 60%;
+	    //display: inline-block;
+		}
+		
 	 	h5{
 	 		//height: 72px;
 	 		//overflow:hidden;
@@ -221,7 +244,7 @@
 	 	img{
 			//width:86%;
 			//margin-left: 5%;
-			width: 30%;
+			height: 200px;
 			float:left;
 			padding:10px 0;
 			padding-left: 10px;
@@ -236,25 +259,50 @@
 			width:65%;
 		}
 		.price{
+			position: absolute;
+			bottom:0;
+			right:15px;
 			@include text(14px);
 			color:$red;
-			display: inline-block;
+			//display: inline-block;
 			margin: 0px;
 				padding-left: 15px;
-				width:65%;
+			//	width:65%;
 			
 		}
 		button{
+			display:inline-block;
 			@include button(14px, 5px, 100px, $blue);
-			margin-left: 15px;
-			width:65%;
-			position: absolute;
+			margin-left: 10px;
+			width:30%;
+			//position: absolute;
+			//margin-top: 150px;
 			bottom:15px;
 			left:30%;
 
 			//margin:8px;
 		}
+		a{
+			display:inline-block;
+			@include button(14px, 5px, 50%, $green);
+			//margin-left: 10px;
+			width:30%;
+			//margin-top: 150px;
+			text-align: center;
+			margin-top: 10px;
+			margin-bottom: 10px;
+			text-decoration: none;
+		}
 	 }
+}
+.productsList{
+display:none;
+background-color: white;
+margin:5px 15px ;
+padding:15px;
+}
+.products{
+display:none;
 }
 
 .catalog{
@@ -286,13 +334,15 @@
 
 @media only screen and (max-width : 1000px) {
 	.catalogMenu{
-	min-height: 400px;
+	min-height: 100px;
 	}
 	.productBlockList{
-		min-height: 200px;
+		min-height: 250px;
 		.product{
+			height:100px;
 			img{
-				width:20%;
+		//	width:20%
+			height:100px;
 			margin:0px;
 			padding-left: 0;
 			margin-left: 5%;
@@ -307,11 +357,7 @@
 			}
 		
 			.price{
-			width:90%;
-			margin:0px;
-			margin-left: 5%;
-			margin-bottom: 5px;
-			padding-left: 0px;
+		
 			}
 		button{
 			position: static;
@@ -322,13 +368,37 @@
 			//padding:0px;
 			//margin:8px;
 		}
+		a{
+			position: static;
+			width:90%;
+			margin:0px;
+			margin-left: 5%;
+			margin-bottom: 5px;
+		}
 		h5{
 			font-size: 12px;
 		}
 		}
 	}
+
+.productBlock{
+
+	    width:48%;
+		
+
 }
 
 
 
+}
+@media only screen and (max-width : 500px) {
 
+.productBlock{
+
+	    width:100%;
+		
+
+}
+
+
+}

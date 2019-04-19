@@ -36,7 +36,15 @@ function getCart(){
                                                         getCart();
                                                       }  
                               }
-                              
+                              if (jqXHR.status == 400) {
+                                                     //document.location.href = 'autorization.php';
+                                                    //  alert('error400');
+                                                      var productCounter=0;
+                                                      var totalPrise=0;
+                                                      setCartsCounter();
+                                                       setTotalPrise();
+                                                     }
+                                                   
 
                                 }
                                });
@@ -57,7 +65,12 @@ function deleteCart(){
                                  success: function(res) {
                                         console.log('Корзина видаленна');
                                          localStorage.removeItem("cartId");
-                                          localStorage.removeItem("cart");                           
+                                          localStorage.removeItem("cart");   
+                                           localStorage.removeItem("totalPrise");
+                                          localStorage.removeItem("productCounter");
+                                           setCartsCounter();
+                                                       setTotalPrise();   
+
                               }, error: function (jqXHR, exception){
              
                                 console.log("error корзина не видаленна");  
@@ -75,6 +88,7 @@ function renderCartPage(){
 
 				getCart();
         var cart=localStorage.getItem("cart");
+        if (cart===null){}else{
           cart=JSON.parse(cart);           
                             for(var i=0; i<cart.orderItems.length;i++){
                             	$('.content .cartList').append('<div class="productCart" id="'+cart.orderItems[i].product.id+'"></div>');
@@ -90,4 +104,6 @@ function renderCartPage(){
                                 deleteProduct(this.id);
            
                          });  
+        
+        }
    };

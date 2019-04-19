@@ -142,14 +142,14 @@ $("span.exit").click(function() {
  $(".poslugiButton").click(function(){
 
 
-  document.location.href = 'filter.php';
+  document.location.href = 'catalog.php';
 
  });
 
   $(".tovaryButton").click(function(){
 
 
-  document.location.href = 'filter.php';
+  document.location.href = 'catalog.php';
 
  });
 
