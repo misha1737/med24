@@ -1,0 +1,54 @@
+.admin{
+	.adminNav{
+		margin-top: 20px;
+		background-color: white;
+		li{
+			margin:5px 0;
+			cursor: pointer;
+			@include text(18px);
+			list-style: none;
+			text-transform: uppercase;
+		}
+		
+	}
+	.adminInfoBlock{
+		margin-top: 20px;
+		@include text(14px);
+
+		
+		.order{
+		
+		background-color: white;
+		margin:20px;	
+		padding: 20px;
+			.buttonOrder{
+				color:$green;
+				float:right;
+				font-size: 24px;
+				cursor:pointer;
+			}
+			.productsOrder{
+				@include text(12px);
+				&.disabled{
+					display:none;
+				}
+				.productOrder{
+				border:3px solid $lGray;
+				margin:2px 0;
+					.price{
+						color:$green;
+						text-align: right;
+						font-size: 12px;
+					}
+				}
+				.totalPrice{
+					font-size: 16px;
+						color:$blue;
+						text-align: right;
+					}
+			}
+		}
+
+
+	}
+}

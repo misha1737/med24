@@ -59,5 +59,5 @@
 	renderCartPage()
 </script>
 		<script>$("#phone").mask("+38(999) 999-9999");</script>
-		<script src="js/zamovlenya.js"></script>
+		<!-- <script src="js/zamovlenya.js"></script> -->
 </body>
