@@ -649,11 +649,49 @@ $( "lecarstveniPreparati" ).hover(function() {
 
 });
 
+function breadcrumbsRender(catalog){
+    var nodes = [];
+$(' .filter .categoria ').append("<a href=catalog.php><label for='subCategory1'> < Всі категорії <span>x</span></label></a>");
+  for (var i=0 ; i<catalog.length; i++) {
+nextInput:
+    for (var j=0 ; j<catalog[i].parentNodes.length; j++){
 
+                  var str = catalog[i].parentNodes[j].nodeId;
+                  
+                  for (var q = 0; q < nodes.length; q++){
+                    console.log('q');
+                     if(nodes[q]==str){
+                     console.log('1');
+                    continue nextInput;
+                   }
+
+                 
+
+                  }
+
+             nodes.push(catalog[i].parentNodes[j].nodeId);
+
+            
+       
+            
+
+
+        $('.filter .categoria ').append("<a href=catalog.php?nodeId="+catalog[i].parentNodes[j].nodeId+"&product=false><label for='subCategory1'> < "+ catalog[i].parentNodes[j].name+" <span>x</span></label></a>");
+          //console.log('444');
+    }
+    
+  }
+
+ console.log(nodes);
+  
+
+
+
+}
 
   function renderProducts(){
 
-var breadcrumbs;
+
     var catalog= $('.productsList').text();
     if(!catalog){
       return 0;
@@ -662,10 +700,19 @@ var breadcrumbs;
 
     $('.productsList').empty();
      catalog= JSON.parse(catalog);
+    
+      breadcrumbsRender(catalog);
+
 
       for (var i=0 ; i<catalog.length; i++) {
+
+         
         // breadcrumbs= catalog[i].path;
+      //console.log(catalog[i].parentNodes[0].name)
        if(catalog[i].hasLinkedProducts){
+
+
+        
 
         $(' .productsList').append("<a href=catalog.php?nodeId="+catalog[i].nodeId+"&product=ture><h4>"+catalog[i].name+"</h4></a>");
       }else
@@ -680,22 +727,27 @@ var breadcrumbs;
   }
 
    var products= $('.products').text();
-    if(!products){
-      return 0;
-    }
+   
+
     products=products.slice(0, -1);
     $('.products').empty();
      products= JSON.parse(products);
-        for (var i=0 ; i<products.length; i++) {
+     console.log(products.content);
+      if(!products.content){
+      return 0;
+    }else{
 
-           // alert( products[i].name);
-           $('.products').append("<div class='catelogElemet'><div class='product' id="+products[i].id+"><img src='img/test.jpg'><h5>"+products[i].name+"</h5><p class='price'>Ціна ="+products[i].priceWithVAT+ "</p></div></div>");
-            $('.products  #'+products[i].id).append(" <button onclick='addProduct("+products[i].id+")' id="+products[i].id+">Добавить в корзину</button>");
-        $('.products #'+products[i].id).append(" <a href=product.php?productId="+products[i].id+">Детальніше</a>");
+        for (var i=0 ; i<products.content.length; i++) {
+
+          //  alert( products.length);
+           $('.products').append("<div class='catelogElemet'><div class='product' id="+products.content[i].id+"><img src='img/test.jpg'><h5>"+products.content[i].name+"</h5><p class='price'>Ціна ="+products.content[i].priceWithVAT+ "</p></div></div>");
+            $('.products  #'+products.content[i].id).append(" <button onclick='addProduct("+products.content[i].id+")' id="+products.content[i].id+">Добавить в корзину</button>");
+        $('.products #'+products.content[i].id).append(" <a href=product.php?productId="+products.content[i].id+">Детальніше</a>");
  }
-     if (products.length>0){
+     if (products.content.length>0){
        $('.products').css('display','block');   
       }
+    }
     //  console.log(products.length);
      // console.log(catalog.length);
       // if (products.length==0 && catalog.length==0){
@@ -705,8 +757,9 @@ var breadcrumbs;
       //  }
    // return 1;
   
-$('.breadcrumbs .thisPage').empty();
-$('.breadcrumbs .thisPage').append(breadcrumbs);
+
+//$('.breadcrumbs .thisPage').empty();
+//$('.breadcrumbs .thisPage').append(breadcrumbs);
 
   }  
  

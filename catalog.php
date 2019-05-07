@@ -29,25 +29,12 @@
 			<div class="col-sm-3 filter">
 				<h4>Категорія</h4>	
 				<form class="categoria">
-				   
-				    <label for="subCategory1"> < Категорія4 <span>x</span></label>
-					<br>
-				   
-				    <label for="subCategory2">&nbsp; < Підкатегорія2 <span>x</span></label>
-<br>
-				  
-				    <label for="subCategory3">&nbsp;&nbsp; < Товари7 <span>x</span></label>
-<br>
-
+			
 			<div class="pdcatalog">
-		 <label for="subCategory3">&nbsp;&nbsp; ^ ще менша категорія1 (30)</label>
-		 <br>
-		 <label for="subCategory3">&nbsp;&nbsp; ^ ще менша категорія2 (124)</label>
-		 <br>
-		 <label for="subCategory3">&nbsp;&nbsp; ^ ще менша категорія3 (11)</label>
-		 <br>
-		 <label for="subCategory3">&nbsp;&nbsp; ^ ще менша категорія4 (6)</label>
+		
 		 </div>
+
+
 <br>	
 
 				</form>
@@ -160,11 +147,10 @@
 			</div>
 			<div class="col-sm-12 filterOption">	
 				Сортировка:
-				   <select>
-				    <option value="">Популярні</option>
-				    <option value="">Від дорогих до дешевих</option>
-				    <option value="">Від дешевих до дорогих</option>
-				    <option value="">По рейтингу</option>
+				   <select id="sortingOption">
+				    <option value="name">По імені</option>
+				<!--     <option value="ask">Від дорогих до дешевих</option> -->
+				    <option value="desk">Від дешевих до дорогих</option>
 				   </select>
 				   <div class="abzac"> </div>
 					<span class="paginationO">1</span>
@@ -197,26 +183,35 @@
                           curl_close($ch); 
                            echo $data;
               }
-       // echo $product;
-            if ($product=='false'){
-            $url='https://web-store-sample-vs.herokuapp.com/web-store/catalog/'. $node;
-            echo "<div class='productsList'>";
-              getCatalog($url);
-            echo "</div>";
-
-          //echo  $product;
-            }else{
+			$url='https://web-store-sample-vs.herokuapp.com/web-store/catalog/'. $node;
               echo "<div class='productsList'>";
-              $url='https://web-store-sample-vs.herokuapp.com/web-store/catalog/'. $node;
-               getCatalog($url);
-              echo "</div>";
+              getCatalog($url);
+             echo "</div>";
+
+	$url2='https://web-store-sample-vs.herokuapp.com/web-store/catalog/'. $node. '/products';
               echo "<div class='products'>";
-               $url='https://web-store-sample-vs.herokuapp.com/web-store/catalog/'. $node. '/products';
-               getCatalog($url);
-               echo "</div>";
-             // $url='https://web-store-sample-vs.herokuapp.com/web-store/catalog/'. $node;
-           // echo  $product;  echo  $product;
-            }
+              getCatalog($url2);
+             echo "</div>";
+       // echo $product;
+          //   if ($product=='false'){
+          //   $url='https://web-store-sample-vs.herokuapp.com/web-store/catalog/'. $node;
+          //   echo "<div class='productsList'>";
+          //     getCatalog($url);
+          //   echo "</div>";
+
+          // //echo  $product;
+          //   }else{
+          //     echo "<div class='productsList'>";
+          //     $url='https://web-store-sample-vs.herokuapp.com/web-store/catalog/'. $node;
+          //      getCatalog($url);
+          //     echo "</div>";
+          //     echo "<div class='products'>";
+          //      $url='https://web-store-sample-vs.herokuapp.com/web-store/catalog/'. $node. '/products';
+          //      getCatalog($url);
+          //      echo "</div>";
+          //    // $url='https://web-store-sample-vs.herokuapp.com/web-store/catalog/'. $node;
+          //  // echo  $product;  echo  $product;
+          //   }
 
            
             

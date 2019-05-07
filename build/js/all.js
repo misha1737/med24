@@ -846,11 +846,49 @@ $( "lecarstveniPreparati" ).hover(function() {
 
 });
 
+function breadcrumbsRender(catalog){
+    var nodes = [];
+$(' .filter .categoria ').append("<a href=catalog.php><label for='subCategory1'> < Всі категорії <span>x</span></label></a>");
+  for (var i=0 ; i<catalog.length; i++) {
+nextInput:
+    for (var j=0 ; j<catalog[i].parentNodes.length; j++){
 
+                  var str = catalog[i].parentNodes[j].nodeId;
+                  
+                  for (var q = 0; q < nodes.length; q++){
+                    console.log('q');
+                     if(nodes[q]==str){
+                     console.log('1');
+                    continue nextInput;
+                   }
+
+                 
+
+                  }
+
+             nodes.push(catalog[i].parentNodes[j].nodeId);
+
+            
+       
+            
+
+
+        $('.filter .categoria ').append("<a href=catalog.php?nodeId="+catalog[i].parentNodes[j].nodeId+"&product=false><label for='subCategory1'> < "+ catalog[i].parentNodes[j].name+" <span>x</span></label></a>");
+          //console.log('444');
+    }
+    
+  }
+
+ console.log(nodes);
+  
+
+
+
+}
 
   function renderProducts(){
 
-var breadcrumbs;
+
     var catalog= $('.productsList').text();
     if(!catalog){
       return 0;
@@ -859,10 +897,19 @@ var breadcrumbs;
 
     $('.productsList').empty();
      catalog= JSON.parse(catalog);
+    
+      breadcrumbsRender(catalog);
+
 
       for (var i=0 ; i<catalog.length; i++) {
+
+         
         // breadcrumbs= catalog[i].path;
+      //console.log(catalog[i].parentNodes[0].name)
        if(catalog[i].hasLinkedProducts){
+
+
+        
 
         $(' .productsList').append("<a href=catalog.php?nodeId="+catalog[i].nodeId+"&product=ture><h4>"+catalog[i].name+"</h4></a>");
       }else
@@ -877,22 +924,27 @@ var breadcrumbs;
   }
 
    var products= $('.products').text();
-    if(!products){
-      return 0;
-    }
+   
+
     products=products.slice(0, -1);
     $('.products').empty();
      products= JSON.parse(products);
-        for (var i=0 ; i<products.length; i++) {
+     console.log(products.content);
+      if(!products.content){
+      return 0;
+    }else{
 
-           // alert( products[i].name);
-           $('.products').append("<div class='catelogElemet'><div class='product' id="+products[i].id+"><img src='img/test.jpg'><h5>"+products[i].name+"</h5><p class='price'>Ціна ="+products[i].priceWithVAT+ "</p></div></div>");
-            $('.products  #'+products[i].id).append(" <button onclick='addProduct("+products[i].id+")' id="+products[i].id+">Добавить в корзину</button>");
-        $('.products #'+products[i].id).append(" <a href=product.php?productId="+products[i].id+">Детальніше</a>");
+        for (var i=0 ; i<products.content.length; i++) {
+
+          //  alert( products.length);
+           $('.products').append("<div class='catelogElemet'><div class='product' id="+products.content[i].id+"><img src='img/test.jpg'><h5>"+products.content[i].name+"</h5><p class='price'>Ціна ="+products.content[i].priceWithVAT+ "</p></div></div>");
+            $('.products  #'+products.content[i].id).append(" <button onclick='addProduct("+products.content[i].id+")' id="+products.content[i].id+">Добавить в корзину</button>");
+        $('.products #'+products.content[i].id).append(" <a href=product.php?productId="+products.content[i].id+">Детальніше</a>");
  }
-     if (products.length>0){
+     if (products.content.length>0){
        $('.products').css('display','block');   
       }
+    }
     //  console.log(products.length);
      // console.log(catalog.length);
       // if (products.length==0 && catalog.length==0){
@@ -902,8 +954,9 @@ var breadcrumbs;
       //  }
    // return 1;
   
-$('.breadcrumbs .thisPage').empty();
-$('.breadcrumbs .thisPage').append(breadcrumbs);
+
+//$('.breadcrumbs .thisPage').empty();
+//$('.breadcrumbs .thisPage').append(breadcrumbs);
 
   }  
  
@@ -1055,11 +1108,16 @@ function renderCartPage(){
         }
    };
 
-function startSearch(name, page){
+function startSearch(name, page=0, sortParam='name', param='asc'){
+
+
+
  $.ajax({
-             url:'https://web-store-sample-vs.herokuapp.com/web-store/catalog/search?name='+name+'&page='+page+'&size=12',
+
+             url:'https://web-store-sample-vs.herokuapp.com/web-store/catalog/search?name='+name+'&page='+page+'&size=12'+'&sort='+sortParam,
           contentType:"application/json",
               success: function(res) {
+              
               	if (res.content.length==0){
          				console.log("Не знайдено")
          				$(".content .container .row .search").append("<h3>Нічого не знайдено</h3>")
@@ -1070,7 +1128,7 @@ function startSearch(name, page){
 				for(i=0;i<res.content.length;i++){
 //test
 
- 
+             // $(".content .container .row .search").remove();
                $(".content .container .row .search").append("<div class='col-md-4 col-lg-3 col-sm-6 catelogElemet'> <div class='product' id="+res.content[i].id+"></div></div>");
 
             //   $(" .content .container .row .search").append("<div class='col-md-4 col-lg-4 col-sm-6  catelogElemet'> <div class='product' id="+res.content[i].id+"></div></div>");
@@ -1090,6 +1148,21 @@ function startSearch(name, page){
               $(".content .container .row .search #"+res.content[i].id+" ").append(" <a href=catalog.php?nodeId="+res.content[i].catalogTreeNodeId+"&product=true>Перейти в каталог</button></a>");
 
                                          }
+                                         //alert(res.totalPages);
+
+                                         for(var i=0; i<res.totalPages;i++){
+                                            
+
+                                            if(page==i){
+
+                                               $('.filterOption #pagesPagination').append('<span class="paginationO thisPage" onclick=search('+i+',true)>'+(i+1)+' </span>');
+                                            }else{
+                                          $('.filterOption #pagesPagination').append('<span class="paginationO" onclick=search('+i+',true)>'+(i+1)+' </span>');
+                                             }
+                                         }
+                                         // $(".search ").append("<div id='name'>"+ name+"<div>");
+                                           
+
                                             optionCatalog=localStorage.getItem("optionCatalogList");
                                             if (optionCatalog=="true"){
                                               setList();  
@@ -1102,13 +1175,15 @@ function startSearch(name, page){
                                             }
 
 
-					if (res.content.length==12){
+					if (!res.last){
          				console.log("Дуже багато")
          				$(".content .container .row .search").append("<button id='searchMore'>Показати ще результати</button>")
          			}
          				$(".content .container .row .search #searchMore").click(function() {
+                  $('.search  #pagesPagination .paginationO').remove();
          					$(".content .container .row .search #searchMore").remove();
-         					page++;
+               
+                  page++;
          						startSearch(name, page);
          				});
 
@@ -1126,14 +1201,42 @@ function startSearch(name, page){
 
   }
 
-function search()
+function search(page=0,dell)
 {
+  localStorage.setItem("page", page);
+  if(dell){
+
+
+    $('.search .catelogElemet').remove();
+    $('.search  h3').remove();
+       $('.search  #searchMore').remove();
+       $('.search  #pagesPagination .paginationO').remove();
+       
+  };
+
+var param='asc';
+  var sorting=$("#sortingOption option:selected").val();
+  if(sorting=='name'){
+     sorting='name'; 
+  }else
+    if(sorting=='ask'){
+    sorting='priceWithVAT'; 
+    param="ask";
+  }else
+    if(sorting=='desk'){
+      sorting='priceWithVAT'; 
+      param="desk";
+
+    }
+
+
 var name = $(".search #name").text().replace(/\s+/g,'');
 name =name.replace(/\s+/g,'&nbsp');
-$(".search #name").remove();
+//$(".search #name").emty();
 console.log(name);
-$("#Пошук .search").append("<h3>результат пошуку <span>"+ name+"</span>:</h3>")
-startSearch(name, 0)
+$("#Пошук .search").append("<h3>результат пошуку <span>"+ name+"</span>:</h3>");
+startSearch(name, page, sorting, param);
+
 			//var name=$(".search #name");
 
         
@@ -1141,91 +1244,40 @@ startSearch(name, 0)
 
 
 
+$('#sortingOption').change(function() {
+    $('.search .catelogElemet').remove();
+    $('.search  h3').remove();
+       $('.search  #searchMore').remove();
+       $('.search  #pagesPagination .paginationO').remove();
+       
+var param='asc';
+  var sorting=$("#sortingOption option:selected").val();
+  if(sorting=='name'){
+     sorting='name'; 
+  }else
+    if(sorting=='ask'){
+    sorting='priceWithVAT'; 
+    param="ask";
+  }else
+    if(sorting=='desk'){
+      sorting='priceWithVAT'; 
+      param="desk";
+
+    }
 
 
+var name = $(".search #name").text().replace(/\s+/g,'');
+name =name.replace(/\s+/g,'&nbsp');
 
 
-//          function startSearch(name, page){
-//  $.ajax({
-//              url:'https://web-store-sample-vs.herokuapp.com/web-store/catalog/search?name='+name+'&page='+page+'&size=12'
-//              , type:'GET',
-//           contentType:"application/json",
-//               success: function(res) {
-//                 if (res.content.length==0){
-//                 console.log("Не знайдено")
-//                 $(".content .container .row .search").append("<h3>Нічого не знайдено</h3>")
-//               }
-            
-          
-
-//         for(i=0;i<res.content.length;i++){
-// //test
-
-//                $("#Пошук .content .container .row .search").append("<div class='col-md-4 col-lg-3 col-sm-6 catelogElemet'> <div class='product' id="+res.content[i].id+"></div></div>");
-
-//                $("#Товар .content .container .row .search").append("<div class='col-md-4 col-lg-4 col-sm-6  catelogElemet'> <div class='product' id="+res.content[i].id+"></div></div>");
-               
-//                 $(".content .container .row .search #"+res.content[i].id+" ").prepend(" <h5>"+res.content[i].name+"</h5>");
-
-//                 //картинка
-//                 $(".content .container .row .search #"+res.content[i].id+" ").append(" <img src='img/test.jpg' >");
-//                 //картинка
-
-//                 $(".content .container .row .search #"+res.content[i].id+" ").append(" <p class='manufacturer'>Производитель:"+res.content[i].product.manufacturer+"</p>");
-                
-//                 $(".content .container .row .search #"+res.content[i].id+" ").append(" <p class='price'>Цена:"+res.content[i].product.priceWithVAT+"</p>");
-
-//                 $(".content .container .row .search #"+res.content[i].id+" ").append(" <button onclick='addProduct("+res.content[i].product.id+")' id="+res.content[i].product.id+">Добавить в корзину</button>");
-              
-//                                          }
-//                                             optionCatalog=localStorage.getItem("optionCatalogList");
-//                                             if (optionCatalog=="true"){
-//                                               setList();  
-//                                               console.log("ser")
-
-//                                             }else{
-//                                               setNotList();
-//                                               console.log("not ser")
-
-//                                             }
+page=localStorage.getItem("page");
 
 
-//           if (res.content.length==12){
-//                 console.log("Дуже багато")
-//                 $(".content .container .row .search").append("<button id='searchMore'>Показати ще результати</button>")
-//               }
-//                 $(".content .container .row .search #searchMore").click(function() {
-//                   $(".content .container .row .search #searchMore").remove();
-//                   page++;
-//                     startSearch(name, page);
-//                 });
+//alert(name+page+sorting);
 
+startSearch(name, page, sorting, param);
+  });
 
-//                },
-
-//          error: function (jqXHR, exception){
-         
-//          console.log("error");  
-//             //   
-//         return false;  
-//            }
-
-//         });
-
-//   }
-
-// function search()
-// {
-// var name = $(".search #name").text().replace(/\s+/g,'');
-// name =name.replace(/\s+/g,'&nbsp');
-// $(".search #name").remove();
-// console.log(name);
-// $("#Пошук .search").append("<h3>результат пошуку <span>"+ name+"</span>:</h3>")
-// startSearch(name, 0)
-//       //var name=$(".search #name");
-
-        
-//          };
 
 	width=document.body.clientWidth;
 console.log(width);
@@ -1389,7 +1441,8 @@ function getOrders(){
 
                                       			$('.adminInfoBlock #'+res[i].id+' .productsOrder').append('<div class="productOrder" id='+res[i].orderItems[j].id+'></div>');
                                       			$('.adminInfoBlock #'+res[i].orderItems[j].id).append('<div class="name">'+ res[i].orderItems[j].product.name +'</div>');
-                                      			$('.adminInfoBlock #'+res[i].orderItems[j].id).append('<div class="price">'+ res[i].orderItems[j].product.priceWithVAT +'</div>');
+                                           
+                                      			$('.adminInfoBlock #'+res[i].orderItems[j].id).append('<div class="priceAndCount">'+res[i].orderItems[j].productCount+'шт '+ '<span class="price">'+(res[i].orderItems[j].productCount * res[i].orderItems[j].product.priceWithVAT) +'</span>грн</div>');
                                    }
                                           var totalPrice=0
                                         var priceMas =  $('.adminInfoBlock #'+res[i].id+" .price");

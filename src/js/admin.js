@@ -27,7 +27,8 @@ function getOrders(){
 
                                       			$('.adminInfoBlock #'+res[i].id+' .productsOrder').append('<div class="productOrder" id='+res[i].orderItems[j].id+'></div>');
                                       			$('.adminInfoBlock #'+res[i].orderItems[j].id).append('<div class="name">'+ res[i].orderItems[j].product.name +'</div>');
-                                      			$('.adminInfoBlock #'+res[i].orderItems[j].id).append('<div class="price">'+ res[i].orderItems[j].product.priceWithVAT +'</div>');
+                                           
+                                      			$('.adminInfoBlock #'+res[i].orderItems[j].id).append('<div class="priceAndCount">'+res[i].orderItems[j].productCount+'шт '+ '<span class="price">'+(res[i].orderItems[j].productCount * res[i].orderItems[j].product.priceWithVAT) +'</span>грн</div>');
                                    }
                                           var totalPrice=0
                                         var priceMas =  $('.adminInfoBlock #'+res[i].id+" .price");

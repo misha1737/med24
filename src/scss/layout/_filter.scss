@@ -140,6 +140,9 @@ text-align: center;
 			&:hover{
 				color:$green;
 			}
+			&.thisPage{
+				color:$red;
+			}
 		}
 		span.glyphicon{
 			float:right;
