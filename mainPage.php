@@ -3,7 +3,10 @@
 			<div class="catalogMenu col-md-4">
 		</div>-->
 	
-
+<div id="preloader">
+		<img src="img/preloader.svg" alt="">
+		
+	</div>
 <div class="container">
 	<div class="row topBlock">
 

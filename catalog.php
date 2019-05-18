@@ -115,33 +115,38 @@
 
 
 			<div class="col-sm-12">
-				<div class="testList">
-					<div class="zagolovokFilter col-sm-12">Категорія4</div>	
-					<div class="col-sm-2 dodatkovaKategoria">
-						<a href="filter.php"><img class="img-responsive" src="img/test.jpg" alt="">	
-						 Додаткова категорія 1</a>	
-					</div>
-					<div class="col-sm-2 dodatkovaKategoria">
-						<a href="filter.php"><img class="img-responsive" src="img/test.jpg" alt="">	
-						 Додаткова категорія 2</a>	
-					</div>
-					<div class="col-sm-2 dodatkovaKategoria">
-						<a href="filter.php"> <img class="img-responsive" src="img/test.jpg" alt="">	
-						Додаткова категорія 3</a>	
-					</div>
-					<div class="col-sm-2 dodatkovaKategoria">
-						<a href="filter.php"><img class="img-responsive" src="img/test.jpg" alt="">	
-						 Додаткова категорія 4</a>	
-					</div>
-					<div class="col-sm-2 dodatkovaKategoria">
-						<a href="filter.php"><img class="img-responsive" src="img/test.jpg" alt="">	
-						 Додаткова категорія 5</a>	
-					</div>
-					<div class="col-sm-2 dodatkovaKategoria">
-						<a href="filter.php"><img class="img-responsive" src="img/test.jpg" alt="">	
-						 Додаткова категорія 6</a>	
-					</div>
-					
+				<div class="allCatalog">
+
+					<div class="zagolovokFilter col-sm-12">Каталог</div>	
+			
+						<?php
+
+        function getCatalog($url){
+               $ch = curl_init(); 
+                          // GET запрос указывается в строке URL 
+                          curl_setopt($ch, CURLOPT_URL, $url); 
+                          curl_setopt($ch, CURLOPT_HEADER, false);  
+                         // curl_setopt($ch,CURLOPT_POSTFIELDS,$fields );
+                          $data = curl_exec($ch); 
+                          curl_close($ch); 
+                           echo $data;
+              }
+              if($node=='all'){
+			$url='https://web-store-sample-vs.herokuapp.com/web-store/catalog/';
+              }else{
+
+			$url='https://web-store-sample-vs.herokuapp.com/web-store/catalog/'. $node. '/sub-categories';
+
+				}
+              echo "<div class='productsList'>";
+              getCatalog($url);
+             echo "</div>";
+
+	$url2='https://web-store-sample-vs.herokuapp.com/web-store/catalog/'. $node. '/products';
+             
+
+           
+					?>
 			
 				</div>
 			</div>
@@ -168,56 +173,13 @@
 
 			<div class="col-sm-12">
 			
-				  <div class="testList">
+				  <div class="allCatalog">
 
-    
-				<?php
-
-        function getCatalog($url){
-               $ch = curl_init(); 
-                          // GET запрос указывается в строке URL 
-                          curl_setopt($ch, CURLOPT_URL, $url); 
-                          curl_setopt($ch, CURLOPT_HEADER, false);  
-                         // curl_setopt($ch,CURLOPT_POSTFIELDS,$fields );
-                          $data = curl_exec($ch); 
-                          curl_close($ch); 
-                           echo $data;
-              }
-			$url='https://web-store-sample-vs.herokuapp.com/web-store/catalog/'. $node;
-              echo "<div class='productsList'>";
-              getCatalog($url);
-             echo "</div>";
-
-	$url2='https://web-store-sample-vs.herokuapp.com/web-store/catalog/'. $node. '/products';
-              echo "<div class='products'>";
+    			<?php
+				 echo "<div class='products'>";
               getCatalog($url2);
              echo "</div>";
-       // echo $product;
-          //   if ($product=='false'){
-          //   $url='https://web-store-sample-vs.herokuapp.com/web-store/catalog/'. $node;
-          //   echo "<div class='productsList'>";
-          //     getCatalog($url);
-          //   echo "</div>";
-
-          // //echo  $product;
-          //   }else{
-          //     echo "<div class='productsList'>";
-          //     $url='https://web-store-sample-vs.herokuapp.com/web-store/catalog/'. $node;
-          //      getCatalog($url);
-          //     echo "</div>";
-          //     echo "<div class='products'>";
-          //      $url='https://web-store-sample-vs.herokuapp.com/web-store/catalog/'. $node. '/products';
-          //      getCatalog($url);
-          //      echo "</div>";
-          //    // $url='https://web-store-sample-vs.herokuapp.com/web-store/catalog/'. $node;
-          //  // echo  $product;  echo  $product;
-          //   }
-
-           
-            
-           
-					?>
-
+				?>
       
 		     </div>
 			

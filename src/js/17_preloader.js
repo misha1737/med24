@@ -1,0 +1,4 @@
+
+function preloaderOff(){
+   $('#preloader').remove();
+}

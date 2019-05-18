@@ -116,31 +116,8 @@
 
 			<div class="col-sm-12">
 				<div class="testList">
-					<div class="zagolovokFilter col-sm-12">Категорія4</div>	
-					<div class="col-sm-2 dodatkovaKategoria">
-						<a href="filter.php"><img class="img-responsive" src="img/test.jpg" alt="">	
-						 Додаткова категорія 1</a>	
-					</div>
-					<div class="col-sm-2 dodatkovaKategoria">
-						<a href="filter.php"><img class="img-responsive" src="img/test.jpg" alt="">	
-						 Додаткова категорія 2</a>	
-					</div>
-					<div class="col-sm-2 dodatkovaKategoria">
-						<a href="filter.php"> <img class="img-responsive" src="img/test.jpg" alt="">	
-						Додаткова категорія 3</a>	
-					</div>
-					<div class="col-sm-2 dodatkovaKategoria">
-						<a href="filter.php"><img class="img-responsive" src="img/test.jpg" alt="">	
-						 Додаткова категорія 4</a>	
-					</div>
-					<div class="col-sm-2 dodatkovaKategoria">
-						<a href="filter.php"><img class="img-responsive" src="img/test.jpg" alt="">	
-						 Додаткова категорія 5</a>	
-					</div>
-					<div class="col-sm-2 dodatkovaKategoria">
-						<a href="filter.php"><img class="img-responsive" src="img/test.jpg" alt="">	
-						 Додаткова категорія 6</a>	
-					</div>
+					<div class="zagolovokFilter col-sm-12">Пошук</div>	
+					
 					
 			
 				</div>

@@ -278,7 +278,7 @@ function eventHover(){
 
  function getPodPodcategoria(idCategoria,idPodCategoria, node){
      $.ajax({
-                url:'https://web-store-sample-vs.herokuapp.com/web-store/catalog/'+node
+                url:'https://web-store-sample-vs.herokuapp.com/web-store/catalog/'+node+'/sub-categories'
                 , type:'GET',
       
               contentType:"application/json",
@@ -304,7 +304,7 @@ function eventHover(){
 
  function  getPodcategoria(idCategoria, node){
      $.ajax({
-                url:'https://web-store-sample-vs.herokuapp.com/web-store/catalog/'+node
+                url:'https://web-store-sample-vs.herokuapp.com/web-store/catalog/'+node+'/sub-categories'
                 , type:'GET',
               contentType:"application/json",
                  success: function(res) {
@@ -339,6 +339,9 @@ function eventHover(){
             , type:'GET',
           contentType:"application/json",
              success: function(res) {
+
+
+
                for(i=0;i<res.length;i++){
                $(".tovaryMenu .catalog").prepend("<div class='categoria id"+i+"'><a href=catalog.php?nodeId="+res[i].nodeId+"&product=false><h4>"+res[i].name+"</h4></a><div class='podcatalog "+i+"'></div></div>");
                $(".tovaryMenu .catalogMenu").prepend("<a href=catalog.php?nodeId="+res[i].nodeId+"&product=false><h5 id="+i+">"+res[i].name+"</h5></a>");
@@ -395,7 +398,7 @@ function eventHover(){
 
  function getPodPodcategoria(idCategoria,idPodCategoria, node){
      $.ajax({
-                url:'https://web-store-sample-vs.herokuapp.com/web-store/catalog/'+node
+                url:'https://web-store-sample-vs.herokuapp.com/web-store/catalog/'+node+'/sub-categories'
                 , type:'GET',
       
               contentType:"application/json",
@@ -421,7 +424,7 @@ function eventHover(){
 
   function  getPodcategoria(idCategoria, node){
      $.ajax({
-                url:'https://web-store-sample-vs.herokuapp.com/web-store/catalog/'+node
+                url:'https://web-store-sample-vs.herokuapp.com/web-store/catalog/'+node+'/sub-categories'
                 , type:'GET',
               contentType:"application/json",
                  success: function(res) {
@@ -456,10 +459,12 @@ function eventHover(){
             , type:'GET',
           contentType:"application/json",
              success: function(res) {
+
                for(i=0;i<res.length;i++){
                $(".topBlock .catalogBlock").prepend("<div class='categoria id"+i+"'><a href=catalog.php?nodeId="+res[i].nodeId+"&product=false><h4>"+res[i].name+"</h4></a><div class='podcatalog "+i+"'></div></div>");
                $(".topBlock  .catalogMenu .menuBlock").prepend("<a href=catalog.php?nodeId="+res[i].nodeId+"&product=false><h5 id="+i+">"+res[i].name+"</h5></a>");
                getPodcategoria(i, res[i].nodeId);
+               preloaderOff();
          }
           eventHover();
        }
@@ -650,8 +655,9 @@ $( "lecarstveniPreparati" ).hover(function() {
 });
 
 function breadcrumbsRender(catalog){
+  
     var nodes = [];
-$(' .filter .categoria ').append("<a href=catalog.php><label for='subCategory1'> < Всі категорії <span>x</span></label></a>");
+// $(' .filter .categoria ').append("<a href=catalog.php><label for='subCategory1'> < Всі категорії <span>x</span></label></a>");
   for (var i=0 ; i<catalog.length; i++) {
 nextInput:
     for (var j=0 ; j<catalog[i].parentNodes.length; j++){
@@ -659,9 +665,9 @@ nextInput:
                   var str = catalog[i].parentNodes[j].nodeId;
                   
                   for (var q = 0; q < nodes.length; q++){
-                    console.log('q');
+                  //  console.log('q');
                      if(nodes[q]==str){
-                     console.log('1');
+                     //console.log('1');
                     continue nextInput;
                    }
 
@@ -673,16 +679,27 @@ nextInput:
 
             
        
-            
+            console.log("this "+j);
 
+             if (j==0){
+                 $('.filter .categoria ').append("<a href=catalog.php?nodeId=all&product=false><label for='subCategory1'>"+ catalog[i].parentNodes[j].name+" <span>x</span></label></a>");
+             } else{
 
-        $('.filter .categoria ').append("<a href=catalog.php?nodeId="+catalog[i].parentNodes[j].nodeId+"&product=false><label for='subCategory1'> < "+ catalog[i].parentNodes[j].name+" <span>x</span></label></a>");
+        $('.filter .categoria ').append("<a href=catalog.php?nodeId="+catalog[i].parentNodes[j-1].nodeId+"&product=false><label for='subCategory1'>"+ catalog[i].parentNodes[j].name+" <span>x</span></label></a>");
           //console.log('444');
+        }
+
+        if (j==catalog[i].parentNodes.length-1){
+          $('.zagolovokFilter').empty();
+          $('.zagolovokFilter').text(catalog[i].parentNodes[j].name);
+        }
+
+
     }
     
   }
 
- console.log(nodes);
+ //console.log(nodes);
   
 
 
@@ -714,10 +731,10 @@ nextInput:
 
         
 
-        $(' .productsList').append("<a href=catalog.php?nodeId="+catalog[i].nodeId+"&product=ture><h4>"+catalog[i].name+"</h4></a>");
+        $(' .productsList').append("<a class='categoriaBlock' href=catalog.php?nodeId="+catalog[i].nodeId+"&product=ture><img class='img-responsive' src='img/test.jpg'><h4>"+catalog[i].name+"</h4></a>");
       }else
       {
-       $(' .productsList').append("<a href=catalog.php?nodeId="+catalog[i].nodeId+"&product=false><h4>"+catalog[i].name+"</h4></a>");
+       $(' .productsList').append("<a class='categoriaBlock' href=catalog.php?nodeId="+catalog[i].nodeId+"&product=false><img class='img-responsive' src='img/test.jpg'><h4>"+catalog[i].name+"</h4></a>");
       }
 
    // console.log(products[1].nodeId);

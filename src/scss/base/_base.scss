@@ -7,7 +7,20 @@ body{
     
     
 }
-
+#preloader{
+	top:0;
+	position: fixed;
+	z-index: 1001;
+	background-color: white;
+	height:100vh;
+	width:100%;
+	display:flex;
+	justify-content:center;
+	align-self:center;
+	img{
+		width:60px;
+	}
+}
 .content{
 margin-top: 80px;	
 background-color: #f5f5f5;
@@ -20,7 +33,7 @@ a{
 .socialsBlockButtons{
 	transition:1s;
 	position: fixed;
-	z-index:1000;
+	z-index:10;
 	max-width:56px;
 	//background-color: white;
 	top:160px;
