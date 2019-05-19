@@ -851,10 +851,58 @@ $( "lecarstveniPreparati" ).hover(function() {
 
 });
 
-function breadcrumbsRender(catalog){
-  
+//catalog.content[i].catalogCategory.parentNodes[j].name
+
+function breadcrumbsRenderForProducts(catalog){
+
     var nodes = [];
-// $(' .filter .categoria ').append("<a href=catalog.php><label for='subCategory1'> < Всі категорії <span>x</span></label></a>");
+    console.log('catalog');
+    
+   for (var i=0 ; i<catalog.content.length; i++) {
+ nextInput:
+     for (var j=0 ; j<catalog.content[i].catalogCategory.parentNodes.length; j++){
+
+                   var str = catalog.content[i].catalogCategory.parentNodes[j].nodeId;
+                  
+                   for (var q = 0; q < nodes.length; q++){
+                      if(nodes[q]==str){
+                     continue nextInput;
+                      console.log(str);
+                      console.log(nodes[q]);
+                     }
+                   }
+              nodes.push(catalog.content[i].catalogCategory.parentNodes[j].nodeId);
+
+             if (j==0){
+                  $('.filter .categoria ').append("<a href=catalog.php?nodeId=all&product=false><label for='subCategory1'>"+ catalog.content[i].catalogCategory.parentNodes[j].name+" <span>x</span></label></a>");
+              } else{
+
+         $('.filter .categoria ').append("<a href=catalog.php?nodeId="+catalog.content[i].catalogCategory.parentNodes[j-1].nodeId+"&product=false><label for='subCategory1'>"+ catalog.content[i].catalogCategory.parentNodes[j].name+" <span>x</span></label></a>");
+         }
+
+        if (j==catalog.content[i].catalogCategory.parentNodes.length-1){
+           $('.zagolovokFilter').empty();
+           $('.zagolovokFilter').text(catalog.content[i].catalogCategory.name);
+           $('.filter .categoria ').append("<a href=catalog.php?nodeId="+catalog.content[i].catalogCategory.nodeId+"&product=false><label for='subCategory1'>"+ catalog.content[i].catalogCategory.name+" <span>x</span></label></a>"); 
+
+         }
+
+     }
+    
+   }
+
+
+
+}
+
+
+
+function breadcrumbsRender(catalog, products){
+  if (catalog.length==0){
+      breadcrumbsRenderForProducts(products);
+  }else{
+
+    var nodes = [];
   for (var i=0 ; i<catalog.length; i++) {
 nextInput:
     for (var j=0 ; j<catalog[i].parentNodes.length; j++){
@@ -862,28 +910,17 @@ nextInput:
                   var str = catalog[i].parentNodes[j].nodeId;
                   
                   for (var q = 0; q < nodes.length; q++){
-                  //  console.log('q');
                      if(nodes[q]==str){
-                     //console.log('1');
                     continue nextInput;
                    }
-
-                 
-
                   }
-
              nodes.push(catalog[i].parentNodes[j].nodeId);
-
-            
-       
-            console.log("this "+j);
 
              if (j==0){
                  $('.filter .categoria ').append("<a href=catalog.php?nodeId=all&product=false><label for='subCategory1'>"+ catalog[i].parentNodes[j].name+" <span>x</span></label></a>");
              } else{
 
         $('.filter .categoria ').append("<a href=catalog.php?nodeId="+catalog[i].parentNodes[j-1].nodeId+"&product=false><label for='subCategory1'>"+ catalog[i].parentNodes[j].name+" <span>x</span></label></a>");
-          //console.log('444');
         }
 
         if (j==catalog[i].parentNodes.length-1){
@@ -891,15 +928,10 @@ nextInput:
           $('.zagolovokFilter').text(catalog[i].parentNodes[j].name);
         }
 
-
     }
     
   }
-
- //console.log(nodes);
-  
-
-
+}
 
 }
 
@@ -915,7 +947,7 @@ nextInput:
     $('.productsList').empty();
      catalog= JSON.parse(catalog);
     
-      breadcrumbsRender(catalog);
+     
 
 
       for (var i=0 ; i<catalog.length; i++) {
@@ -936,8 +968,8 @@ nextInput:
 
    // console.log(products[1].nodeId);
   } 
-  if (catalog.length>0){
-  $('.productsList').css('display','block');
+  if (catalog.length<1){
+  $('.productsList').css('display','none');
   }
 
    var products= $('.products').text();
@@ -959,7 +991,7 @@ nextInput:
         $('.products #'+products.content[i].id).append(" <a href=product.php?productId="+products.content[i].id+">Детальніше</a>");
  }
      if (products.content.length>0){
-       $('.products').css('display','block');   
+      // $('.products').css('display','block');   
       }
     }
     //  console.log(products.length);
@@ -974,7 +1006,11 @@ nextInput:
 
 //$('.breadcrumbs .thisPage').empty();
 //$('.breadcrumbs .thisPage').append(breadcrumbs);
+   breadcrumbsRender(catalog, products);
 
+
+  $('.products').removeClass('load'); 
+  $('.productsList').removeClass('load');
   }  
  
 renderProducts();

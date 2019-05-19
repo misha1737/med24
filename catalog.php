@@ -138,7 +138,7 @@
 			$url='https://web-store-sample-vs.herokuapp.com/web-store/catalog/'. $node. '/sub-categories';
 
 				}
-              echo "<div class='productsList'>";
+              echo "<div class='productsList load'>";
               getCatalog($url);
              echo "</div>";
 
@@ -176,7 +176,7 @@
 				  <div class="allCatalog">
 
     			<?php
-				 echo "<div class='products'>";
+				 echo "<div class='products load'>";
               getCatalog($url2);
              echo "</div>";
 				?>
