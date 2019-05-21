@@ -6,6 +6,9 @@
 		<?php
 		 require_once "header.php";
 		?>
+		<script>
+			$('.modal_addProduct').remove();
+		</script>
 <div class="content">
 
 	<div class="container">
@@ -56,7 +59,7 @@
 	</footer>
 
 <script>
-	renderCartPage()
+	 renderCartPage()
 </script>
 		<script>$("#phone").mask("+38(999) 999-9999");</script>
 		<!-- <script src="js/zamovlenya.js"></script> -->

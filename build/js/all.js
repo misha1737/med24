@@ -229,224 +229,8 @@ function refreshToken(id){
 
 
 }
-function addProduct(id) {
-
-                                               var cartVersion=0;
-                                               var productCounter=0;
-                                               var formData=0;
-                                               if (localStorage.getItem("cart")==null){
-                                                 formData ={
-                                                  "orderItems":
-                                                 [{
-                                                   "productCount": 1,
-                                                    "productId": id
-                                                }]
-                                                }
-                                                formData=JSON.stringify(formData);
-
-                                               // formData=JSON.parse(formData);
-                                                  console.log(formData);
-                                                  $.ajax({
-                                          
-                                                    headers: {
-                                                      Authorization : 'Bearer ' + localStorage.getItem("token")
-                                                    },
-                                                    url:'https://web-store-sample-vs.herokuapp.com/web-store/shopping-carts'
-                                                    , type:'POST',
-                                                    contentType:"application/json",
-                                                  data:formData,
-                                                    success: function(res) {
-                                                   localStorage.setItem('cartId', res.id);     
-                                                     console.log("!!!");
-                                                   
-                                                formData=JSON.stringify(formData);
-                                                     getCart();
-
-                                               
-                                                  },
-                                                  error: function (jqXHR, exception){  
-                                                     if (jqXHR.status == 401 && localStorage.getItem("token")==null) {
-                                                     document.location.href = 'autorization.php';
-                                                     }else
-                                                     {
-                                                      if (jqXHR.status == 401){
-                                                        refreshToken();
-                                                        addProduct(id);
-                                                      }
-                                                     }
-                                          
-                                                   }
-                                                 });
-
-                                                  }else{
-
-                                                     formData ={
-                                                  "orderItems":
-                                                 [ {
-                                                
-                                                   
-                                                }]
-                                                }
-                                                var newProduct=true;
-                                                        cart=localStorage.getItem("cart");
-                                                    cart=JSON.parse(cart);
-                                                  for(var i=0; i<cart.orderItems.length; i++ )    {  
-                                                     if(cart.orderItems[i].product.id==id) {
-
-                                                       formData.orderItems[i]={
-                                                   "productCount": cart.orderItems[i].productCount+1,
-                                                   "productId": cart.orderItems[i].product.id
-                                                      
-                                                    }   
-                                                        newProduct=false;
-                                                     }else{
-
-                                                   formData.orderItems[i]={
-                                                   "productCount": cart.orderItems[i].productCount,
-                                                   "productId": cart.orderItems[i].product.id
-                                                    }
-                                                    }
-                                                  }
-                                                      if (newProduct){
-                                                           formData.orderItems[cart.orderItems.length]={
-                                                          "productCount": 1,
-                                                          "productId": id
-                                                           }
-                                                      }
-                                                      formData.version=cart.version;
-
-                                                formData=JSON.stringify(formData);
-
-                                                      //  for(i=0;i<formData.orderItems.lenght)
-
-                                                   console.log(formData);
 
 
-                                                     $.ajax({
-                                          
-                                                    headers: {
-                                                      Authorization : 'Bearer ' + localStorage.getItem("token")
-                                                     },
-                                                    url:'https://web-store-sample-vs.herokuapp.com/web-store/shopping-carts/'+ localStorage.getItem("cartId")
-                                                    , type:'PUT',
-                                                    contentType:"application/json",
-                                                  data:formData,
-                                                    success: function(res) {
-
-                                                     console.log("add ok");
-                                             
-                                     
-                                                      getCart();
-                                                      
-                                                  },
-                                                  error: function (jqXHR, exception){  
-                                                     if (jqXHR.status == 401 && localStorage.getItem("token")==null) {
-                                                     document.location.href = 'autorization.php';
-                                                     }else
-                                                     {
-                                                      if (jqXHR.status == 401){
-                                                        refreshToken();
-                                                        addProduct(id);
-                                                      }
-                                                     }
-                              
-                                                   }
-                                                 });
-
-
-                                                  }
-
-
-
-
-
-
-
-
-                                             }
-function deleteProduct(id){
-
- var cart=localStorage.getItem("cart");
-          cart=JSON.parse(cart); 
-
-console.log(id);
-
-                                                 var deleteElement=null;
-                                                   formData ={
-                                                  "orderItems":
-                                                 [ {  }]
-                                                }
-                                               
-                                                  for(var i=0; i<cart.orderItems.length; i++ )    {  
-                                                     formData.orderItems[i]={
-                                                                "productCount": cart.orderItems[i].productCount,
-                                                               "productId": cart.orderItems[i].product.id
-                                                               } 
-                                                     if(cart.orderItems[i].product.id==id) {
-                                                            if(cart.orderItems[i].productCount==1){
-                                                                //видалення продукта
-                                                              
-                                                               deleteElement=i;
-                                                              $('.content .cartList #'+cart.orderItems[i].product.id+'').remove();
-
-                                                            }else{
-                                                              formData.orderItems[i]={
-                                                                "productCount": cart.orderItems[i].productCount-1,
-                                                               "productId": cart.orderItems[i].product.id
-                                                               }
-                                                                $('.content .cartList #'+cart.orderItems[i].product.id+' .productCount' ).text(' x'+formData.orderItems[i].productCount+''); 
-                                                            }
-
-                                                                  }
-                                                                   
-                                                                  
-                                                                }
-                                                                if (deleteElement!=null && cart.orderItems.length==1){
-                                                                
-                                                                  deleteCart();
-                                                                }
-                                                                if (deleteElement!=null){
-                                                      formData.orderItems.splice(deleteElement, 1);}
-
-
-
-                                                      formData.version=cart.version;
-
-                                               formData=JSON.stringify(formData);
-
-                                               
-
-                                                   console.log(formData);
-
-                                                        $.ajax({
-                                          
-                                                    headers: {
-                                                      Authorization : 'Bearer ' + localStorage.getItem("token")
-                                                     },
-                                                    url:'https://web-store-sample-vs.herokuapp.com/web-store/shopping-carts/'+ localStorage.getItem("cartId")
-                                                    , type:'PUT',
-                                                    contentType:"application/json",
-                                                  data:formData,
-                                                    success: function(res) {
-                                                     console.log("delete ok");
-                                                      getCart();  
-
-                                                  },
-                                                  error: function (jqXHR, exception){  
-                                                     if (jqXHR.status == 401 && localStorage.getItem("token")==null) {
-                                                     document.location.href = 'autorization.php';
-                                                     }else
-                                                     {
-                                                      if (jqXHR.status == 401){
-                                                        refreshToken();
-                                                        addProduct(id);
-                                                      }
-                                                     }
-                              
-                                                   }
-                                                 });
-
-} 
 
 
 
@@ -818,7 +602,7 @@ $( "lecarstveniPreparati" ).hover(function() {
                 
                 $(".content .container .row #"+res[i].id+" ").append(" <p class='price'>Цена:"+res[i].product.priceWithVAT+"</p>");
 
-                $(".content .container .row #"+res[i].id+" ").append(" <button onclick='addProduct("+res[i].product.id+")' id="+res[i].product.id+">Добавить в корзину</button>");
+                $(".content .container .row #"+res[i].id+" ").append(" <button onclick='modalAddProduct("+res[i].product.id+")' id="+res[i].product.id+">Добавить в корзину</button>");
               
                                          }
 //--------------------------------------------------------
@@ -883,7 +667,7 @@ function breadcrumbsRenderForProducts(catalog){
         if (j==catalog.content[i].catalogCategory.parentNodes.length-1){
            $('.zagolovokFilter').empty();
            $('.zagolovokFilter').text(catalog.content[i].catalogCategory.name);
-           $('.filter .categoria ').append("<a href=catalog.php?nodeId="+catalog.content[i].catalogCategory.nodeId+"&product=false><label for='subCategory1'>"+ catalog.content[i].catalogCategory.name+" <span>x</span></label></a>"); 
+           $('.filter .categoria ').append("<a href=catalog.php?nodeId="+catalog.content[i].catalogCategory.parentNodes[j].nodeId+"&product=false><label for='subCategory1'>"+ catalog.content[i].catalogCategory.name+" <span>x</span></label></a>"); 
 
          }
 
@@ -987,7 +771,7 @@ nextInput:
 
           //  alert( products.length);
            $('.products').append("<div class='catelogElemet'><div class='product' id="+products.content[i].id+"><img src='img/test.jpg'><h5>"+products.content[i].name+"</h5><p class='price'>Ціна ="+products.content[i].priceWithVAT+ "</p></div></div>");
-            $('.products  #'+products.content[i].id).append(" <button onclick='addProduct("+products.content[i].id+")' id="+products.content[i].id+">Добавить в корзину</button>");
+            $('.products  #'+products.content[i].id).append(" <button onclick='modalAddProduct("+products.content[i].id+")' id="+products.content[i].id+">Добавить в корзину</button>");
         $('.products #'+products.content[i].id).append(" <a href=product.php?productId="+products.content[i].id+">Детальніше</a>");
  }
      if (products.content.length>0){
@@ -1051,6 +835,332 @@ $("#endPrise").append(localStorage.getItem("totalPrise"));
 
 setCartsCounter();
 setTotalPrise();
+
+function modalAddProduct(id){
+ addProduct(id);
+  //getCart();
+
+  //$('.modal_addProduct').removeClass('off');
+ // renderCartPage(); 
+  
+}
+
+$('.basket').click(function(e){
+     $('.modal_addProduct').removeClass('off');
+      renderCartPage(); 
+   });
+
+
+ $('.modal_addProduct').click(function(e){
+  if (e.target == this){
+     $('.modal_addProduct').addClass('off');
+    return;
+  }
+   
+
+   });
+ $('.modal_addProduct .addProductBlock').click(function(){
+
+  
+
+   });
+
+ $('.closeModal').click(function(){
+$('.modal_addProduct').addClass('off');
+  
+
+   });
+
+
+
+function addProduct(id) {
+
+                                               var cartVersion=0;
+                                               var productCounter=0;
+                                               var formData=0;
+                                               if (localStorage.getItem("cart")==null){
+                                                 formData ={
+                                                  "orderItems":
+                                                 [{
+                                                   "productCount": 1,
+                                                    "productId": id
+                                                }]
+                                                }
+                                                formData=JSON.stringify(formData);
+
+                                               // formData=JSON.parse(formData);
+                                                  console.log(formData);
+                                                  $.ajax({
+                                          
+                                                    headers: {
+                                                      Authorization : 'Bearer ' + localStorage.getItem("token")
+                                                    },
+                                                    url:'https://web-store-sample-vs.herokuapp.com/web-store/shopping-carts'
+                                                    , type:'POST',
+                                                    contentType:"application/json",
+                                                  data:formData,
+                                                    success: function(res) {
+                                                   localStorage.setItem('cartId', res.id);     
+                                                     console.log("!!!");
+                                                   
+                                                formData=JSON.stringify(formData);
+                                                     getCart();
+                                                    
+
+                                               
+                                                  },
+                                                  error: function (jqXHR, exception){  
+                                                     if (jqXHR.status == 401 && localStorage.getItem("token")==null) {
+                                                     document.location.href = 'autorization.php';
+                                                     }else
+                                                     {
+                                                      if (jqXHR.status == 401){
+                                                        refreshToken();
+                                                        addProduct(id);
+                                                      }
+                                                     }
+                                          
+                                                   }
+                                                 });
+
+                                                  }else{
+
+                                                     formData ={
+                                                  "orderItems":
+                                                 [ {
+                                                
+                                                   
+                                                }]
+                                                }
+                                                var newProduct=true;
+                                                        cart=localStorage.getItem("cart");
+                                                    cart=JSON.parse(cart);
+                                                  for(var i=0; i<cart.orderItems.length; i++ )    {  
+                                                     if(cart.orderItems[i].product.id==id) {
+
+                                                       formData.orderItems[i]={
+                                                   "productCount": cart.orderItems[i].productCount+1,
+                                                   "productId": cart.orderItems[i].product.id
+                                                      
+                                                    }   
+                                                        newProduct=false;
+                                                     }else{
+
+                                                   formData.orderItems[i]={
+                                                   "productCount": cart.orderItems[i].productCount,
+                                                   "productId": cart.orderItems[i].product.id
+                                                    }
+                                                    }
+                                                  }
+                                                      if (newProduct){
+                                                           formData.orderItems[cart.orderItems.length]={
+                                                          "productCount": 1,
+                                                          "productId": id
+                                                           }
+                                                      }
+                                                      formData.version=cart.version;
+
+                                                formData=JSON.stringify(formData);
+
+                                                      //  for(i=0;i<formData.orderItems.lenght)
+
+                                                   console.log(formData);
+
+
+                                                     $.ajax({
+                                          
+                                                    headers: {
+                                                      Authorization : 'Bearer ' + localStorage.getItem("token")
+                                                     },
+                                                    url:'https://web-store-sample-vs.herokuapp.com/web-store/shopping-carts/'+ localStorage.getItem("cartId")
+                                                    , type:'PUT',
+                                                    contentType:"application/json",
+                                                  data:formData,
+                                                    success: function(res) {
+
+                                                     console.log("add ok");
+                                             
+                                                   
+                                                      getCart();
+                                                      
+                                                  },
+                                                  error: function (jqXHR, exception){  
+                                                     if (jqXHR.status == 401 && localStorage.getItem("token")==null) {
+                                                     document.location.href = 'autorization.php';
+                                                     }else
+                                                     {
+                                                      if (jqXHR.status == 401){
+                                                        refreshToken();
+                                                        addProduct(id);
+                                                      }
+                                                     }
+                              
+                                                   }
+                                                 });
+                                                  }
+                                             }
+function deleteProduct(id){
+
+
+
+
+ var cart=localStorage.getItem("cart");
+          cart=JSON.parse(cart); 
+
+console.log(id);
+
+                                                 var deleteElement=null;
+                                                   formData ={
+                                                  "orderItems":
+                                                 [ {  }]
+                                                }
+                                               
+                                                  for(var i=0; i<cart.orderItems.length; i++ )    {  
+                                                     formData.orderItems[i]={
+                                                                "productCount": cart.orderItems[i].productCount,
+                                                               "productId": cart.orderItems[i].product.id
+                                                               } 
+                                                     if(cart.orderItems[i].product.id==id) {
+                                                           
+                                                             
+                                                              
+                                                               deleteElement=i;
+                                                              $('.content .cartList #'+cart.orderItems[i].product.id+'').remove();
+
+                                                            
+                                                                  }
+                                                                   
+                                                                  
+                                                                }
+                                                                if (deleteElement!=null && cart.orderItems.length==1){
+                                                                
+                                                                  deleteCart();
+                                                                }
+                                                                if (deleteElement!=null){
+                                                      formData.orderItems.splice(deleteElement, 1);}
+
+
+
+                                                      formData.version=cart.version;
+
+                                               formData=JSON.stringify(formData);
+
+                                               
+
+                                                   console.log(formData);
+
+                                                        $.ajax({
+                                          
+                                                    headers: {
+                                                      Authorization : 'Bearer ' + localStorage.getItem("token")
+                                                     },
+                                                    url:'https://web-store-sample-vs.herokuapp.com/web-store/shopping-carts/'+ localStorage.getItem("cartId")
+                                                    , type:'PUT',
+                                                    contentType:"application/json",
+                                                  data:formData,
+                                                    success: function(res) {
+                                                     console.log("delete ok");
+                                                      getCart();  
+
+                                                  },
+                                                  error: function (jqXHR, exception){  
+                                                     if (jqXHR.status == 401 && localStorage.getItem("token")==null) {
+                                                     document.location.href = 'autorization.php';
+                                                     }else
+                                                     {
+                                                      if (jqXHR.status == 401){
+                                                        refreshToken();
+                                                        addProduct(id);
+                                                      }
+                                                     }
+                              
+                                                   }
+                                                 });
+
+
+
+//фунція де видаляється 1 товар а не всі
+//  var cart=localStorage.getItem("cart");
+//           cart=JSON.parse(cart); 
+
+// console.log(id);
+
+//                                                  var deleteElement=null;
+//                                                    formData ={
+//                                                   "orderItems":
+//                                                  [ {  }]
+//                                                 }
+                                               
+//                                                   for(var i=0; i<cart.orderItems.length; i++ )    {  
+//                                                      formData.orderItems[i]={
+//                                                                 "productCount": cart.orderItems[i].productCount,
+//                                                                "productId": cart.orderItems[i].product.id
+//                                                                } 
+//                                                      if(cart.orderItems[i].product.id==id) {
+//                                                             if(cart.orderItems[i].productCount==1){
+//                                                                 //видалення продукта
+                                                              
+//                                                                deleteElement=i;
+//                                                               $('.content .cartList #'+cart.orderItems[i].product.id+'').remove();
+
+//                                                             }else{
+//                                                               formData.orderItems[i]={
+//                                                                 "productCount": cart.orderItems[i].productCount-1,
+//                                                                "productId": cart.orderItems[i].product.id
+//                                                                }
+//                                                                 $('.content .cartList #'+cart.orderItems[i].product.id+' .productCount' ).text(' x'+formData.orderItems[i].productCount+''); 
+//                                                             }
+
+//                                                                   }
+                                                                   
+                                                                  
+//                                                                 }
+//                                                                 if (deleteElement!=null && cart.orderItems.length==1){
+                                                                
+//                                                                   deleteCart();
+//                                                                 }
+//                                                                 if (deleteElement!=null){
+//                                                       formData.orderItems.splice(deleteElement, 1);}
+
+
+
+//                                                       formData.version=cart.version;
+
+//                                                formData=JSON.stringify(formData);
+
+                                               
+
+//                                                    console.log(formData);
+
+//                                                         $.ajax({
+                                          
+//                                                     headers: {
+//                                                       Authorization : 'Bearer ' + localStorage.getItem("token")
+//                                                      },
+//                                                     url:'https://web-store-sample-vs.herokuapp.com/web-store/shopping-carts/'+ localStorage.getItem("cartId")
+//                                                     , type:'PUT',
+//                                                     contentType:"application/json",
+//                                                   data:formData,
+//                                                     success: function(res) {
+//                                                      console.log("delete ok");
+//                                                       getCart();  
+
+//                                                   },
+//                                                   error: function (jqXHR, exception){  
+//                                                      if (jqXHR.status == 401 && localStorage.getItem("token")==null) {
+//                                                      document.location.href = 'autorization.php';
+//                                                      }else
+//                                                      {
+//                                                       if (jqXHR.status == 401){
+//                                                         refreshToken();
+//                                                         addProduct(id);
+//                                                       }
+//                                                      }
+                              
+//                                                    }
+//                                                  });
+
+} 
 function getCart(){
              
                             $.ajax({
@@ -1077,6 +1187,8 @@ function getCart(){
                                         localStorage.setItem("cart", cart);
                                         setCartsCounter();
                                         setTotalPrise();
+                                        $('.modal_addProduct').removeClass('off');
+                                                       renderCartPage(); 
               
                               }, error: function (jqXHR, exception){
              
@@ -1139,16 +1251,23 @@ function renderCartPage(){
 	console.log("script");
 	$('.content .cartList').text('');
 
-				getCart();
+				//getCart();
         var cart=localStorage.getItem("cart");
         if (cart===null){}else{
-          cart=JSON.parse(cart);           
+          cart=JSON.parse(cart); 
+
                             for(var i=0; i<cart.orderItems.length;i++){
-                            	$('.content .cartList').append('<div class="productCart" id="'+cart.orderItems[i].product.id+'"></div>');
-                            	$('.content .cartList #'+cart.orderItems[i].product.id+'').append('<span class="name">'+cart.orderItems[i].product.name+'</span>');
-                              $('.content .cartList #'+cart.orderItems[i].product.id+'').append('<span class="productCount"> x'+cart.orderItems[i].productCount+'</span>');
-                            	$('.content .cartList #'+cart.orderItems[i].product.id+'').append('<span class="price">'+(cart.orderItems[i].product.priceWithVAT*cart.orderItems[i].productCount).toFixed(2)+'</span>');
+                              var price= (cart.orderItems[i].product.priceWithVAT).toFixed(2);
+                               var counter= cart.orderItems[i].productCount;
+                            	$('.content .cartList').append('<div class="productCart" id="'+cart.orderItems[i].product.id+'"><div class="priceAndCount"></div>');
+                              $('.content .cartList #'+cart.orderItems[i].product.id+'').prepend('<a href="product.php?productId='+cart.orderItems[i].product.id+'" class="name">'+cart.orderItems[i].product.name+'</a>');
+                              $('.content .cartList #'+cart.orderItems[i].product.id+'').prepend('<img src="img/test.jpg" class="productImg">');
+                              $('.content .cartList #'+cart.orderItems[i].product.id+' .priceAndCount').append('<span class="price">'+price+'</span>');
+                              $('.content .cartList #'+cart.orderItems[i].product.id+' .priceAndCount').append('<span id="decrement"><i class="fa fa-minus" aria-hidden="true"></i></span><input class="productCount"type="number" value="'+counter+'"><span id="increment"><i class="fa fa-plus" aria-hidden="true"></i></span></span>');
+                              $('.content .cartList #'+cart.orderItems[i].product.id+' .priceAndCount').append('<span class="totalPrice">'+(price*counter).toFixed(2)+'</span>');
                             	$('.content .cartList #'+cart.orderItems[i].product.id+'').append('<button class="removeProduct" id="'+cart.orderItems[i].product.id+'">X</Button>');
+                                
+                               activeDecrement(counter,cart.orderItems[i].product.id);
                             }
                               $(".content .cartList button").click(function() {
                                  var productItem=this;
@@ -1157,9 +1276,130 @@ function renderCartPage(){
                                 deleteProduct(this.id);
            
                          });  
-        
+                          console.log($(".cartList input"));
+                          $(".cartList input").change(function(){
+                                  //selectorId=this
+                                 
+                                selectorId=$(this).parent().parent()[0].id;
+                                 counter= this.value;
+                                  timerId = setTimeout(changeCart, 1000, selectorId, counter);
+                          
+
+                          });
         }
-   };
+   
+ function changeCart(id,counter){
+
+     console.log('changeCart '+id+' '+counter);
+                                                     formData ={
+                                                  "orderItems":
+                                                 [ {
+                                                
+                                                  
+                                                }]
+                                                }
+                                                
+                                                        cart=localStorage.getItem("cart");
+                                                    cart=JSON.parse(cart);
+                                                    console.log(cart);
+                                                      for(var i=0; i<cart.orderItems.length; i++ )    {  
+                                                        if(cart.orderItems[i].product.id==id){
+                                                       formData.orderItems[i]={
+                                                   "productCount": counter,
+                                                   "productId": cart.orderItems[i].product.id
+                                                    }   
+                                                      }else{
+                                                      formData.orderItems[i]={
+                                                   "productCount": cart.orderItems[i].productCount,
+                                                   "productId": cart.orderItems[i].product.id
+                                                      }
+
+
+                                                  }
+                                                }
+                                                      formData.version=cart.version;
+                                                formData=JSON.stringify(formData);
+                                                   console.log(formData);
+
+
+                                                     $.ajax({
+                                          
+                                                    headers: {
+                                                       Authorization : 'Bearer ' + localStorage.getItem("token")
+                                                     },
+                                                     url:'https://web-store-sample-vs.herokuapp.com/web-store/shopping-carts/'+ localStorage.getItem("cartId")
+                                                    , type:'PUT',
+                                                     contentType:"application/json",
+                                                   data:formData,
+                                                    success: function(res) {
+
+                                                     console.log("change ok");
+                                             
+                                     
+                                                      getCart();
+                                                      
+                                                  },
+                                                  error: function (jqXHR, exception){  
+                                                     if (jqXHR.status == 401 && localStorage.getItem("token")==null) {
+                                                     document.location.href = 'autorization.php';
+                                                     }else
+                                                     {
+                                                      if (jqXHR.status == 401){
+                                                        refreshToken();
+                                                        addProduct(id);
+                                                      }
+                                                     }
+                              
+                                                   }
+                                                 });
+                                                  
+
+
+}
+
+   function activeDecrement(counter, id){
+  if (counter>1){
+    var button=$('.cartList  #'+id+' span .fa-minus');
+  
+    $(button).removeClass('disabled');
+   
+      return false
+  }else{
+    var button=$('.cartList  #'+id+' span .fa-minus');
+    $(button).addClass('disabled');
+    return true
+  }
+}
+
+$('.cartList #decrement').click(function(){
+ 
+
+
+
+
+
+var selectorId=($(this).parent().parent()[0].id);
+var counter=$('.cartList #'+selectorId+' .priceAndCount .productCount').val();
+if (activeDecrement(counter,selectorId)){
+}else{
+$('.cartList #'+selectorId+' .priceAndCount .productCount').val(--counter);
+clearTimeout(timerId);
+timerId = setTimeout(changeCart, 500, selectorId, counter);
+}
+});
+
+
+$('.cartList #increment').click(function(){
+
+  var selectorId=($(this).parent().parent()[0].id);
+var counter=$('.cartList #'+selectorId+' .priceAndCount .productCount').val();
+$('.cartList #'+selectorId+' .priceAndCount .productCount').val(++counter);
+clearTimeout(timerId);
+timerId = setTimeout(changeCart, 500, selectorId, counter);
+activeDecrement(counter,selectorId);
+});
+
+};
 
 function startSearch(name, page=0, sortParam='name', param='asc'){
 
@@ -1196,7 +1436,7 @@ function startSearch(name, page=0, sortParam='name', param='asc'){
                 
                 $(".content .container .row .search #"+res.content[i].id+" ").append(" <p class='price'>Цена:"+res.content[i].priceWithVAT+"</p>");
 
-                $(".content .container .row .search #"+res.content[i].id+" ").append(" <button onclick='addProduct("+res.content[i].id+")' id="+res.content[i].id+">Добавить в корзину</button>");
+                $(".content .container .row .search #"+res.content[i].id+" ").append(" <button onclick='modalAddProduct("+res.content[i].id+")' id="+res.content[i].id+">Добавить в корзину</button>");
 
               $(".content .container .row .search #"+res.content[i].id+" ").append(" <a href=catalog.php?nodeId="+res.content[i].catalogTreeNodeId+"&product=true>Перейти в каталог</button></a>");
 

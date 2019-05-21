@@ -1,0 +1,54 @@
+.modal_addProduct {
+
+	height:100vh;
+	width:100%;
+	z-index:1000;
+	position: fixed;
+		background-color: rgba(0,0,0, 0.3);
+		display: flex;
+		justify-content:center;
+		//align-items:center;
+	.addProductBlock{
+		padding-top: 55px;
+		position: relative;
+	overflow-y: scroll;
+	height:auto;
+	margin-top: 10vh;
+	max-height:80%;
+	width:60%;
+	background-color: white;
+		.closeModal{
+			position: absolute;
+			z-index:10;
+			right: 10px;
+			top: 10px;
+			 @include button(15px, 5px, 30px, $blue);
+			 border-radius: 100%;
+			 margin-top: 2px;
+		}
+	}
+	&.off{
+		display:none;
+	}
+}
+
+@media only screen and (max-width : 1200px) {
+
+.modal_addProduct {
+	.addProductBlock{
+
+	width:80%;
+
+		}
+	}
+}
+@media only screen and (max-width : 1000px) {
+
+.modal_addProduct {
+	.addProductBlock{
+
+	width:100%;
+
+		}
+	}
+}

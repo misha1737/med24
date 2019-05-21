@@ -33,7 +33,7 @@ function startSearch(name, page=0, sortParam='name', param='asc'){
                 
                 $(".content .container .row .search #"+res.content[i].id+" ").append(" <p class='price'>Цена:"+res.content[i].priceWithVAT+"</p>");
 
-                $(".content .container .row .search #"+res.content[i].id+" ").append(" <button onclick='addProduct("+res.content[i].id+")' id="+res.content[i].id+">Добавить в корзину</button>");
+                $(".content .container .row .search #"+res.content[i].id+" ").append(" <button onclick='modalAddProduct("+res.content[i].id+")' id="+res.content[i].id+">Добавить в корзину</button>");
 
               $(".content .container .row .search #"+res.content[i].id+" ").append(" <a href=catalog.php?nodeId="+res.content[i].catalogTreeNodeId+"&product=true>Перейти в каталог</button></a>");
 

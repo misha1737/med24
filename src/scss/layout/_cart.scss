@@ -1,43 +1,96 @@
+.addProductBlock{
+	.content{
+		margin:0;
+		padding:15px;
+	}
+}
 .cartList{
-	margin-top: 50px;
+	//margin-top: 50px;
 	.productCart{
 
-		background:$white;
-		margin-top: 5px;
-		@include text(16px);
-		min-height: 36px;
-		position: relative;
-	}
-	span.price{
-		position: absolute;
-		right: 70px;
-		padding-left: 30px;
-		color:$black;
-		padding-top: 5px;
-		padding-bottom: 5px;
-	}
-	button.removeProduct{
-		position: absolute;
-		right: 30px;
-		 @include button(15px, 5px, 30px, $blue);
-		 border-radius: 100%;
-		 margin-top: 2px;
-	}
+		 background:$white;
+		 margin-bottom:15px;
+		 border: 1px solid $lGray;
+		 height:130px;
+		// position:relative;
+		// margin-top: 5px;
+		// @include text(16px);
+		// min-height: 36px;
+		 position: relative;
+		img.productImg{
+			height:100px;
+			margin:15px;
+			margin-left: 45px;
+			//position: absolute;
+			//left:15px;
+			//top:30px;
+			float:left;
+		}
+		.priceAndCount{
+		//	background-color: red;
+			display:flex;
+			justify-content:end;
+			align-self:center;
+			flex-grow: 1;
+			margin-top: 20px;
 
-	span.name{
-		display:inline-block;
-		max-width: 75%;
-		padding-left: 30px;
-		padding-top: 5px;
-		padding-bottom: 5px;
-	}
-	span.productCount{
-		position: absolute;
-		right: 135px;
-		padding-left: 30px;
-		color:$green;
-		padding-top: 5px;
-		padding-bottom: 5px;
+				span.price{
+					flex-grow: 5;
+					@include text(18px);
+		
+			}
+			span.productCount{
+				@include text(14px);
+				height:30px;
+					min-width: 100px;
+		
+			}
+
+			span.totalPrice{
+			//flex-grow: 1;
+			text-align: right;
+			@include text(18px);
+			margin-right:15px; 
+			min-width: 120px;
+			}
+			#decrement{
+				margin:0 10px;
+				cursor:pointer;
+				font-size: 20px;
+				color:$blue;
+				i.disabled{
+					color:$lGray;
+				}
+			}
+			#increment{
+				margin:0 10px;
+				cursor:pointer;
+				font-size: 20px;
+				color:$blue;
+				
+			}
+		}
+		
+		button.removeProduct{
+			position: absolute;
+			left: 5px;
+			top: 15px;
+			 @include button(15px, 5px, 30px, $gray);
+			 border-radius: 100%;
+			 margin-top: 2px;
+		}
+
+		a.name{
+			@include text(18px);
+			 display:block;
+			 font-weight: 700;
+			 color:$blue;
+			// max-width: 75%;
+			// padding-left: 30px;
+			 margin-top: 15px;
+			// padding-bottom: 5px;
+		}
+		
 	}
 
 }
@@ -65,21 +118,46 @@ a#zakaz{
 
 @media only screen and (max-width : 1000px) {
 	.cartList{
-		span.name{
-			display:inline-block;
-			max-width: 60%;
-			padding-left: 15px;
+		.productCart{
+			height:auto;
+			.priceAndCount{
+				margin:15px;
+				width:100%;
+			}
+
+			}
 		}
-		span.price{
-		//padding-left: 80px;
-		//padding-top: 15px;
+}
+@media only screen and (max-width : 600px) {
+	.cartList{
+		.productCart{
+			text-align: center;
+			height:auto;
+			.priceAndCount{
+				display:block;
+				width:100%;
+				text-align: center;
+					span.price{
+					display:block;
+					}
+					span.totalPrice{
+					display:block;
+					text-align: center;
+					}
+					span.productCount{
+					min-width: 50px;
+					}
+			}
+			img.productImg{
+
+			height:100px;
+			margin:15px;
+			margin-left: 45px;
+			//position: absolute;
+			//left:15px;
+			//top:30px;
+			float:none;
+			}
+			}
 		}
-	button.removeProduct{
-		position: absolute;
-		right: 15px;
-		// @include button(30px, 5px, 50px, $blue);
-		// border-radius: 100%;
-		// margin-top: 2px;	
-	}
-	}
 }

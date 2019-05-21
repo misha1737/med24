@@ -24,6 +24,8 @@ function getCart(){
                                         localStorage.setItem("cart", cart);
                                         setCartsCounter();
                                         setTotalPrise();
+                                        $('.modal_addProduct').removeClass('off');
+                                                       renderCartPage(); 
               
                               }, error: function (jqXHR, exception){
              
@@ -86,16 +88,23 @@ function renderCartPage(){
 	console.log("script");
 	$('.content .cartList').text('');
 
-				getCart();
+				//getCart();
         var cart=localStorage.getItem("cart");
         if (cart===null){}else{
-          cart=JSON.parse(cart);           
+          cart=JSON.parse(cart); 
+
                             for(var i=0; i<cart.orderItems.length;i++){
-                            	$('.content .cartList').append('<div class="productCart" id="'+cart.orderItems[i].product.id+'"></div>');
-                            	$('.content .cartList #'+cart.orderItems[i].product.id+'').append('<span class="name">'+cart.orderItems[i].product.name+'</span>');
-                              $('.content .cartList #'+cart.orderItems[i].product.id+'').append('<span class="productCount"> x'+cart.orderItems[i].productCount+'</span>');
-                            	$('.content .cartList #'+cart.orderItems[i].product.id+'').append('<span class="price">'+(cart.orderItems[i].product.priceWithVAT*cart.orderItems[i].productCount).toFixed(2)+'</span>');
+                              var price= (cart.orderItems[i].product.priceWithVAT).toFixed(2);
+                               var counter= cart.orderItems[i].productCount;
+                            	$('.content .cartList').append('<div class="productCart" id="'+cart.orderItems[i].product.id+'"><div class="priceAndCount"></div>');
+                              $('.content .cartList #'+cart.orderItems[i].product.id+'').prepend('<a href="product.php?productId='+cart.orderItems[i].product.id+'" class="name">'+cart.orderItems[i].product.name+'</a>');
+                              $('.content .cartList #'+cart.orderItems[i].product.id+'').prepend('<img src="img/test.jpg" class="productImg">');
+                              $('.content .cartList #'+cart.orderItems[i].product.id+' .priceAndCount').append('<span class="price">'+price+'</span>');
+                              $('.content .cartList #'+cart.orderItems[i].product.id+' .priceAndCount').append('<span id="decrement"><i class="fa fa-minus" aria-hidden="true"></i></span><input class="productCount"type="number" value="'+counter+'"><span id="increment"><i class="fa fa-plus" aria-hidden="true"></i></span></span>');
+                              $('.content .cartList #'+cart.orderItems[i].product.id+' .priceAndCount').append('<span class="totalPrice">'+(price*counter).toFixed(2)+'</span>');
                             	$('.content .cartList #'+cart.orderItems[i].product.id+'').append('<button class="removeProduct" id="'+cart.orderItems[i].product.id+'">X</Button>');
+                                
+                               activeDecrement(counter,cart.orderItems[i].product.id);
                             }
                               $(".content .cartList button").click(function() {
                                  var productItem=this;
@@ -104,6 +113,127 @@ function renderCartPage(){
                                 deleteProduct(this.id);
            
                          });  
-        
+                          console.log($(".cartList input"));
+                          $(".cartList input").change(function(){
+                                  //selectorId=this
+                                 
+                                selectorId=$(this).parent().parent()[0].id;
+                                 counter= this.value;
+                                  timerId = setTimeout(changeCart, 1000, selectorId, counter);
+                          
+
+                          });
         }
-   };
+   
+ function changeCart(id,counter){
+
+     console.log('changeCart '+id+' '+counter);
+                                                     formData ={
+                                                  "orderItems":
+                                                 [ {
+                                                
+                                                  
+                                                }]
+                                                }
+                                                
+                                                        cart=localStorage.getItem("cart");
+                                                    cart=JSON.parse(cart);
+                                                    console.log(cart);
+                                                      for(var i=0; i<cart.orderItems.length; i++ )    {  
+                                                        if(cart.orderItems[i].product.id==id){
+                                                       formData.orderItems[i]={
+                                                   "productCount": counter,
+                                                   "productId": cart.orderItems[i].product.id
+                                                    }   
+                                                      }else{
+                                                      formData.orderItems[i]={
+                                                   "productCount": cart.orderItems[i].productCount,
+                                                   "productId": cart.orderItems[i].product.id
+                                                      }
+
+
+                                                  }
+                                                }
+                                                      formData.version=cart.version;
+                                                formData=JSON.stringify(formData);
+                                                   console.log(formData);
+
+
+                                                     $.ajax({
+                                          
+                                                    headers: {
+                                                       Authorization : 'Bearer ' + localStorage.getItem("token")
+                                                     },
+                                                     url:'https://web-store-sample-vs.herokuapp.com/web-store/shopping-carts/'+ localStorage.getItem("cartId")
+                                                    , type:'PUT',
+                                                     contentType:"application/json",
+                                                   data:formData,
+                                                    success: function(res) {
+
+                                                     console.log("change ok");
+                                             
+                                     
+                                                      getCart();
+                                                      
+                                                  },
+                                                  error: function (jqXHR, exception){  
+                                                     if (jqXHR.status == 401 && localStorage.getItem("token")==null) {
+                                                     document.location.href = 'autorization.php';
+                                                     }else
+                                                     {
+                                                      if (jqXHR.status == 401){
+                                                        refreshToken();
+                                                        addProduct(id);
+                                                      }
+                                                     }
+                              
+                                                   }
+                                                 });
+                                                  
+
+
+}
+
+   function activeDecrement(counter, id){
+  if (counter>1){
+    var button=$('.cartList  #'+id+' span .fa-minus');
+  
+    $(button).removeClass('disabled');
+   
+      return false
+  }else{
+    var button=$('.cartList  #'+id+' span .fa-minus');
+    $(button).addClass('disabled');
+    return true
+  }
+}
+
+$('.cartList #decrement').click(function(){
+ 
+
+
+
+
+
+var selectorId=($(this).parent().parent()[0].id);
+var counter=$('.cartList #'+selectorId+' .priceAndCount .productCount').val();
+if (activeDecrement(counter,selectorId)){
+}else{
+$('.cartList #'+selectorId+' .priceAndCount .productCount').val(--counter);
+clearTimeout(timerId);
+timerId = setTimeout(changeCart, 500, selectorId, counter);
+}
+});
+
+
+$('.cartList #increment').click(function(){
+
+  var selectorId=($(this).parent().parent()[0].id);
+var counter=$('.cartList #'+selectorId+' .priceAndCount .productCount').val();
+$('.cartList #'+selectorId+' .priceAndCount .productCount').val(++counter);
+clearTimeout(timerId);
+timerId = setTimeout(changeCart, 500, selectorId, counter);
+activeDecrement(counter,selectorId);
+});
+
+};

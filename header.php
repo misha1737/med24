@@ -124,13 +124,9 @@
 						<span class="access"></span>
 					</div>
 					<div class="col-md-4 col-xs-1">
-						<span class="basket"><a href="cart.php"><img src="img/cart.svg"><p class="productCounter">
+						<span class="basket"><a href="#"><img src="img/cart.svg"><p class="productCounter">
 							<!-- кількість товарів  -->
-
 						</p>
-
-
-
 					</a><p>Товарів:<br> на <span id="totalPrise"></span> грн</p></span>
 					</div>
 				</div>
@@ -149,7 +145,7 @@
 						<div class="mobMenuButtons">
 						<span class="phoneNumber"><a href="tel:+380 800 750 700"><i class="fas fa-mobile-alt"></i><p><br>0 800 750 700</p></a></span>
 						<span class="access"></span>
-						<span class="basket"><a href="cart.php"><img src="img/cart.svg"><p class="productCounter">0</p></a><p>Товарів:<br> на 0 грн</p></span>
+						<span class="basket"><a href="#"><img src="img/cart.svg"><p class="productCounter">0</p></a><p>Товарів:<br> на 0 грн</p></span>
 						</div>
 				
 				<div class="col-md-4 col-xs-12">
@@ -188,7 +184,6 @@
 				
 					<div class="col-md-4 tovaryButtonBlock col-xs-6">
 					<button class="tovaryButton">Товари <i class="fas fa-angle-down"></i></button>
-
 					</div>
 					<div class="col-md-4 col-xs-6">
 					<button class="poslugiButton">Послуги <i class="fas fa-angle-down"></i></button>
@@ -218,3 +213,7 @@
 				</div>
 			</div>
 	</div>	
+	
+	<?php
+		 require_once "modal_addProduct.php";
+		?>
