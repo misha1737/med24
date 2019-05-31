@@ -1,8 +1,10 @@
 <div class="breadcrumbs">
 	<a href="index.php">
 			Головна
-	</a> > <span class="thisPage"></span>
-
+	</a> > 
+	<span id='breadcrumbs'>
+	<span class="thisPage"></span>
+	</span>
 </div>
 
 <script>

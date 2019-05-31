@@ -1,5 +1,31 @@
+function proguctSort(cart){
+console.log('SORT')
+console.log(cart); 
+
+function compare( a, b ) {
+ // console.log(a.id);
+  if ( a.product.name < b.product.name ){
+    return -1;
+  }
+  if ( a.product.name > b.product.name ){
+    return 1;
+  }
+  return 0;
+}
+
+cart.orderItems.sort( compare );
+
+console.log(cart); 
+return cart;
+}
+
+
+
 function getCart(){
              
+
+
+
                             $.ajax({
                                 url:'https://web-store-sample-vs.herokuapp.com/web-store/shopping-carts/'+localStorage.getItem("username")
                                  , headers: {
@@ -9,7 +35,9 @@ function getCart(){
                               contentType:"application/json",
                                  success: function(res) {
                                         console.log('Корзина Отримана');
-
+                                       
+                                        res=proguctSort(res);
+                                
                                         localStorage.setItem("cartId", res.id);
                                             var productCounter=0;
                                             var totalPrise=0;
@@ -26,6 +54,9 @@ function getCart(){
                                         setTotalPrise();
                                         $('.modal_addProduct').removeClass('off');
                                                        renderCartPage(); 
+                                                     
+                                                       
+                                                       
               
                               }, error: function (jqXHR, exception){
              

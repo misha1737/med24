@@ -1,5 +1,6 @@
 
 function modalAddProduct(id){
+  getCart();
  addProduct(id);
   //getCart();
 
@@ -33,7 +34,11 @@ $('.modal_addProduct').addClass('off');
   
 
    });
+ $('.prodovjitPocupki').click(function(){
+$('.modal_addProduct').addClass('off');
+  
 
+   });
 
 
 function addProduct(id) {
@@ -73,9 +78,13 @@ function addProduct(id) {
                                                
                                                   },
                                                   error: function (jqXHR, exception){  
+                                                     if (jqXHR.status == 409 ) {
+                                                     document.location.href = 'autorization.php';
+                                                     }
                                                      if (jqXHR.status == 401 && localStorage.getItem("token")==null) {
                                                      document.location.href = 'autorization.php';
-                                                     }else
+                                                     }
+                                                     else
                                                      {
                                                       if (jqXHR.status == 401){
                                                         refreshToken();
@@ -148,6 +157,9 @@ function addProduct(id) {
                                                       
                                                   },
                                                   error: function (jqXHR, exception){  
+                                                      if (jqXHR.status == 409 ) {
+                                                     document.location.href = 'autorization.php';
+                                                     }
                                                      if (jqXHR.status == 401 && localStorage.getItem("token")==null) {
                                                      document.location.href = 'autorization.php';
                                                      }else
@@ -170,7 +182,6 @@ function deleteProduct(id){
  var cart=localStorage.getItem("cart");
           cart=JSON.parse(cart); 
 
-console.log(id);
 
                                                  var deleteElement=null;
                                                    formData ={

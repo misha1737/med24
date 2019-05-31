@@ -65,7 +65,15 @@ a{
 		@include text(12px);
 		color:$blue;
 		text-decoration: none;
+		cursor: pointer;
+		label{
+			cursor: pointer;
+		}
+		
 	}
+		span{
+		color:black;
+		}
 	.thisPage{
 		@include text(12px);
 	}

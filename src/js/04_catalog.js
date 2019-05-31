@@ -2,7 +2,9 @@
 
 function refreshToken(id){
                                                  
-
+                                                if ($('body').hasClass('autoron')){
+                                                  return 0
+                                                }
                                                  formData ={
                                                   "refreshToken" :  localStorage.getItem("refresh_token")
                                                 
@@ -10,7 +12,7 @@ function refreshToken(id){
                                                 formData=JSON.stringify(formData);
 
                                                // formData=JSON.parse(formData);
-                                                  console.log(formData);
+                                                 // console.log(formData);
                                                   $.ajax({
                                           
                                                   
@@ -441,10 +443,10 @@ $( "lecarstveniPreparati" ).hover(function() {
 //catalog.content[i].catalogCategory.parentNodes[j].name
 
 function breadcrumbsRenderForProducts(catalog){
-
+    
     var nodes = [];
     console.log('catalog');
-    
+    $('#breadcrumbs').empty();
    for (var i=0 ; i<catalog.content.length; i++) {
  nextInput:
      for (var j=0 ; j<catalog.content[i].catalogCategory.parentNodes.length; j++){
@@ -460,17 +462,15 @@ function breadcrumbsRenderForProducts(catalog){
                    }
               nodes.push(catalog.content[i].catalogCategory.parentNodes[j].nodeId);
 
-             if (j==0){
-                  $('.filter .categoria ').append("<a href=catalog.php?nodeId=all&product=false><label for='subCategory1'>"+ catalog.content[i].catalogCategory.parentNodes[j].name+" <span>x</span></label></a>");
-              } else{
+             
 
-         $('.filter .categoria ').append("<a href=catalog.php?nodeId="+catalog.content[i].catalogCategory.parentNodes[j-1].nodeId+"&product=false><label for='subCategory1'>"+ catalog.content[i].catalogCategory.parentNodes[j].name+" <span>x</span></label></a>");
-         }
+         $('#breadcrumbs ').append("<a href=catalog.php?nodeId="+catalog.content[i].catalogCategory.parentNodes[j].nodeId+"&product=false><label for='subCategory1'>"+ catalog.content[i].catalogCategory.parentNodes[j].name+" </label></a><span> > </span>");
+         
 
         if (j==catalog.content[i].catalogCategory.parentNodes.length-1){
            $('.zagolovokFilter').empty();
            $('.zagolovokFilter').text(catalog.content[i].catalogCategory.name);
-           $('.filter .categoria ').append("<a href=catalog.php?nodeId="+catalog.content[i].catalogCategory.parentNodes[j].nodeId+"&product=false><label for='subCategory1'>"+ catalog.content[i].catalogCategory.name+" <span>x</span></label></a>"); 
+           $('#breadcrumbs ').append("<a href=catalog.php?nodeId="+catalog.content[i].catalogCategory.parentNodes[j].nodeId+"&product=false><label for='subCategory1'>"+ catalog.content[i].catalogCategory.name+" </label></a><span></span>"); 
 
          }
 
@@ -489,6 +489,10 @@ function breadcrumbsRender(catalog, products){
       breadcrumbsRenderForProducts(products);
   }else{
 
+
+      $('#breadcrumbs').empty();
+
+
     var nodes = [];
   for (var i=0 ; i<catalog.length; i++) {
 nextInput:
@@ -503,12 +507,10 @@ nextInput:
                   }
              nodes.push(catalog[i].parentNodes[j].nodeId);
 
-             if (j==0){
-                 $('.filter .categoria ').append("<a href=catalog.php?nodeId=all&product=false><label for='subCategory1'>"+ catalog[i].parentNodes[j].name+" <span>x</span></label></a>");
-             } else{
+             
 
-        $('.filter .categoria ').append("<a href=catalog.php?nodeId="+catalog[i].parentNodes[j-1].nodeId+"&product=false><label for='subCategory1'>"+ catalog[i].parentNodes[j].name+" <span>x</span></label></a>");
-        }
+        $('#breadcrumbs').append("<a href=catalog.php?nodeId="+catalog[i].parentNodes[j].nodeId+"&product=false><label for='subCategory1'>"+ catalog[i].parentNodes[j].name+" </label></a><span> > </span>");
+        
 
         if (j==catalog[i].parentNodes.length-1){
           $('.zagolovokFilter').empty();
@@ -521,6 +523,191 @@ nextInput:
 }
 
 }
+
+
+function getProducts(node, page=0, catalog,  sortParam='name'){
+console.log('this funk');
+                //console.log(res);
+               console.log(node);
+
+
+  $.ajax({
+
+             url:'https://web-store-sample-vs.herokuapp.com/web-store/catalog/'+node+'/products?page='+page+'&size=12'+'&sort='+sortParam,
+          contentType:"application/json",
+              success: function(res) {
+                   
+      if(!res.content){
+
+      return 0;
+    }else{
+
+        for (var i=0 ; i<res.content.length; i++) {
+
+          //  alert( products.length);
+           $('.products').append("<div class='catelogElemet'><div class='product' id="+res.content[i].id+"><img src='img/test.jpg'><a class='name' href=product.php?productId="+res.content[i].id+">"+res.content[i].name+"</a><p class='price'>Ціна ="+res.content[i].priceWithVAT+ "</p></div></div>");
+            $('.products  #'+res.content[i].id).append(" <button onclick='modalAddProduct("+res.content[i].id+")' id="+res.content[i].id+">Добавить в корзину</button>");
+        $('.products #'+res.content[i].id).append(" <a class='info' href=product.php?productId="+res.content[i].id+">Детальніше</a>");
+ }
+
+     if (res.content.length>0){
+      // $('.products').css('display','block');   
+      }
+    }
+    //  console.log(products.length);
+     // console.log(catalog.length);
+      // if (products.length==0 && catalog.length==0){
+      //     alert("ffff");
+      //   $('.productsList').css('display','block');
+      //   $(' .productsList').append("<h5>В цій категорії товарів немає</h5>");
+      //  }
+   // return 1;
+  
+
+//$('.breadcrumbs .thisPage').empty();
+//$('.breadcrumbs .thisPage').append(breadcrumbs);
+  
+      breadcrumbsRender(catalog, res);
+  optionCatalog=localStorage.getItem("optionCatalogList");
+                                            // if (optionCatalog=="true"){
+                                            //   setList();  
+                                            //   console.log("ser")
+
+                                            // }else{
+                                            //   setNotList();
+                                            //   console.log("not ser")
+
+                                            // }
+
+  $('.products').removeClass('load'); 
+  $('.productsList').removeClass('load'); 
+
+          
+
+                                
+
+                                         for(var i=0; i<res.totalPages;i++){
+                                            
+
+                                            if(page==i){
+
+                                               $('.filterOption #pagesPagination').append('<span class="paginationO thisPage" onclick="getProductsNext('+i+',true,\''+node+'\')">'+(i+1)+' </span>');
+                                            }else{
+                                          $('.filterOption #pagesPagination').append('<span class="paginationO" onclick="getProductsNext('+i+',true,\''+node+'\')">'+(i+1)+' </span>');
+                                             }
+                                         }
+                                         // $(".search ").append("<div id='name'>"+ name+"<div>");
+                                           
+
+                                            optionCatalog=localStorage.getItem("optionCatalogList");
+                                            if (optionCatalog=="true"){
+                                              setList();  
+                                              console.log("ser")
+
+                                            }else{
+                                              setNotList();
+                                              console.log("not ser")
+
+                                            }
+
+
+
+          if (!res.last){
+                console.log("Дуже багато")
+                $(".content .container .row .search").append("<button id='searchMore'>Показати ще результати</button>")
+              }
+                $(".content .container .row .search #searchMore").click(function() {
+                  $('.search  #pagesPagination .paginationO').remove();
+                  $(".content .container .row .search #searchMore").remove();
+               
+                  page++;
+                    getProducts(name, page);
+                });
+
+
+               },
+
+         error: function (jqXHR, exception){
+         
+         console.log("error");  
+            //   
+        return false;  
+           }
+
+        });
+}
+
+function getProductsNext(page=0,dell, node)
+{
+   if(dell){
+    $('  #searchMore').remove();
+    $(' #pagesPagination .paginationO').remove();
+    $('.products .catelogElemet').remove();
+    $('.products  h3').remove();
+       
+       
+  };
+var catalog=[];
+
+
+
+var sorting='name';
+  var sorting=$(" .prosort#sortingOption option:selected").val();
+  if(sorting=='name'){
+     sorting='name'; 
+  }else
+    if(sorting=='ask'){
+    sorting='priceWithVAT'; 
+    param="ask";
+  }else
+    if(sorting=='desk'){
+      sorting='priceWithVAT'; 
+      param="desk";
+
+    }
+
+
+getProducts(node, page, catalog, sorting);
+}
+$('.prosort#sortingOption').change(function() {
+    $(' #searchMore').remove();
+    $(' #pagesPagination .paginationO').remove();
+    $('.products .catelogElemet').remove();
+    $('.products  h3').remove();
+       
+var param='asc';
+  var sorting=$(".prosort#sortingOption option:selected").val();
+  if(sorting=='name'){
+     sorting='name'; 
+  }else
+    if(sorting=='ask'){
+    sorting='priceWithVAT'; 
+    param="ask";
+  }else
+    if(sorting=='desk'){
+      sorting='priceWithVAT'; 
+      param="desk";
+
+    }
+
+page=localStorage.getItem("page");
+
+
+//alert(name+page+sorting);
+
+node=$('.allCatalog .node').text();
+catalog=[];
+getProducts(node, page, catalog, sorting);
+  });
+
+
+
+
+
+
+
+
+
 
   function renderProducts(){
 
@@ -562,42 +749,17 @@ nextInput:
    var products= $('.products').text();
    
 
-    products=products.slice(0, -1);
+   // products=products.slice(0, -1);
     $('.products').empty();
-     products= JSON.parse(products);
-     console.log(products.content);
-      if(!products.content){
-      return 0;
-    }else{
-
-        for (var i=0 ; i<products.content.length; i++) {
-
-          //  alert( products.length);
-           $('.products').append("<div class='catelogElemet'><div class='product' id="+products.content[i].id+"><img src='img/test.jpg'><h5>"+products.content[i].name+"</h5><p class='price'>Ціна ="+products.content[i].priceWithVAT+ "</p></div></div>");
-            $('.products  #'+products.content[i].id).append(" <button onclick='modalAddProduct("+products.content[i].id+")' id="+products.content[i].id+">Добавить в корзину</button>");
-        $('.products #'+products.content[i].id).append(" <a href=product.php?productId="+products.content[i].id+">Детальніше</a>");
- }
-     if (products.content.length>0){
-      // $('.products').css('display','block');   
-      }
-    }
-    //  console.log(products.length);
-     // console.log(catalog.length);
-      // if (products.length==0 && catalog.length==0){
-      //     alert("ffff");
-      //   $('.productsList').css('display','block');
-      //   $(' .productsList').append("<h5>В цій категорії товарів немає</h5>");
-      //  }
-   // return 1;
   
 
-//$('.breadcrumbs .thisPage').empty();
-//$('.breadcrumbs .thisPage').append(breadcrumbs);
-   breadcrumbsRender(catalog, products);
+   products=getProducts(products, 0,catalog);
 
 
-  $('.products').removeClass('load'); 
-  $('.productsList').removeClass('load');
+
+   
+    // products= JSON.parse(products);
+  
   }  
  
 renderProducts();

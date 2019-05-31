@@ -3,8 +3,14 @@ function setCartsCounter()
 $("header .basket a .productCounter").text('');
 if( localStorage.getItem("productCounter")==null){
 	$("header .basket a .productCounter").append("0");
+	var z= $('.oformitZ');
+	console.log(z);
+	$(z).css('display','none');
 }else{
 
+var z= $('.oformitZ');
+	console.log(z);
+	$(z).css('display','block');
 $("header .basket a .productCounter").append(localStorage.getItem("productCounter"));}
 }
 

@@ -1,4 +1,4 @@
-<div class="container">
+<!-- <div class="container">
 	<div class="row">
 		<div class="col-md-3">
 			© Интернет-магазин «Розетка™» 2001–2018<br>
@@ -40,9 +40,9 @@
 
 	</div>			
 
-</div>
+</div> -->
 
- <?php include 'socials.php'; ?>
+<!--  <?php include 'socials.php'; ?> -->
 
 
 

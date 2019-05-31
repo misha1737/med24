@@ -1,10 +1,16 @@
 //перевірка і вивід імя користувача
+//refreshToken();
 function username(){
   name= localStorage.getItem("username");
   if(typeof(localStorage.getItem("username"))==="object"){
      $("header .access ").append("<a href='autorization.php'><i class='far fa-user'></i><span>Увійти / Зареєструватись</span></a>");
    }else{
     $("header .access ").append("<i class='far fa-user'></i><span>"+name+"</span><span class='exit'> Вийти</span>");
+  }
+   if(typeof(localStorage.getItem("username"))==="object"){
+     $(".user .access ").append("<a href='autorization.php'><i class='far fa-user'></i><span>Увійти / Зареєструватись</span></a>");
+   }else{
+    $(".user .access ").append("<i class='far fa-user'></i><span>"+name+"</span><span class='exit'> Вийти</span>");
   }
 }
 username();
@@ -142,14 +148,14 @@ $("span.exit").click(function() {
  $(".poslugiButton").click(function(){
 
 
-  document.location.href = 'catalog.php';
+  document.location.href = 'catalog.php?nodeId=all&product=false';
 
  });
 
   $(".tovaryButton").click(function(){
 
 
-  document.location.href = 'catalog.php';
+  document.location.href = 'catalog.php?nodeId=all&product=false';
 
  });
 

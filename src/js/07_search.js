@@ -23,7 +23,7 @@ function startSearch(name, page=0, sortParam='name', param='asc'){
 
             //   $(" .content .container .row .search").append("<div class='col-md-4 col-lg-4 col-sm-6  catelogElemet'> <div class='product' id="+res.content[i].id+"></div></div>");
                
-                $(".content .container .row .search #"+res.content[i].id+" ").prepend(" <h5>"+res.content[i].name+"</h5>");
+                $(".content .container .row .search #"+res.content[i].id+" ").prepend(" <a class='name' href='product.php?productId="+res.content[i].id+"'>"+res.content[i].name+"</a>");
 
                 //картинка
                 $(".content .container .row .search #"+res.content[i].id+" ").append(" <img src='img/test.jpg' >");
@@ -35,7 +35,7 @@ function startSearch(name, page=0, sortParam='name', param='asc'){
 
                 $(".content .container .row .search #"+res.content[i].id+" ").append(" <button onclick='modalAddProduct("+res.content[i].id+")' id="+res.content[i].id+">Добавить в корзину</button>");
 
-              $(".content .container .row .search #"+res.content[i].id+" ").append(" <a href=catalog.php?nodeId="+res.content[i].catalogTreeNodeId+"&product=true>Перейти в каталог</button></a>");
+              $(".content .container .row .search #"+res.content[i].id+" ").append(" <a class='info' href=product.php?productId="+res.content[i].id+">детальніше</button></a>");
 
                                          }
                                          //alert(res.totalPages);
@@ -105,7 +105,7 @@ function search(page=0,dell)
   };
 
 var param='asc';
-  var sorting=$("#sortingOption option:selected").val();
+  var sorting=$(".search #sortingOption option:selected").val();
   if(sorting=='name'){
      sorting='name'; 
   }else
@@ -134,14 +134,14 @@ startSearch(name, page, sorting, param);
 
 
 
-$('#sortingOption').change(function() {
+$('.search #sortingOption').change(function() {
     $('.search .catelogElemet').remove();
     $('.search  h3').remove();
        $('.search  #searchMore').remove();
        $('.search  #pagesPagination .paginationO').remove();
        
 var param='asc';
-  var sorting=$("#sortingOption option:selected").val();
+  var sorting=$(".search #sortingOption option:selected").val();
   if(sorting=='name'){
      sorting='name'; 
   }else

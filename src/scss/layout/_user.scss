@@ -1,0 +1,19 @@
+.user{
+	padding:15px;
+	background-color: white;
+	margin-bottom: 15px;
+	.access{
+
+		i{
+			font-size: 18px;
+			margin-right: 15px;
+		}
+		span{
+			@include text(18px);
+		}
+		span.exit{
+			cursor:pointer;
+			float:right;
+		}
+	}
+}

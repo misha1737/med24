@@ -2,7 +2,7 @@
 		<?php
 		 require_once "head.php";
 		?>
-<body id="Авторизація">
+<body id="Авторизація" class="autoron">
 
 		<?php
 		 require_once "header.php";
@@ -50,3 +50,6 @@
 	
 </body>
 </html>
+<script>
+
+</script>

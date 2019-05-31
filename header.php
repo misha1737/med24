@@ -121,7 +121,7 @@
 						<span class="phoneNumber"><i class="fas fa-mobile-alt"></i><p><br><a href="tel:+380 800 750 700">0 800 750 700</a></p></span>
 					</div>
 					<div class="col-md-4">
-						<span class="access"></span>
+						<a href="user.php" class="access"></a>
 					</div>
 					<div class="col-md-4 col-xs-1">
 						<span class="basket"><a href="#"><img src="img/cart.svg"><p class="productCounter">
@@ -144,7 +144,7 @@
 				</div>
 						<div class="mobMenuButtons">
 						<span class="phoneNumber"><a href="tel:+380 800 750 700"><i class="fas fa-mobile-alt"></i><p><br>0 800 750 700</p></a></span>
-						<span class="access"></span>
+						<a href="user.php" class="access"></a>
 						<span class="basket"><a href="#"><img src="img/cart.svg"><p class="productCounter">0</p></a><p>Товарів:<br> на 0 грн</p></span>
 						</div>
 				

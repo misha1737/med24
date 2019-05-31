@@ -27,9 +27,9 @@
 			</div>	
 
 			<div class="col-sm-3 filter">
-				<h4>Категорія</h4>	
+				<!-- <h4>Категорія</h4>	
 				<form class="categoria">
-			
+			 -->
 			<div class="pdcatalog">
 		
 		 </div>
@@ -38,7 +38,7 @@
 <br>	
 
 				</form>
-				<h4>Бренд</h4>	
+				<!-- <h4>Бренд</h4>	
 				<form>
 				    <input type="checkbox" id="brand1" name="subscribe">
 				    <label for="brand1">Бренд1</label>
@@ -107,7 +107,7 @@
  
 <div id="slider-range"></div>
 
-<button class="filterSend">Прийняти</button>
+<button class="filterSend">Прийняти</button> -->
 
 			</div>
 
@@ -141,8 +141,9 @@
               echo "<div class='productsList load'>";
               getCatalog($url);
              echo "</div>";
-
-	$url2='https://web-store-sample-vs.herokuapp.com/web-store/catalog/'. $node. '/products';
+             $page=0;
+             $page='name';
+	$url2='https://web-store-sample-vs.herokuapp.com/web-store/catalog/'. $node. '/products' .'?page='.$page.'&size=2'.'&sort='.$sortParam;
              
 
            
@@ -152,16 +153,15 @@
 			</div>
 			<div class="col-sm-12 filterOption">	
 				Сортировка:
-				   <select id="sortingOption">
+				   <select class="prosort" id="sortingOption">
 				    <option value="name">По імені</option>
 				<!--     <option value="ask">Від дорогих до дешевих</option> -->
 				    <option value="desk">Від дешевих до дорогих</option>
 				   </select>
 				   <div class="abzac"> </div>
-					<span class="paginationO">1</span>
-					<span class="paginationO">2</span>
-					<span class="paginationO">3</span>
-					<span class="paginationO">4</span>
+					 <span id="pagesPagination">
+					
+					</span>
 					<span class="glyphicon 	glyphicon glyphicon-th blockOption "></span>
 					<span class="glyphicon glyphicon glyphicon-th-list listOption"></span>
 			</div>
@@ -177,7 +177,11 @@
 
     			<?php
 				 echo "<div class='products load'>";
-              getCatalog($url2);
+             // getCatalog($url2);
+             	echo $node ;
+             echo "</div>";
+          	echo "<div class='node' style='display:none'>";
+             echo $node ;
              echo "</div>";
 				?>
       

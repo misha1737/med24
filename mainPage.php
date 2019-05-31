@@ -16,7 +16,7 @@
 </div>
 
 <div class="col-md-6 sliderBox">
-<div class="sliderMenu">
+<!-- <div class="sliderMenu">
 	<ul>
 		<li>Топ Акції</li>
 		<li>З подарунками</li>
@@ -25,35 +25,23 @@
 		<li>Товар дня</li>
 	</ul>
 </div>
+ -->
 
-
-		<?php
+	<!-- 	<?php
 		 require_once "libs/rslider/rslider.html";
-		?>
-<!-- <iframe src="libs/rslider/rslider.html" width="100%" height="600px" align="left">
-    Ваш браузер не поддерживает плавающие фреймы!
- </iframe> -->
+		?> -->
+
 </div>
 
 <div class="catalogBlock col-md-9 ">
-	
-	<!-- 	<div class="ktg kategoria1">	<?php include 'categoriya1.php'; ?></div>
-		<div class="ktg kategoria2">	<?php include 'categoriya2.php'; ?></div>
-		<div class="ktg kategoria3">	<?php include 'categoriya3.php'; ?></div>
-		<div class="ktg kategoria4">	<?php include 'categoriya4.php'; ?></div>
-		<div class="ktg kategoria5">	<?php include 'categoriya5.php'; ?></div>
-		<div class="ktg kategoria6">	<?php include 'categoriya6.php'; ?></div>
-		<div class="ktg kategoria7">	<?php include 'categoriya7.php'; ?></div>
-		<div class="ktg kategoria8">	<?php include 'categoriya8.php'; ?></div> -->
-		 <?php include 'categorii.php'; ?>
-		
+
 
 	</div>
 
 
-<div class="col-md-3 catalogPoslugi">
-
-<button class="medPoslugi">Популярні медичні послуги</button>
+<div class="col-md-3 ">
+<!-- <div class="col-md-3 catalogPoslugi"> -->
+<!-- <button class="medPoslugi">Популярні медичні послуги</button>
 <div class="row medPosluga">
 	<div class="col-xs-6">
 	<h4>Медична консультація</h4>
@@ -80,7 +68,7 @@
 	<div class="col-xs-6">
 	<img class="img-responsive" src="img/poslugi3.jpg" alt="">	
 	</div>
-</div>
+</div> -->
 
 </div>
 
@@ -89,7 +77,7 @@
 
 </div> 
 
-<div class="container sliderProducts">	
+<!-- <div class="container sliderProducts">	
 <div class="row">
 	<h3>Акційні товари</h3>
 	  <?php include 'sliderA.php'; ?>
@@ -128,4 +116,4 @@
 
 		</div>
 	</div>
-</div>
+</div> -->

@@ -8,7 +8,8 @@
 			
 	
 		<div class="row">
-			<a href="zamovlenya.php" id="zakaz">  Оформити замовлення</a>
+			<a href="" id="zakaz" class="prodovjitPocupki">  Продовжити покупки</a>
+			<a href="zamovlenya.php" id="zakaz" class="oformitZ">  Оформити замовлення</a>
 		</div>
 			
 		</div>

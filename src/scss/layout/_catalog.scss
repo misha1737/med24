@@ -179,7 +179,15 @@
 			//display:flex;
 		background: $white;
 		min-height: 300px;
+		a.name{
+			display: inline-block;
+			height: 72px;
+			overflow:hidden;
+			@include text(16px);
+			padding: 3px 18px;
+		}
 		h5{
+			display: inline-block;
 			height: 72px;
 			overflow:hidden;
 			@include text(16px);
@@ -203,7 +211,7 @@
 			margin: 0px;
 			
 		}
-		a{
+		a.info{
 			display:inline-block;
 			@include button(14px, 5px, 86%, $green);
 			margin-left: 7%;
@@ -232,14 +240,16 @@
 	 	//display: flex;
 	 	height:200px;
 	// 	min-height: 490px;
-		a{
-			//    width: 60%;
-	    //display: inline-block;
+		a.name{
+			
+	 		@include text(16px);
+			margin-left: 15px;
+			display:inline-block;
+			width:65%;
+			text-align: left;
 		}
 		
 	 	h5{
-	 		//height: 72px;
-	 		//overflow:hidden;
 	 		@include text(16px);
 			margin-left: 15px;
 			display:inline-block;
@@ -287,7 +297,7 @@
 
 			//margin:8px;
 		}
-		a{
+		a.info{
 			display:inline-block;
 			@include button(14px, 5px, 50%, $green);
 			//margin-left: 10px;
@@ -373,14 +383,14 @@ padding:15px;
 			//padding:0px;
 			//margin:8px;
 		}
-		a{
+		a.info{
 			position: static;
 			width:90%;
 			margin:0px;
 			margin-left: 5%;
 			margin-bottom: 5px;
 		}
-		h5{
+		a.name{
 			font-size: 12px;
 		}
 		}
