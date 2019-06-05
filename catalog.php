@@ -9,7 +9,7 @@
 <?php
 		 require_once "head.php";
 		?>
-<body id="Товар">
+<body >
 
 	<?php
 		 require_once "header.php";
@@ -141,6 +141,8 @@
               echo "<div class='productsList load'>";
               getCatalog($url);
              echo "</div>";
+             echo "<div class='productsList2'></div>";
+             echo "<div class='productsList3'></div>";
              $page=0;
              $page='name';
 	$url2='https://web-store-sample-vs.herokuapp.com/web-store/catalog/'. $node. '/products' .'?page='.$page.'&size=2'.'&sort='.$sortParam;

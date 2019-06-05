@@ -307,7 +307,7 @@ function eventHover(){
 
               }else{
               $(".tovaryMenu .catalog .podcatalog."+idCategoria+"").prepend("<div class='podcategoria'><a href=catalog.php?nodeId="+res[i].nodeId+"&product=false><h5 id="+i+">"+res[i].name+"</h5></a><div class='podpodcatalog "+i+"'></div></div>");
-
+                
               }   
 
              }
@@ -334,6 +334,7 @@ function eventHover(){
                for(i=0;i<res.length;i++){
                $(".tovaryMenu .catalog").prepend("<div class='categoria id"+i+"'><a href=catalog.php?nodeId="+res[i].nodeId+"&product=false><h4>"+res[i].name+"</h4></a><div class='podcatalog "+i+"'></div></div>");
                $(".tovaryMenu .catalogMenu").prepend("<a href=catalog.php?nodeId="+res[i].nodeId+"&product=false><h5 id="+i+">"+res[i].name+"</h5></a>");
+               
                getPodcategoria(i, res[i].nodeId);
          }
           eventHover();
@@ -927,16 +928,30 @@ getProducts(node, page, catalog, sorting);
     
      
 
+//alert(catalog[0].parentNodes.length);
+function get2pageCatalog(node, page){
+    $.ajax({
 
+             url:'https://web-store-sample-vs.herokuapp.com/web-store/catalog/'+node+'/sub-categories',
+          contentType:"application/json",
+           async:false,
+              success: function(res) {
+                
+                console.log(res);
+                for(var i=0; i<res.length; i++){
+                  console.log(page);
+                  
+                  $('.productsList2 #'+page+' ' ).append("<a href='catalog.php?nodeId="+res[i].nodeId+"&product=false' class='podcategoria' <h4>"+res[i].name+"</h4> </a>")
+                }
+              }
+            });
+
+
+}
+if(!!catalog.length){
+if (catalog[0].parentNodes.length>2){
       for (var i=0 ; i<catalog.length; i++) {
-
-         
-        // breadcrumbs= catalog[i].path;
-      //console.log(catalog[i].parentNodes[0].name)
        if(catalog[i].hasLinkedProducts){
-
-
-        
 
         $(' .productsList').append("<a class='categoriaBlock' href=catalog.php?nodeId="+catalog[i].nodeId+"&product=ture><img class='img-responsive' src='img/test.jpg'><h4>"+catalog[i].name+"</h4></a>");
       }else
@@ -944,8 +959,32 @@ getProducts(node, page, catalog, sorting);
        $(' .productsList').append("<a class='categoriaBlock' href=catalog.php?nodeId="+catalog[i].nodeId+"&product=false><img class='img-responsive' src='img/test.jpg'><h4>"+catalog[i].name+"</h4></a>");
       }
 
-   // console.log(products[1].nodeId);
   } 
+}else if (catalog[0].parentNodes.length==1){
+
+  for (var i=0 ; i<catalog.length; i++) {
+    
+        $(' .productsList2').append("<div  id="+i+"  class='catalogLinksBlock' ><a href='catalog.php?nodeId="+catalog[i].nodeId+"&product=ture' class='categoriaBlock'><img class='img-responsive' src='img/test.jpg'><h4>"+catalog[i].name+"</h4></a></div>");
+        
+           get2pageCatalog(catalog[i].nodeId, i);
+
+        
+
+  }
+  $(' .productsList').css('display','none');
+}else if (catalog[0].parentNodes.length==2){
+  
+  for (var i=0 ; i<catalog.length; i++) {
+       
+
+        $(' .productsList3').append("<a class='categoriaBlock' href=catalog.php?nodeId="+catalog[i].nodeId+"&product=ture><img class='img-responsive' src='img/test.jpg'><h4>"+catalog[i].name+"</h4></a>");
+        
+  }
+  $(' .productsList').css('display','none');
+}
+
+}
+
   if (catalog.length<1){
   $('.productsList').css('display','none');
   }
@@ -972,6 +1011,7 @@ renderProducts();
         if((linkstoProducts.length+linkstoCatalog.length)>0){
         }else{
            $('.productsList').css('display','block');
+           $('.productsList').css('overflow','hidden');
            $(' .testList .productsList').append("<h5>В цій категорії товарів немає</h5>");
         }
 function setCartsCounter()
