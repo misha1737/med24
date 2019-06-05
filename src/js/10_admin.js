@@ -1,4 +1,4 @@
-function getOrders(){
+function getAllOrders(){
 
 	$.ajax({
                                 url:'https://web-store-sample-vs.herokuapp.com/web-store/orders'
@@ -8,36 +8,36 @@ function getOrders(){
                                  type:'GET',
                               contentType:"application/json",
                                  success: function(res) {
-                                 	$('.adminInfoBlock').empty();
+                                 	//$('.adminInfoBlock').empty();
                                         console.log('Замовлення Отримані');
                                        
                                        for(var i=0;i<res.length; i++){
                                        	 console.log(res[i].address);
-                                       $('.adminInfoBlock').append('<div class="order" id='+res[i].id+'></div>');
-                                       $('.adminInfoBlock #'+res[i].id).append('<div class="buttonOrder" id='+res[i].id+'><span class="glyphicon glyphicon-download"></span></div>');
-                                       	$('.adminInfoBlock #'+res[i].id).append('<div class="addres">Адреса: '+ res[i].address +'</div>');
-                                       	$('.adminInfoBlock #'+res[i].id).append('<div class="phoneNumber">Телефон: '+ res[i].phoneNumber +'</div>');
-                                   		$('.adminInfoBlock #'+res[i].id).append('<div class="status">Статус замовлення: '+ res[i].status +'</div>');
-                                   		$('.adminInfoBlock #'+res[i].id).append('<div class="productsOrder disabled"></div>');
+                                       $('#AllOrders').append('<div class="order" id='+res[i].id+'></div>');
+                                       $('#AllOrders  #'+res[i].id).append('<div class="buttonOrder" id='+res[i].id+'><span class="glyphicon glyphicon-download"></span></div>');
+                                       	$('#AllOrders .order#'+res[i].id).append('<div class="addres">Адреса: '+ res[i].address +'</div>');
+                                       	$('#AllOrders .order#'+res[i].id).append('<div class="phoneNumber">Телефон: '+ res[i].phoneNumber +'</div>');
+                                   		$('#AllOrders .order#'+res[i].id).append('<div class="status">Статус замовлення: '+ res[i].status +'</div>');
+                                   		$('#AllOrders .order#'+res[i].id).append('<div class="productsOrder disabled"></div>');
                                       
 
 
                                       	for(var j=0;j<res[i].orderItems.length; j++){
                                       			console.log(res[i].orderItems[j]);
 
-                                      			$('.adminInfoBlock #'+res[i].id+' .productsOrder').append('<div class="productOrder" id='+res[i].orderItems[j].id+'></div>');
-                                      			$('.adminInfoBlock #'+res[i].orderItems[j].id).append('<div class="name">'+ res[i].orderItems[j].product.name +'</div>');
+                                      			$('#AllOrders #'+res[i].id+' .productsOrder').append('<div class="productOrder" id='+res[i].orderItems[j].id+'></div>');
+                                      			$('#AllOrders #'+res[i].orderItems[j].id).append('<div class="name">'+ res[i].orderItems[j].product.name +'</div>');
                                            
-                                      			$('.adminInfoBlock #'+res[i].orderItems[j].id).append('<div class="priceAndCount">'+res[i].orderItems[j].productCount+'шт '+ '<span class="price">'+(res[i].orderItems[j].productCount * res[i].orderItems[j].product.priceWithVAT) +'</span>грн</div>');
+                                      			$('#AllOrders #'+res[i].orderItems[j].id).append('<div class="priceAndCount">'+res[i].orderItems[j].productCount+'шт '+ '<span class="price">'+(res[i].orderItems[j].productCount * res[i].orderItems[j].product.priceWithVAT) +'</span>грн</div>');
                                    }
                                           var totalPrice=0
-                                        var priceMas =  $('.adminInfoBlock #'+res[i].id+" .price");
+                                        var priceMas =  $('#AllOrders #'+res[i].id+" .price");
                                           for( q=0;q<priceMas.length; q++){
                                              totalPrice+= +$(priceMas[q]).text();
 
                                           }
 
-                                          $('.adminInfoBlock #'+res[i].id+' .productsOrder').append('<div class="totalPrice">Загальна сума = '+  totalPrice +'</div>');
+                                          $('#AllOrders #'+res[i].id+' .productsOrder').append('<div class="totalPrice">Загальна сума = '+  totalPrice +'</div>');
                                  }
 
 
@@ -79,16 +79,16 @@ $.ajax({
                                  type:'GET',
                               contentType:"application/json",
                                  success: function(res) {
-                                 	$('.adminInfoBlock').empty();
+                                 	//$('.adminInfoBlock').empty();
                                         console.log('Користувачі Отримані');
                                        
                                  for(var i=0;i<res.length; i++){
                                 	console.log(res[i].firstName);
-                                       $('.adminInfoBlock').append('<div class="order" id=user'+res[i].id+'></div>');
-                                       	$('.adminInfoBlock #user'+res[i].id).append('<div class="firstName">'+ res[i].firstName +'</div>');
-                                       	$('.adminInfoBlock #user'+res[i].id).append('<div class="lastName">'+ res[i].lastName +'</div>');
-                                   		$('.adminInfoBlock #user'+res[i].id).append('<div class="email">'+ res[i].email +'</div>');
-                                   		$('.adminInfoBlock #user'+res[i].id).append('<div class="phone">'+ res[i].phone +'</div>');
+                                       $('#users').append('<div class="user" id=user'+res[i].id+'></div>');
+                                       	$('#users #user'+res[i].id).append('<div class="firstName">'+ res[i].firstName +'</div>');
+                                       	$('#users #user'+res[i].id).append('<div class="lastName">'+ res[i].lastName +'</div>');
+                                   		$('#users #user'+res[i].id).append('<div class="email">'+ res[i].email +'</div>');
+                                   		$('#users #user'+res[i].id).append('<div class="phone">'+ res[i].phone +'</div>');
                                    	
                                    	}
 
@@ -110,12 +110,29 @@ $.ajax({
 
 
 
-
 $('.adminNav #zamovlenya').click(function(){
-getOrders();
+
 })
 
 $('.adminNav #users').click(function(){
-getUsers();
+
 })
 
+
+
+$("#zamovlenyaButton").click(function(){
+
+$("#AllOrders").css("display","block");
+$("#users").css("display","none");
+$(".adminNav li").removeClass('active');
+$("#zamovlenyaButton").addClass('active');
+});
+
+
+$("#usersButton").click(function(){
+
+$("#AllOrders").css("display","none");
+$("#users").css("display","block");
+$(".adminNav li").removeClass('active');
+$("#usersButton").addClass('active');
+});

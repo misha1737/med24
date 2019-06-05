@@ -536,9 +536,9 @@ console.log('this funk');
              url:'https://web-store-sample-vs.herokuapp.com/web-store/catalog/'+node+'/products?page='+page+'&size=12'+'&sort='+sortParam,
           contentType:"application/json",
               success: function(res) {
-                   
+              
       if(!res.content){
-
+          
       return 0;
     }else{
 
@@ -551,6 +551,7 @@ console.log('this funk');
  }
 
      if (res.content.length>0){
+      $('.filterOption').css('display','block'); 
       // $('.products').css('display','block');   
       }
     }

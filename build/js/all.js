@@ -739,9 +739,9 @@ console.log('this funk');
              url:'https://web-store-sample-vs.herokuapp.com/web-store/catalog/'+node+'/products?page='+page+'&size=12'+'&sort='+sortParam,
           contentType:"application/json",
               success: function(res) {
-                   
+              
       if(!res.content){
-
+          
       return 0;
     }else{
 
@@ -754,6 +754,7 @@ console.log('this funk');
  }
 
      if (res.content.length>0){
+      $('.filterOption').css('display','block'); 
       // $('.products').css('display','block');   
       }
     }
@@ -1371,9 +1372,6 @@ return cart;
 
 function getCart(){
              
-
-
-
                             $.ajax({
                                 url:'https://web-store-sample-vs.herokuapp.com/web-store/shopping-carts/'+localStorage.getItem("username")
                                  , headers: {
@@ -1921,7 +1919,7 @@ $(".slider2ArowRight").mousedown(function () {
 */
 !function(a){"function"==typeof define&&define.amd?define(["jquery"],a):a("object"==typeof exports?require("jquery"):jQuery)}(function(a){var b,c=navigator.userAgent,d=/iphone/i.test(c),e=/chrome/i.test(c),f=/android/i.test(c);a.mask={definitions:{9:"[0-9]",a:"[A-Za-z]","*":"[A-Za-z0-9]"},autoclear:!0,dataName:"rawMaskFn",placeholder:"_"},a.fn.extend({caret:function(a,b){var c;if(0!==this.length&&!this.is(":hidden"))return"number"==typeof a?(b="number"==typeof b?b:a,this.each(function(){this.setSelectionRange?this.setSelectionRange(a,b):this.createTextRange&&(c=this.createTextRange(),c.collapse(!0),c.moveEnd("character",b),c.moveStart("character",a),c.select())})):(this[0].setSelectionRange?(a=this[0].selectionStart,b=this[0].selectionEnd):document.selection&&document.selection.createRange&&(c=document.selection.createRange(),a=0-c.duplicate().moveStart("character",-1e5),b=a+c.text.length),{begin:a,end:b})},unmask:function(){return this.trigger("unmask")},mask:function(c,g){var h,i,j,k,l,m,n,o;if(!c&&this.length>0){h=a(this[0]);var p=h.data(a.mask.dataName);return p?p():void 0}return g=a.extend({autoclear:a.mask.autoclear,placeholder:a.mask.placeholder,completed:null},g),i=a.mask.definitions,j=[],k=n=c.length,l=null,a.each(c.split(""),function(a,b){"?"==b?(n--,k=a):i[b]?(j.push(new RegExp(i[b])),null===l&&(l=j.length-1),k>a&&(m=j.length-1)):j.push(null)}),this.trigger("unmask").each(function(){function h(){if(g.completed){for(var a=l;m>=a;a++)if(j[a]&&C[a]===p(a))return;g.completed.call(B)}}function p(a){return g.placeholder.charAt(a<g.placeholder.length?a:0)}function q(a){for(;++a<n&&!j[a];);return a}function r(a){for(;--a>=0&&!j[a];);return a}function s(a,b){var c,d;if(!(0>a)){for(c=a,d=q(b);n>c;c++)if(j[c]){if(!(n>d&&j[c].test(C[d])))break;C[c]=C[d],C[d]=p(d),d=q(d)}z(),B.caret(Math.max(l,a))}}function t(a){var b,c,d,e;for(b=a,c=p(a);n>b;b++)if(j[b]){if(d=q(b),e=C[b],C[b]=c,!(n>d&&j[d].test(e)))break;c=e}}function u(){var a=B.val(),b=B.caret();if(o&&o.length&&o.length>a.length){for(A(!0);b.begin>0&&!j[b.begin-1];)b.begin--;if(0===b.begin)for(;b.begin<l&&!j[b.begin];)b.begin++;B.caret(b.begin,b.begin)}else{for(A(!0);b.begin<n&&!j[b.begin];)b.begin++;B.caret(b.begin,b.begin)}h()}function v(){A(),B.val()!=E&&B.change()}function w(a){if(!B.prop("readonly")){var b,c,e,f=a.which||a.keyCode;o=B.val(),8===f||46===f||d&&127===f?(b=B.caret(),c=b.begin,e=b.end,e-c===0&&(c=46!==f?r(c):e=q(c-1),e=46===f?q(e):e),y(c,e),s(c,e-1),a.preventDefault()):13===f?v.call(this,a):27===f&&(B.val(E),B.caret(0,A()),a.preventDefault())}}function x(b){if(!B.prop("readonly")){var c,d,e,g=b.which||b.keyCode,i=B.caret();if(!(b.ctrlKey||b.altKey||b.metaKey||32>g)&&g&&13!==g){if(i.end-i.begin!==0&&(y(i.begin,i.end),s(i.begin,i.end-1)),c=q(i.begin-1),n>c&&(d=String.fromCharCode(g),j[c].test(d))){if(t(c),C[c]=d,z(),e=q(c),f){var k=function(){a.proxy(a.fn.caret,B,e)()};setTimeout(k,0)}else B.caret(e);i.begin<=m&&h()}b.preventDefault()}}}function y(a,b){var c;for(c=a;b>c&&n>c;c++)j[c]&&(C[c]=p(c))}function z(){B.val(C.join(""))}function A(a){var b,c,d,e=B.val(),f=-1;for(b=0,d=0;n>b;b++)if(j[b]){for(C[b]=p(b);d++<e.length;)if(c=e.charAt(d-1),j[b].test(c)){C[b]=c,f=b;break}if(d>e.length){y(b+1,n);break}}else C[b]===e.charAt(d)&&d++,k>b&&(f=b);return a?z():k>f+1?g.autoclear||C.join("")===D?(B.val()&&B.val(""),y(0,n)):z():(z(),B.val(B.val().substring(0,f+1))),k?b:l}var B=a(this),C=a.map(c.split(""),function(a,b){return"?"!=a?i[a]?p(b):a:void 0}),D=C.join(""),E=B.val();B.data(a.mask.dataName,function(){return a.map(C,function(a,b){return j[b]&&a!=p(b)?a:null}).join("")}),B.one("unmask",function(){B.off(".mask").removeData(a.mask.dataName)}).on("focus.mask",function(){if(!B.prop("readonly")){clearTimeout(b);var a;E=B.val(),a=A(),b=setTimeout(function(){B.get(0)===document.activeElement&&(z(),a==c.replace("?","").length?B.caret(0,a):B.caret(a))},10)}}).on("blur.mask",v).on("keydown.mask",w).on("keypress.mask",x).on("input.mask paste.mask",function(){B.prop("readonly")||setTimeout(function(){var a=A(!0);B.caret(a),h()},0)}),e&&f&&B.off("input.mask").on("input.mask",u),A()})}})});
 
-function getOrders(){
+function getAllOrders(){
 
 	$.ajax({
                                 url:'https://web-store-sample-vs.herokuapp.com/web-store/orders'
@@ -1931,36 +1929,36 @@ function getOrders(){
                                  type:'GET',
                               contentType:"application/json",
                                  success: function(res) {
-                                 	$('.adminInfoBlock').empty();
+                                 	//$('.adminInfoBlock').empty();
                                         console.log('Замовлення Отримані');
                                        
                                        for(var i=0;i<res.length; i++){
                                        	 console.log(res[i].address);
-                                       $('.adminInfoBlock').append('<div class="order" id='+res[i].id+'></div>');
-                                       $('.adminInfoBlock #'+res[i].id).append('<div class="buttonOrder" id='+res[i].id+'><span class="glyphicon glyphicon-download"></span></div>');
-                                       	$('.adminInfoBlock #'+res[i].id).append('<div class="addres">Адреса: '+ res[i].address +'</div>');
-                                       	$('.adminInfoBlock #'+res[i].id).append('<div class="phoneNumber">Телефон: '+ res[i].phoneNumber +'</div>');
-                                   		$('.adminInfoBlock #'+res[i].id).append('<div class="status">Статус замовлення: '+ res[i].status +'</div>');
-                                   		$('.adminInfoBlock #'+res[i].id).append('<div class="productsOrder disabled"></div>');
+                                       $('#AllOrders').append('<div class="order" id='+res[i].id+'></div>');
+                                       $('#AllOrders  #'+res[i].id).append('<div class="buttonOrder" id='+res[i].id+'><span class="glyphicon glyphicon-download"></span></div>');
+                                       	$('#AllOrders .order#'+res[i].id).append('<div class="addres">Адреса: '+ res[i].address +'</div>');
+                                       	$('#AllOrders .order#'+res[i].id).append('<div class="phoneNumber">Телефон: '+ res[i].phoneNumber +'</div>');
+                                   		$('#AllOrders .order#'+res[i].id).append('<div class="status">Статус замовлення: '+ res[i].status +'</div>');
+                                   		$('#AllOrders .order#'+res[i].id).append('<div class="productsOrder disabled"></div>');
                                       
 
 
                                       	for(var j=0;j<res[i].orderItems.length; j++){
                                       			console.log(res[i].orderItems[j]);
 
-                                      			$('.adminInfoBlock #'+res[i].id+' .productsOrder').append('<div class="productOrder" id='+res[i].orderItems[j].id+'></div>');
-                                      			$('.adminInfoBlock #'+res[i].orderItems[j].id).append('<div class="name">'+ res[i].orderItems[j].product.name +'</div>');
+                                      			$('#AllOrders #'+res[i].id+' .productsOrder').append('<div class="productOrder" id='+res[i].orderItems[j].id+'></div>');
+                                      			$('#AllOrders #'+res[i].orderItems[j].id).append('<div class="name">'+ res[i].orderItems[j].product.name +'</div>');
                                            
-                                      			$('.adminInfoBlock #'+res[i].orderItems[j].id).append('<div class="priceAndCount">'+res[i].orderItems[j].productCount+'шт '+ '<span class="price">'+(res[i].orderItems[j].productCount * res[i].orderItems[j].product.priceWithVAT) +'</span>грн</div>');
+                                      			$('#AllOrders #'+res[i].orderItems[j].id).append('<div class="priceAndCount">'+res[i].orderItems[j].productCount+'шт '+ '<span class="price">'+(res[i].orderItems[j].productCount * res[i].orderItems[j].product.priceWithVAT) +'</span>грн</div>');
                                    }
                                           var totalPrice=0
-                                        var priceMas =  $('.adminInfoBlock #'+res[i].id+" .price");
+                                        var priceMas =  $('#AllOrders #'+res[i].id+" .price");
                                           for( q=0;q<priceMas.length; q++){
                                              totalPrice+= +$(priceMas[q]).text();
 
                                           }
 
-                                          $('.adminInfoBlock #'+res[i].id+' .productsOrder').append('<div class="totalPrice">Загальна сума = '+  totalPrice +'</div>');
+                                          $('#AllOrders #'+res[i].id+' .productsOrder').append('<div class="totalPrice">Загальна сума = '+  totalPrice +'</div>');
                                  }
 
 
@@ -2002,16 +2000,16 @@ $.ajax({
                                  type:'GET',
                               contentType:"application/json",
                                  success: function(res) {
-                                 	$('.adminInfoBlock').empty();
+                                 	//$('.adminInfoBlock').empty();
                                         console.log('Користувачі Отримані');
                                        
                                  for(var i=0;i<res.length; i++){
                                 	console.log(res[i].firstName);
-                                       $('.adminInfoBlock').append('<div class="order" id=user'+res[i].id+'></div>');
-                                       	$('.adminInfoBlock #user'+res[i].id).append('<div class="firstName">'+ res[i].firstName +'</div>');
-                                       	$('.adminInfoBlock #user'+res[i].id).append('<div class="lastName">'+ res[i].lastName +'</div>');
-                                   		$('.adminInfoBlock #user'+res[i].id).append('<div class="email">'+ res[i].email +'</div>');
-                                   		$('.adminInfoBlock #user'+res[i].id).append('<div class="phone">'+ res[i].phone +'</div>');
+                                       $('#users').append('<div class="user" id=user'+res[i].id+'></div>');
+                                       	$('#users #user'+res[i].id).append('<div class="firstName">'+ res[i].firstName +'</div>');
+                                       	$('#users #user'+res[i].id).append('<div class="lastName">'+ res[i].lastName +'</div>');
+                                   		$('#users #user'+res[i].id).append('<div class="email">'+ res[i].email +'</div>');
+                                   		$('#users #user'+res[i].id).append('<div class="phone">'+ res[i].phone +'</div>');
                                    	
                                    	}
 
@@ -2033,16 +2031,32 @@ $.ajax({
 
 
 
-
 $('.adminNav #zamovlenya').click(function(){
-getOrders();
+
 })
 
 $('.adminNav #users').click(function(){
-getUsers();
+
 })
 
 
+
+$("#zamovlenyaButton").click(function(){
+
+$("#AllOrders").css("display","block");
+$("#users").css("display","none");
+$(".adminNav li").removeClass('active');
+$("#zamovlenyaButton").addClass('active');
+});
+
+
+$("#usersButton").click(function(){
+
+$("#AllOrders").css("display","none");
+$("#users").css("display","block");
+$(".adminNav li").removeClass('active');
+$("#usersButton").addClass('active');
+});
 
 //alert(filter);
 var filter=false;
@@ -2615,6 +2629,23 @@ if(productId=$('#product #proguctId').text()){
 // $("a").on('touchstart', function() {
 // 	location.href = $(this).attr('href');
 // });
+
+$("#CartButton").click(function(){
+
+$("#orders").css("display","none");
+$("#cartList").css("display","block");
+$(".userNav li").removeClass('active');
+$("#CartButton").addClass('active');
+});
+
+
+$("#UserButton").click(function(){
+
+$("#orders").css("display","block");
+$("#cartList").css("display","none");
+$(".userNav li").removeClass('active');
+$("#UserButton").addClass('active');
+});
 console.log("zamovlenya");
 
 $("#oformitZ").click(function(){
@@ -2724,6 +2755,65 @@ zamovlenya=JSON.parse(zamovlenya);
 
 
 });
+
+function getOrders(){
+
+			
+ 					
+              $.ajax({
+                                url:'https://web-store-sample-vs.herokuapp.com/web-store/orders/user/'+localStorage.getItem("username")
+                                 , headers: {
+                                                    Authorization : 'Bearer ' + localStorage.getItem("token")
+                                                  },
+                                 type:'GET',
+                              contentType:"application/json",
+                                 success: function(res) {
+                                        console.log('замовлення Отримані');
+                                    
+                       					for (kay in res){ 
+                       					    
+                       						$('#orders').append('<div class="orderBlock '+res[kay].id+'"></div>');
+ 									   $('#orders .'+res[kay].id+'').append('<div class="adresBlock"></div>');
+                                       $('#orders .'+res[kay].id+' .adresBlock').append('<div>Адреса: '+res[kay].address+'</div>');
+                                       $('#orders .'+res[kay].id+' .adresBlock').append('<div>Номер: '+res[kay].phoneNumber+'</div>');
+                                       $('#orders .'+res[kay].id+' .adresBlock').append('<div>Статус: '+res[kay].status+'</div>');
+
+                                       //$('#orders .'+res[kay].id+'').append('<div class="'+res[kay].id+' "></div>');	
+										var orderPrice=0;
+                                       		for (product in res[kay].orderItems){  
+                                       				
+                                       	$('#orders .'+res[kay].id).append('<div class="'+res[kay].orderItems[product].product.id+' productBox"></div>'	)
+                                       	$('#orders .'+res[kay].id+' .'+res[kay].orderItems[product].product.id).append('<img class="productImg" src="img/test.jpg" alt="">');
+                                        $('#orders .'+res[kay].id+' .'+res[kay].orderItems[product].product.id).append('<a class="name" href="product.php?productId='+res[kay].orderItems[product].product.id +'">'+res[kay].orderItems[product].product.name+'</a>');
+                                        $('#orders .'+res[kay].id+' .'+res[kay].orderItems[product].product.id).append('<div class="price">Ціна:'+res[kay].orderItems[product].product.priceWithVAT+'</div>');
+                                        $('#orders .'+res[kay].id+' .'+res[kay].orderItems[product].product.id).append('<div class="count">Кількість:'+res[kay].orderItems[product].productCount+'</div>');
+                                       var price=res[kay].orderItems[product].product.priceWithVAT;
+                                       var count=res[kay].orderItems[product].productCount;
+                                       var suma=+(price*count).toFixed(2);
+                                       orderPrice=+(orderPrice+suma).toFixed(2);
+                                        $('#orders .'+res[kay].id+' .'+res[kay].orderItems[product].product.id).append('<div class="suma">Сума:'+suma+'</div>');
+
+                                   				}
+                                   				$('#orders .'+res[kay].id+' .adresBlock').append('<div>Сума до сплати: '+orderPrice+'</div>');
+                                   			}
+
+              							
+                              }, 
+                              error: function (jqXHR, exception){
+             
+                               if (jqXHR.status == 401 && localStorage.getItem("token")==null) {
+                                                     document.location.href = 'autorization.php';
+                                                     }else
+                                                     {
+                                                      if (jqXHR.status == 401){
+                                                        refreshToken();
+                                                        getOrders();
+                                                      }  
+                              }
+                                }
+                               });                       
+}
+
 
 function preloaderOff(){
    $('#preloader').remove();

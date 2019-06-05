@@ -8,10 +8,17 @@
 			@include text(18px);
 			list-style: none;
 			text-transform: uppercase;
+			&.active{
+				color:$green;
+			}
 		}
 		
 	}
+
 	.adminInfoBlock{
+		#users{
+			display:none;
+		}
 		margin-top: 20px;
 		@include text(14px);
 

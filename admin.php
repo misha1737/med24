@@ -18,17 +18,26 @@
 		<div class="row">
 		<div class="col-sm-3">
 			<ul class="adminNav">	
-				<li id="zamovlenya">	
+				<li id="zamovlenyaButton" class="active">	
 					Замовлення	
 				</li>
-				<li id="users">	
+				<li id="usersButton" >	
 					Користувачі
 				</li>
 			</ul>
 		</div>
 			<div class="col-sm-9">
 					<div class="adminInfoBlock">	
+						<div id="AllOrders">
+						
 
+
+						</div>
+						<div id="users">
+						
+
+
+						</div>
 					</div>
 			</div>
 		</div>
@@ -46,8 +55,9 @@
 		?>
 
 	</footer>
-
-
-	
+<script>
+getAllOrders();
+getUsers();
+</script>	
 </body>
 </html>

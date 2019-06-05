@@ -23,9 +23,6 @@ return cart;
 
 function getCart(){
              
-
-
-
                             $.ajax({
                                 url:'https://web-store-sample-vs.herokuapp.com/web-store/shopping-carts/'+localStorage.getItem("username")
                                  , headers: {

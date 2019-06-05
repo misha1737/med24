@@ -1,0 +1,75 @@
+#orders{
+	
+	display:none;
+	
+	.orderBlock{
+		margin-bottom: 30px;
+		background-color: white;
+
+	}
+	.adresBlock{
+		@include text(14px);
+		padding: 15px;
+		border-bottom: 1px solid $gray;
+	}
+	.productBox{
+	//margin: 15px 0;
+	min-height: 130px;
+		
+
+		.productImg{
+			height:100px;
+			margin:15px;
+			float:left;
+		}
+		.name{
+			@include text(16px);
+			
+			color:$blue;
+			display: block;
+			padding-top: 15px;
+		}
+		.price{
+			@include text(14px);
+		}
+		.count{
+			@include text(14px);
+		}
+		.suma{
+			@include text(14px);
+		}
+	}
+}
+
+@media only screen and (max-width : 1000px) {
+	#orders{
+
+	.productBox{
+	display:block;
+	height: 160px;
+	}
+
+	}
+}
+@media only screen and (max-width : 600px) {
+	#orders{
+	
+	.productBox{
+		min-height: 160px;
+	display:block;
+	height: auto;
+	border-bottom: 1px solid $lGray;
+	.productImg{
+		display:block;
+		float:none;
+		margin:auto;
+		margin-top: 10px;
+
+	}
+	.name{
+			font-size: 14px;
+		}
+	}
+
+	}
+}

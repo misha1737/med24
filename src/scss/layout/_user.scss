@@ -17,3 +17,33 @@
 		}
 	}
 }
+.userNav{
+		background-color: white;
+
+		li{
+			padding:5px 0;
+			cursor: pointer;
+			@include text(18px);
+			list-style: none;
+			text-transform: uppercase;
+			&.active{
+				color:$green;
+			}
+		}
+		
+	}
+@media only screen and (max-width : 1000px) {
+	.user{
+
+	.access{
+
+
+		span{
+			font-size: 14px;
+		}
+	}
+}
+
+
+
+}

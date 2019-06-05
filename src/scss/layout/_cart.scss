@@ -120,8 +120,10 @@ a#zakaz{
 	.cartList{
 		.productCart{
 			height:auto;
+			
 			.priceAndCount{
-				margin:15px;
+				margin:0;
+				padding:15px 0;
 				width:100%;
 			}
 

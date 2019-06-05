@@ -151,7 +151,7 @@
 			
 				</div>
 			</div>
-			<div class="col-sm-12 filterOption">	
+			<div class="col-sm-12 filterOption " style='display:none'>	
 				Сортировка:
 				   <select class="prosort" id="sortingOption">
 				    <option value="name">По імені</option>
