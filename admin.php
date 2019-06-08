@@ -27,18 +27,7 @@
 			</ul>
 		</div>
 			<div class="col-sm-9">
-					<div class="adminInfoBlock">	
-						<div id="AllOrders">
-						
-
-
-						</div>
-						<div id="users">
-						
-
-
-						</div>
-					</div>
+					
 			</div>
 		</div>
 	</div>
@@ -56,8 +45,34 @@
 
 	</footer>
 <script>
-getAllOrders();
-getUsers();
+		let promise = new Promise((resolve, reject) => {
+
+		    refreshToken();
+		    $('adminInfoBloc').append('<div id="AllOrders"></div>');
+				$('adminInfoBloc').append('<div id="users"></div>');
+				getAllOrders();
+				getUsers();
+		    resolve("result");
+
+		});
+
+		// promise.then навешивает обработчики на успешный результат или ошибку
+		promise
+		  .then(
+		    result => {
+		     
+
+
+		  
+		    },
+		    error => {
+		      // вторая функция - запустится при вызове reject
+		    
+		    }
+		  );
+	
+	
+	
 </script>	
 </body>
 </html>

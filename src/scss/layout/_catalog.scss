@@ -4,6 +4,55 @@
 	}
 
 }
+
+
+
+.catalogLeftMenu{
+	//margin-top: 10px;
+	padding:10px;
+	background:white;
+	.catalogLinksBlock2{
+	h4{
+		@include text(16px);
+		margin:0;
+		//padding:5px;
+		color:$blue
+	}
+	a{
+		@include text(14px);
+		padding:0 10px;
+		display:block;
+		text-decoration: none;
+		&:hover{
+			color:$green;
+		}
+	}
+	.categoriaBlock{
+		padding:10px;
+
+	}
+	.podcategoria2{
+		display:none;
+
+	}
+	button{
+		color:$green;
+		background:none;
+		border:none;
+		font-size: 18px;
+		float:right;
+		outline: none;
+		padding: 0 7px;
+		&.off{
+			transform: rotate(180deg);
+		}
+	}
+
+	}
+
+}
+
+
 .catalogMenu{
 	min-height: 400px;
 	margin-top: 20px;

@@ -737,13 +737,30 @@ function get2pageCatalog(node, page){
                 console.log(res);
                 for(var i=0; i<res.length; i++){
                   console.log(page);
-                  
+                  console.log(page);
                   $('.productsList2 #'+page+' ' ).append("<a href='catalog.php?nodeId="+res[i].nodeId+"&product=false' class='podcategoria' <h4>"+res[i].name+"</h4> </a>")
+                  $('.catalogLeftMenu #c'+page+' ' ).append("<a href='catalog.php?nodeId="+res[i].nodeId+"&product=false' class='podcategoria2' <h4>"+res[i].name+"</h4> </a>")
+
                 }
+                 $('.catalogLeftMenu #c'+page+' ' ).prepend("<button class='catalogButton'><i class='fa fa-chevron-circle-down' aria-hidden='true'></i></button>")
+                  $('.catalogLeftMenu #c'+page+' button').click(function(){
+                    if($('.catalogLeftMenu #c'+page+' button').hasClass('off')){
+                        $('.catalogLeftMenu #c'+page+' button').removeClass('off');
+                        var selector = $(this).siblings(".podcategoria2");
+                        $(selector).css('display','none');
+
+                    }else{
+                        $('.catalogLeftMenu #c'+page+' button').addClass('off');
+                        var selector = $(this).siblings(".podcategoria2");
+                         $(selector).css('display','block');
+                   }
+                  })
               }
             });
 
+function getButton() {
 
+  }
 }
 if(!!catalog.length){
 if (catalog[0].parentNodes.length>2){
@@ -751,9 +768,11 @@ if (catalog[0].parentNodes.length>2){
        if(catalog[i].hasLinkedProducts){
 
         $(' .productsList').append("<a class='categoriaBlock' href=catalog.php?nodeId="+catalog[i].nodeId+"&product=ture><img class='img-responsive' src='img/test.jpg'><h4>"+catalog[i].name+"</h4></a>");
+        $(' .catalogLeftMenu').append("<a class='categoriaBlock' href=catalog.php?nodeId="+catalog[i].nodeId+"&product=ture><h4>"+catalog[i].name+"</h4></a>");
       }else
       {
        $(' .productsList').append("<a class='categoriaBlock' href=catalog.php?nodeId="+catalog[i].nodeId+"&product=false><img class='img-responsive' src='img/test.jpg'><h4>"+catalog[i].name+"</h4></a>");
+       $(' .catalogLeftMenu').append("<a class='categoriaBlock' href=catalog.php?nodeId="+catalog[i].nodeId+"&product=false><h4>"+catalog[i].name+"</h4></a>");
       }
 
   } 
@@ -762,7 +781,7 @@ if (catalog[0].parentNodes.length>2){
   for (var i=0 ; i<catalog.length; i++) {
     
         $(' .productsList2').append("<div  id="+i+"  class='catalogLinksBlock' ><a href='catalog.php?nodeId="+catalog[i].nodeId+"&product=ture' class='categoriaBlock'><img class='img-responsive' src='img/test.jpg'><h4>"+catalog[i].name+"</h4></a></div>");
-        
+        $(' .catalogLeftMenu').append("<div  id=c"+i+"  class='catalogLinksBlock2' ><a href='catalog.php?nodeId="+catalog[i].nodeId+"&product=ture' class='categoriaBlock'><h4>"+catalog[i].name+"</h4></a></div>");
            get2pageCatalog(catalog[i].nodeId, i);
 
         
@@ -775,7 +794,7 @@ if (catalog[0].parentNodes.length>2){
        
 
         $(' .productsList3').append("<a class='categoriaBlock' href=catalog.php?nodeId="+catalog[i].nodeId+"&product=ture><img class='img-responsive' src='img/test.jpg'><h4>"+catalog[i].name+"</h4></a>");
-        
+        $(' .catalogLeftMenu').append("<a class='categoriaBlock' href=catalog.php?nodeId="+catalog[i].nodeId+"&product=ture><h4>"+catalog[i].name+"</h4></a>");
   }
   $(' .productsList').css('display','none');
 }

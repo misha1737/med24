@@ -1,7 +1,7 @@
 
 //alert(filter);
-var filter=false;
-
+var filter=true;
+$(" .filter").css("display","block")
 $(" .filter-off").click(function() {
 
 if(filter){
